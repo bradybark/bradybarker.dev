@@ -1,42 +1,99 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* --- App.css --- */
+
+/* Performance & Scroll Fixes */
+html {
+  scroll-behavior: smooth; /* Ensures smooth navigation clicks */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  overscroll-behavior: none; /* Prevents bounce effect on Mac/Mobile */
+  will-change: scroll-position;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* --- Custom Animations --- */
+
+/* Floating animation for icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU layer */
+}
+
+/* Breathing pulse for background glow */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.3; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+  will-change: opacity;
+  transform: translateZ(0); 
+}
+
+/* Shimmering gradient text effect */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: gradient-flow 8s linear infinite;
+}
+
+/* Smooth slide-up entrance */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* --- Print Styles --- */
+@media print {
+  @page { margin: 1cm; }
+  
+  body { 
+    background: white !important; 
+    color: black !important; 
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* Hide interactive elements */
+  nav, aside, button, footer { 
+    display: none !important; 
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .min-h-screen { 
+    min-height: auto !important; 
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  
+  main { 
+    padding-top: 0 !important; 
+    margin-left: 0 !important; 
+  }
+  
+  section { 
+    margin-bottom: 2cm !important; 
+    page-break-inside: avoid; 
+  }
+  
+  /* Ensure text is readable */
+  .text-slate-400 { 
+    color: #666 !important; 
+  }
+  
+  /* Remove gradient text for print */
+  .bg-clip-text { 
+    -webkit-text-fill-color: black !important; 
+    background: none !important; 
+  }
 }
