@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './App.css'; 
 import { 
   Github, Linkedin, Mail, Download, Moon, Sun, MapPin, 
   Database, Server, BarChart3, Terminal, Cpu, GraduationCap, 
   Trophy, Users, ChevronRight, Home, Gem, User, Menu, X, 
   Dumbbell, Gamepad2, Dog, MousePointer2, Cloud, Award, Check, 
-  ArrowUpRight, Timer, TrendingUp, Zap, ChevronDown, ChevronUp
+  ArrowUpRight, Timer, TrendingUp, Zap, ChevronDown, ChevronUp,
+  Workflow, PieChart
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell 
@@ -113,9 +113,19 @@ const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(resumeData.personalInfo.email);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    // Fallback for clipboard API in iframes
+    const textArea = document.createElement("textarea");
+    textArea.value = resumeData.personalInfo.email;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error('Unable to copy', err);
+    }
+    document.body.removeChild(textArea);
   };
 
   return (
@@ -141,8 +151,8 @@ const HeroSection = ({ resumeData }) => {
         </p>
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
-          <a 
-            href={`mailto:${resumeData.personalInfo.email}`}
+          {/* Email Button */}
+          <button 
             onClick={handleCopyEmail}
             className={`px-6 py-3 rounded-lg font-medium transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer min-w-[170px]
               ${isCopied 
@@ -153,13 +163,15 @@ const HeroSection = ({ resumeData }) => {
           >
             {isCopied ? <Check size={18} /> : <Mail size={18} />}
             {isCopied ? "Email Copied!" : "Contact Me"}
-          </a>
+          </button>
 
+          {/* Resume Button */}
           <a href="/Brady_Barker_Resume.pdf" download="Brady_Barker_Resume.pdf" className="px-6 py-3 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg font-medium transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 cursor-pointer">
             <Download size={18} /> Resume
           </a>
           
-          <div className="flex gap-3 pl-2 border-l border-slate-300 dark:border-slate-700 ml-2">
+          {/* Social Icons - Updated for Mobile: Removed left border/padding on mobile, added spacing */}
+          <div className="flex gap-4 md:gap-3 pl-0 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-700 ml-0 md:ml-2 mt-2 md:mt-0 w-full md:w-auto justify-start md:justify-center">
             <a href={resumeData.personalInfo.linkedin} target="_blank" rel="noreferrer" className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="LinkedIn Profile">
               <Linkedin size={25} />
             </a>
@@ -187,8 +199,8 @@ const HeroSection = ({ resumeData }) => {
 const ImpactSection = ({ onClose }) => {
   // Data derived from resume achievements for visualization
   const performanceData = [
-    { name: 'Legacy System', value: 100, label: '~12 Hours' },
-    { name: 'Modern Stack', value: 1, label: '< 10 mins' },
+    { name: 'Legacy System', value: 100, label: 'Hours' },
+    { name: 'Modern Stack', value: 1, label: '< 15 mins' },
   ];
 
   return (
@@ -281,34 +293,63 @@ const ImpactSection = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Visual 2: Tech Stack Integration */}
-        <div className="lg:col-span-1 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-center">
+        {/* Visual 2: Tech Stack Integration (Updated to Vertical Pipeline) */}
+        <div className="lg:col-span-1 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col">
             <h3 className="font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
                <Server size={20} className="text-slate-400" /> Modern Data Stack
             </h3>
-            
-            <div className="space-y-4 relative">
-               {/* Vertical Line Connector */}
-               <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800"></div>
 
+            <div className="relative space-y-2"> 
+               {/* Item 1: Raw Data */}
                <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-                  <div className="p-2 bg-orange-100 dark:bg-orange-900/20 text-orange-600 rounded-lg"><Database size={18} /></div>
-                  <div className="text-sm font-medium text-slate-700 dark:text-slate-300">Raw Data Sources</div>
+                  <div className="p-2 bg-orange-100 dark:bg-orange-900/20 text-orange-600 rounded-lg shrink-0"><Database size={18} /></div>
+                  <div className="font-semibold text-sm text-slate-800 dark:text-slate-200">Raw Data</div>
                </div>
 
-               <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm ml-4">
-                   <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 rounded-lg"><Terminal size={18} /></div>
-                   <div className="text-sm font-medium text-slate-700 dark:text-slate-300">Databricks (ETL)</div>
+               {/* Connector 1 */}
+               <div className="flex justify-center h-4">
+                  <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
                </div>
 
-               <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm ml-8 border-l-4 border-l-green-500">
-                   <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 rounded-lg"><BarChart3 size={18} /></div>
-                   <div className="text-sm font-medium text-slate-700 dark:text-slate-300">Power BI Semantic Layer</div>
+               {/* Item 2: Databricks Workflow */}
+               <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                  <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 rounded-lg shrink-0"><Workflow size={18} /></div>
+                  <div>
+                    <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">Databricks Workflow</div>
+                    <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Creates Semantic Layer Tables</div>
+                  </div>
                </div>
+
+               {/* Connector 2 */}
+               <div className="flex justify-center h-4">
+                  <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+               </div>
+
+               {/* Item 3: Semantic Models */}
+               <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                  <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 rounded-lg shrink-0"><BarChart3 size={18} /></div>
+                  <div className="font-semibold text-sm text-slate-800 dark:text-slate-200">Semantic Models</div>
+               </div>
+
+               {/* Connector 3 */}
+               <div className="flex justify-center h-4">
+                  <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+               </div>
+
+               {/* Item 4: Reports (New) */}
+               <div className="relative z-10 flex items-center gap-4 p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                  <div className="p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 rounded-lg shrink-0"><PieChart size={18} /></div>
+                  <div>
+                    <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">Reports & Self-Service</div>
+                    <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Pre-built PBI & Ad-hoc Analysis</div>
+                  </div>
+               </div>
+
             </div>
-            <div className="mt-6 text-xs text-slate-500 leading-relaxed">
-               Architected flow ensuring data integrity from ingestion to executive dashboards.
-            </div>
+            
+            <p className="mt-6 text-xs text-slate-500 leading-relaxed text-center">
+               End-to-end lineage ensuring data integrity from ingestion to executive dashboards.
+            </p>
         </div>
       </div>
 
@@ -616,6 +657,9 @@ const App = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+      {/* Inject custom styles here */}
+      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
+
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} scrollToSection={scrollToSection} />
 
       {/* Sidebar */}
