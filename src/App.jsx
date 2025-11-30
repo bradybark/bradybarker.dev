@@ -202,7 +202,7 @@ const HeroSection = ({ resumeData }) => {
           </a>
 
           {/* Social Icons */}
-          <div className="flex gap-4 md:gap-3 pl-0 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-700 ml-0 md:ml-2 mt-2 md:mt-0 w-full md:w-auto justify-start md:justify-center">
+          <div className="flex gap-3 pl-2 border-l border-slate-300 dark:border-slate-700 ml-2">
             <a
               href={resumeData.personalInfo.linkedin}
               target="_blank"
