@@ -16,7 +16,8 @@ const ProjectsSection = ({ resumeData }) => (
           key={idx}
           className="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-blue-500/30 transition-all duration-300"
         >
-          <div className="mb-4">
+          {/* Centered Title and Role */}
+          <div className="mb-4 text-center">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {project.title}
             </h3>
@@ -24,6 +25,7 @@ const ProjectsSection = ({ resumeData }) => (
               {project.role}
             </span>
           </div>
+          
           <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">{project.description}</p>
           <ul className="space-y-2 mb-6 flex-grow">
             {project.details.map((detail, dIdx) => (

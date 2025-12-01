@@ -13,6 +13,14 @@ import {
   BarChart3,
   PieChart,
   ChevronUp,
+  Shield,
+  CheckCircle,
+  Activity,
+  LayoutGrid,
+  Cloud,
+  FileText,
+  RefreshCw,
+  Archive
 } from 'lucide-react';
 import {
   BarChart,
@@ -22,13 +30,45 @@ import {
   CartesianGrid,
   Tooltip,
   Cell,
+  AreaChart,
+  Area,
+  Legend,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer,
+  LabelList,
+  ComposedChart,
+  Line
 } from 'recharts';
-import { performanceData } from '../../data/resumeData';
+import { impactData } from '../../data/resumeData';
 import SectionHeader from '../common/SectionHeader';
+
+const ICON_MAP = {
+  Zap,
+  Users,
+  Award,
+  Timer,
+  Shield,
+  CheckCircle,
+  Activity,
+  Server,
+  Database,
+  LayoutGrid,
+  Cloud,
+  FileText,
+  RefreshCw,
+  Archive // CHANGED MAP
+};
 
 const ImpactSection = ({ onClose }) => {
   const chartContainerRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
+  const [activeTabId, setActiveTabId] = useState(impactData[0].id);
+
+  const activeData = impactData.find(d => d.id === activeTabId) || impactData[0];
 
   useEffect(() => {
     const el = chartContainerRef.current;
@@ -44,6 +84,168 @@ const ImpactSection = ({ onClose }) => {
     return () => observer.disconnect();
   }, []);
 
+  // --- Dynamic Chart Rendering Logic ---
+  const renderChart = () => {
+    const width = Math.max(chartWidth, 200);
+    const height = 260;
+
+    switch (activeData.chart.type) {
+      case 'bar': // Horizontal Bar (Cost Analytics)
+        return (
+          <BarChart
+            width={width}
+            height={height}
+            data={activeData.chart.data}
+            layout="vertical"
+            margin={{ top: 5, right: 50, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#94a3b8" strokeOpacity={0.2} />
+            <XAxis type="number" hide />
+            <YAxis
+              dataKey="name"
+              type="category"
+              width={100}
+              tick={{ fill: "#64748b", fontSize: 11, fontWeight: "bold" }}
+            />
+            <Tooltip
+              cursor={{ fill: "transparent" }}
+              content={({ active, payload }) =>
+                active && payload && payload.length ? (
+                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                    <div className="font-bold mb-1">{payload[0].payload.name}</div>
+                    <div className="text-slate-300">{payload[0].payload.label}</div>
+                  </div>
+                ) : null
+              }
+            />
+            <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={32}>
+              {activeData.chart.data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+              <LabelList 
+                dataKey="label" 
+                position="right" 
+                fill="#94a3b8" 
+                fontSize={12} 
+                fontWeight="bold" 
+              />
+            </Bar>
+          </BarChart>
+        );
+
+      case 'benchmark': // Vertical Benchmark (Compliance)
+        return (
+          <BarChart
+            width={width}
+            height={height}
+            data={activeData.chart.data}
+            margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
+            barCategoryGap="20%"
+          >
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#94a3b8" strokeOpacity={0.1} />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fill: "#94a3b8", fontSize: 12, fontWeight: "600" }} 
+              axisLine={false}
+              tickLine={false}
+              dy={10}
+            />
+            <YAxis hide />
+            <Tooltip
+              cursor={{ fill: "rgba(148, 163, 184, 0.05)" }}
+              content={({ active, payload }) =>
+                active && payload && payload.length ? (
+                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                    <div className="font-bold mb-1">{payload[0].payload.name}</div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: payload[0].color }}></span>
+                      <span>Value: {payload[0].value}</span>
+                    </div>
+                  </div>
+                ) : null
+              }
+            />
+            <Bar 
+              dataKey="value" 
+              radius={[8, 8, 0, 0]} 
+              barSize={60}
+              minPointSize={3}
+              animationDuration={1000}
+            >
+              {activeData.chart.data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+              <LabelList 
+                dataKey="label" 
+                position="top" 
+                fill="#94a3b8" 
+                fontSize={14} 
+                fontWeight="bold" 
+                offset={10}
+              />
+            </Bar>
+          </BarChart>
+        );
+
+      case 'capability-grid': // Modernization Scorecard
+        return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full w-full">
+            {activeData.chart.data.map((badge, idx) => {
+              const Icon = ICON_MAP[badge.icon] || CheckCircle;
+              const colorConfig = {
+                green:  { bg: "bg-green-50 dark:bg-green-900/20",  text: "text-green-700 dark:text-green-300", border: "border-green-200 dark:border-green-800" },
+                blue:   { bg: "bg-blue-50 dark:bg-blue-900/20",    text: "text-blue-700 dark:text-blue-300",   border: "border-blue-200 dark:border-blue-800" },
+                purple: { bg: "bg-purple-50 dark:bg-purple-900/20", text: "text-purple-700 dark:text-purple-300", border: "border-purple-200 dark:border-purple-800" },
+                yellow: { bg: "bg-yellow-50 dark:bg-yellow-900/20", text: "text-yellow-700 dark:text-yellow-300", border: "border-yellow-200 dark:border-yellow-800" },
+              };
+              const colors = colorConfig[badge.color] || colorConfig.green;
+
+              return (
+                <div 
+                  key={idx} 
+                  className={`flex flex-col items-center justify-center text-center gap-3 p-2 h-full w-full rounded-xl border ${colors.bg} ${colors.border} transition-all hover:scale-[1.02]`}
+                >
+                  <Icon size={40} className={colors.text} strokeWidth={1.5} />
+                  <span className={`font-bold text-base sm:text-lg leading-snug ${colors.text}`}>
+                    {badge.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  // Determine the correct icon component for the chart header
+  const ChartHeaderIcon = ICON_MAP[activeData.chart.icon] || Timer;
+
+  const stackItems = [
+    {
+      label: 'Raw Data',
+      Icon: Database,
+      classes: 'bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
+    },
+    {
+      label: 'Databricks Workflows',
+      Icon: Workflow,
+      classes: 'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+    },
+    {
+      label: 'Semantic Models',
+      Icon: BarChart3,
+      classes: 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+    },
+    {
+      label: 'Self-Service Reports',
+      Icon: PieChart,
+      classes: 'bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
+    }
+  ];
+
   return (
     <section
       id="impact"
@@ -51,7 +253,7 @@ const ImpactSection = ({ onClose }) => {
     >
       <button
         onClick={onClose}
-        className="absolute top-2 right-2 sm:right-0 p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all"
+        className="absolute top-2 right-2 sm:right-0 p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all z-20"
         title="Close Impact Section"
       >
         <X size={24} />
@@ -63,186 +265,112 @@ const ImpactSection = ({ onClose }) => {
         colorClass="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
       />
 
+      {/* --- UNIFIED GRID TABS --- */}
+      <div className="max-w-3xl mx-auto mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50">
+          {impactData.map((project) => (
+            <button
+              key={project.id}
+              onClick={() => setActiveTabId(project.id)}
+              className={`
+                px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 w-full
+                flex items-center justify-center text-center
+                ${activeTabId === project.id
+                  ? 'bg-white dark:bg-slate-700 text-green-600 dark:text-green-400 shadow-sm ring-1 ring-slate-200 dark:ring-slate-600'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/30'
+                }
+              `}
+            >
+              {project.title}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* --- Key Metrics Cards --- */}
         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Zap size={64} className="text-yellow-500" />
-            </div>
-            <div className="relative z-10">
-              <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">99%</div>
-              <div className="text-sm font-semibold text-green-600 dark:text-green-400 uppercase tracking-wide">
-                Refresh Time Reduction
-              </div>
-              <p className="text-xs text-slate-500 mt-2">
-                Migrated legacy MSAS cubes to optimized Databricks pipelines.
-              </p>
-            </div>
-          </div>
+          {activeData.metrics.map((metric, idx) => {
+            const IconComponent = ICON_MAP[metric.icon] || Award;
+            const colorClasses = {
+              yellow: "text-yellow-500 text-yellow-600 dark:text-yellow-400",
+              blue: "text-blue-500 text-blue-600 dark:text-blue-400",
+              purple: "text-purple-500 text-purple-600 dark:text-purple-400",
+              green: "text-green-500 text-green-600 dark:text-green-400"
+            };
+            const [iconColor, textColor] = colorClasses[metric.color].split(' ');
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Users size={64} className="text-blue-500" />
-            </div>
-            <div className="relative z-10">
-              <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">3,000+</div>
-              <div className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
-                Finance Users Scaled
+            return (
+              <div
+                key={`${activeTabId}-${idx}`}
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity ${iconColor}`}>
+                  <IconComponent size={64} />
+                </div>
+                <div className="relative z-10">
+                  <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">
+                    {metric.value}
+                  </div>
+                  <div className={`text-sm font-semibold uppercase tracking-wide ${textColor}`}>
+                    {metric.label}
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2">
+                    {metric.desc}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-slate-500 mt-2">
-                Supporting enterprise analytics across multiple finance divisions.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Award size={64} className="text-purple-500" />
-            </div>
-            <div className="relative z-10">
-              <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">$4.6B</div>
-              <div className="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wide">
-                Trade Value Supported
-              </div>
-              <p className="text-xs text-slate-500 mt-2">
-                Ensured continuous data support for USMCA compliance reporting.
-              </p>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
+        {/* --- Dynamic Chart Section --- */}
         <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <Timer className="text-slate-400" size={20} />
-            <h3 className="font-bold text-slate-900 dark:text-white">Pipeline Latency Optimization</h3>
+            <ChartHeaderIcon className="text-slate-400" size={20} />
+            <h3 className="font-bold text-slate-900 dark:text-white">{activeData.chart.title}</h3>
           </div>
 
-          <div ref={chartContainerRef} className="w-full h-[260px] min-h-[260px]">
-            {chartWidth > 10 ? (
-              <BarChart
-                width={Math.max(chartWidth, 200)}
-                height={260}
-                data={performanceData}
-                layout="vertical"
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  horizontal={false}
-                  stroke="#94a3b8"
-                  strokeOpacity={0.2}
-                />
-                <XAxis type="number" hide />
-                <YAxis
-                  dataKey="name"
-                  type="category"
-                  width={140}
-                  tick={{
-                    fill: "#64748b",
-                    fontSize: 12,
-                    fontWeight: "bold",
-                  }}
-                />
-                <Tooltip
-                  cursor={{ fill: "transparent" }}
-                  content={({ active, payload }) =>
-                    active && payload && payload.length ? (
-                      <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl">
-                        {payload[0].payload.label}
-                      </div>
-                    ) : null
-                  }
-                />
-                <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={40}>
-                  {performanceData.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={index === 0 ? "#94a3b8" : "#22c55e"}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
-                Loading chart…
-              </div>
+          <div 
+            className="w-full h-[260px] min-h-[260px] flex items-center justify-center"
+            ref={chartContainerRef}
+          >
+            {chartWidth > 10 ? renderChart() : (
+              <div className="text-slate-400 text-xs">Loading chart...</div>
             )}
           </div>
 
           <div className="text-center text-xs text-slate-400 mt-2">
-            Visualization of refresh time reduction from Legacy MSAS to Databricks/Power BI stack.
+            {activeData.chart.subtitle}
           </div>
         </div>
 
+        {/* --- Static Data Stack Visualization --- */}
         <div className="lg:col-span-1 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col">
           <h3 className="font-bold text-slate-900 dark:text-white mb-6 flex items-center justify-center gap-2">
             <Server size={20} className="text-slate-400" /> Improved Data Stack
           </h3>
-
           <div className="relative space-y-2">
-            <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-              <div className="absolute left-3 p-2 bg-orange-100 dark:bg-orange-900/20 text-orange-600 rounded-lg shrink-0">
-                <Database size={18} />
-              </div>
-              <div className="w-full text-center px-10">
-                <div className="font-semibold text-sm text-slate-800 dark:text-slate-200">
-                  Raw Data
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center h-4">
-              <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
-            </div>
-
-            <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-              <div className="absolute left-3 p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 rounded-lg shrink-0">
-                <Workflow size={18} />
-              </div>
-              <div className="w-full text-center px-10">
-                <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">
-                  Databricks Workflows
-                </div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Creates Gold Source Tables
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center h-4">
-              <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
-            </div>
-
-            <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-              <div className="absolute left-3 p-2 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 rounded-lg shrink-0">
-                <BarChart3 size={18} />
-              </div>
-              <div className="w-full text-center px-10">
-                <div className="font-semibold text-sm text-slate-800 dark:text-slate-200">
-                  Semantic Models
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center h-4">
-              <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
-            </div>
-
-            <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
-              <div className="absolute left-3 p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 rounded-lg shrink-0">
-                <PieChart size={18} />
-              </div>
-              <div className="w-full text-center px-10">
-                <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">
-                  Pre-Built & Self-Service Reports
-                </div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Power BI Reports
-                </div>
-              </div>
-            </div>
+             {stackItems.map((item, i) => (
+               <React.Fragment key={i}>
+                 <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                    <div className={`absolute left-3 p-2 rounded-lg shrink-0 ${item.classes}`}>
+                      <item.Icon size={18} />
+                    </div>
+                    <div className="w-full text-center px-10">
+                      <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">
+                        {item.label}
+                      </div>
+                    </div>
+                 </div>
+                 {i < stackItems.length - 1 && (
+                   <div className="flex justify-center h-4">
+                     <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+                   </div>
+                 )}
+               </React.Fragment>
+             ))}
           </div>
-
           <p className="mt-6 text-xs text-slate-500 leading-relaxed text-center">
             Clean, well-governed data pipelines connect raw sources to trusted reports and analytics.
           </p>
