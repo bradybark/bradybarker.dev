@@ -1,4 +1,3 @@
-// src/components/sections/ImpactSection.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import {
   TrendingUp,
@@ -60,7 +59,7 @@ const ICON_MAP = {
   Cloud,
   FileText,
   RefreshCw,
-  Archive // CHANGED MAP
+  Archive
 };
 
 const ImpactSection = ({ onClose }) => {
@@ -187,9 +186,46 @@ const ImpactSection = ({ onClose }) => {
           </BarChart>
         );
 
-      case 'capability-grid': // Modernization Scorecard
+      case 'composed': // Scale vs Stability (Composed Chart)
         return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full w-full">
+          <ComposedChart
+            width={width}
+            height={height}
+            data={activeData.chart.data}
+            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#94a3b8" strokeOpacity={0.1} />
+            <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 11 }} />
+            <YAxis yAxisId="left" hide />
+            <YAxis yAxisId="right" orientation="right" hide />
+            <Tooltip
+              content={({ active, payload, label }) =>
+                active && payload && payload.length ? (
+                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                    <div className="font-bold mb-2">{label}</div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="text-slate-300">Users: <span className="text-white">{payload[0].value}</span></span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <span className="text-slate-300">Errors: <span className="text-white">{payload[1].value}</span></span>
+                    </div>
+                  </div>
+                ) : null
+              }
+            />
+            <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} iconSize={8} />
+            
+            <Bar yAxisId="left" dataKey="users" name="Active Users" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
+            
+            <Line yAxisId="right" type="monotone" dataKey="failures" name="System Errors" stroke="#ef4444" strokeWidth={3} dot={{ r: 4, fill: "#ef4444", strokeWidth: 2, stroke: "#fff" }} activeDot={{ r: 6, fill: "#ef4444" }} />
+          </ComposedChart>
+        );
+
+      case 'capability-grid': // NEW: Modernization Scorecard
+        return (
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 h-full w-full">
             {activeData.chart.data.map((badge, idx) => {
               const Icon = ICON_MAP[badge.icon] || CheckCircle;
               const colorConfig = {
@@ -203,10 +239,10 @@ const ImpactSection = ({ onClose }) => {
               return (
                 <div 
                   key={idx} 
-                  className={`flex flex-col items-center justify-center text-center gap-3 p-2 h-full w-full rounded-xl border ${colors.bg} ${colors.border} transition-all hover:scale-[1.02]`}
+                  className={`flex flex-col items-center justify-center text-center gap-1.5 sm:gap-3 p-2 h-full w-full rounded-xl border ${colors.bg} ${colors.border} transition-all hover:scale-[1.02]`}
                 >
-                  <Icon size={40} className={colors.text} strokeWidth={1.5} />
-                  <span className={`font-bold text-base sm:text-lg leading-snug ${colors.text}`}>
+                  <Icon className={`w-8 h-8 sm:w-10 sm:h-10 ${colors.text}`} strokeWidth={1.5} />
+                  <span className={`font-bold text-xs sm:text-lg leading-tight ${colors.text}`}>
                     {badge.label}
                   </span>
                 </div>
@@ -240,7 +276,7 @@ const ImpactSection = ({ onClose }) => {
       classes: 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
     },
     {
-      label: 'Self-Service Reports',
+      label: 'Prebuilt & Self-Service Reports',
       Icon: PieChart,
       classes: 'bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
     }

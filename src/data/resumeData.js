@@ -20,7 +20,6 @@ import {
   Archive
 } from 'lucide-react';
 
-// ... (Keep existing resumeData object as is) ...
 export const resumeData = {
   personalInfo: {
     name: "Brady Barker",
@@ -128,7 +127,7 @@ export const impactData = [
       }
     ],
     chart: {
-      type: 'bar', // Vertical Bar (Time comparison)
+      type: 'bar', // Vertical Bar
       title: "Pipeline Latency (Lower is Better)",
       subtitle: "Drastic reduction in refresh times",
       data: [
@@ -158,7 +157,7 @@ export const impactData = [
       {
         value: "Cross-Team",
         label: "Unified Data Source",
-        desc: "Single Gold Source utilized by Finance, Legal, and ESG teams.",
+        desc: "Single Gold Source utilized across Finance",
         icon: "Users",
         color: "blue"
       }
