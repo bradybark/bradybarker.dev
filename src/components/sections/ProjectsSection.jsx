@@ -36,10 +36,7 @@ const ProjectsSection = ({ resumeData }) => (
           </ul>
           <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
             {project.tech.map((t, tIdx) => (
-              <span
-                key={tIdx}
-                className="px-2 py-1 text-xs font-medium rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors"
-              >
+              <span key={tIdx} className="tech-tag">
                 {t}
               </span>
             ))}

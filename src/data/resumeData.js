@@ -54,6 +54,7 @@ export const resumeData = {
       ]
     }
   ],
+  // Professional Projects (Displayed on Resume Page)
   projects: [
     {
       title: "Enterprise Cost Analytics Platform",
@@ -67,7 +68,8 @@ export const resumeData = {
       role: "Data Engineer",
       description: "Integrated GHG (Greenhouse Gas) & IRA (Inflation Reduction Act) data for real-time reporting.",
       details: ["Built automated SQL/Python pipelines in Databricks.", "Created centralized GHG and IRA Gold Source tables, enabling cross-team and enterprise-wide reporting.", "Integrated data into PLP Semantic Models to enable compliance tracking, forecasting, and decision support."],
-      tech: ["Python", "SQL", "Databricks", "Automation"]
+      tech: ["Python", "SQL", "Databricks", "Automation"],
+      githubUrl: "https://github.com/bradybark/mars-web-scraper", 
     },
     {
       title: "System Modernization",

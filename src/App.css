@@ -7,7 +7,6 @@ html {
 
 body {
   overscroll-behavior: none; /* Prevents bounce effect on Mac/Mobile */
-  will-change: scroll-position;
 }
 
 /* --- Custom Animations --- */
@@ -20,8 +19,8 @@ body {
 
 .animate-float {
   animation: float 8s ease-in-out infinite;
-  will-change: transform;
-  transform: translateZ(0); /* Force GPU layer */
+  /* REMOVED: will-change:BW transform; */
+  /* REMOVED: transform: translateZ(0); */
 }
 
 /* Breathing pulse for background glow */
@@ -32,8 +31,8 @@ body {
 
 .animate-pulse-slow {
   animation: pulse-slow 6s ease-in-out infinite;
-  will-change: opacity;
-  transform: translateZ(0); 
+  /* REMOVED: will-change: opacity; */
+  /* REMOVED: transform: translateZ(0); */
 }
 
 /* Shimmering gradient text effect */
@@ -96,5 +95,4 @@ body {
     -webkit-text-fill-color: black !important; 
     background: none !important; 
   }
-
 }
