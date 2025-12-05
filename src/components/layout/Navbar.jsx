@@ -51,11 +51,7 @@ const Navbar = ({
             <Link to="/home" className="flex items-center gap-2 cursor-pointer">
               <CustomBBIcon size={32} />
               <span
-                className={`text-lg md:text-xl font-bold bg-clip-text text-transparent ml-2 ${
-                  darkMode
-                    ? 'bg-gradient-to-r from-blue-300 via-purple-300 to-purple-400'
-                    : 'bg-gradient-to-r from-blue-600 to-purple-600'
-                }`}
+                className="text-lg md:text-xl font-bold text-slate-900 dark:text-white ml-2"
               >
                 Brady Barker
               </span>
