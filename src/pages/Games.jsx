@@ -1,4 +1,4 @@
-// src/pages/Game.jsx
+// src/pages/Games.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Bug, 
@@ -22,7 +22,6 @@ const Game = () => {
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   
   // Track multiple active items on grid
-  // Array of objects: { index: number, type: 'bug' | 'star' | 'time', id: number }
   const [activeItems, setActiveItems] = useState([]); 
   
   // Visual Feedback States
@@ -45,10 +44,8 @@ const Game = () => {
   };
 
   const spawnEntities = () => {
-    // CRITICAL: Stop spawning if game is over
     if (gameStateRef.current !== 'playing') return;
 
-    // Clear previous visual feedback
     setZappedIndices([]);
     
     // 1. Determine how many BUGS to spawn
@@ -62,7 +59,6 @@ const Game = () => {
     const newItems = [];
     const usedIndices = new Set();
 
-    // Helper to get a unique random index
     const getUniqueIndex = () => {
       let index;
       let attempts = 0;
@@ -74,7 +70,7 @@ const Game = () => {
       return index;
     };
 
-    // 2. Add Bugs (Always spawn bugs)
+    // 2. Add Bugs
     for (let i = 0; i < bugCount; i++) {
       newItems.push({ 
         index: getUniqueIndex(), 
@@ -83,11 +79,9 @@ const Game = () => {
       });
     }
 
-    // 3. Chance to spawn an EXTRA Powerup (30% chance)
-    // This runs alongside bugs, so it doesn't replace them.
+    // 3. Chance to spawn Powerup
     if (Math.random() > 0.7) {
       const type = Math.random() > 0.5 ? 'time' : 'star';
-      // Only add if we have space (we definitely do in a 3x3 grid with max 3 bugs)
       newItems.push({
         index: getUniqueIndex(),
         type,
@@ -97,8 +91,6 @@ const Game = () => {
 
     setActiveItems(newItems);
 
-    // Speed Calculation
-    // Caps at 800ms refresh rate so it doesn't get impossible
     const speed = Math.max(800, 1500 - (score * 20));
 
     clearTimeout(spawnTimerRef.current);
@@ -110,31 +102,24 @@ const Game = () => {
 
     const item = activeItems.find(i => i.index === index);
     if (item) {
-      // Logic based on Type
       if (item.type === 'bug') {
         setScore(s => s + 1);
       } else if (item.type === 'star') {
         setScore(s => s + 5);
       } else if (item.type === 'time') {
-        setTimeLeft(t => t + 1); // Updated: Only adds +1 second
+        setTimeLeft(t => t + 1);
       }
 
-      // Visual Feedback Logic
       setZappedIndices(prev => [...prev, index]);
 
-      // Remove clicked item immediately
       const remaining = activeItems.filter(i => i.index !== index);
       setActiveItems(remaining);
 
-      // --- DELAY LOGIC ---
-      // Reset the spawn timer on every click.
       clearTimeout(spawnTimerRef.current);
 
       if (remaining.length === 0) {
-        // If board is clear, respawn quickly
         setTimeout(spawnEntities, 200); 
       } else {
-        // If items remain, add a delay before they disappear/move
         spawnTimerRef.current = setTimeout(spawnEntities, 1000); 
       }
     }
@@ -151,7 +136,6 @@ const Game = () => {
 
   // --- Effects ---
 
-  // Countdown Timer
   useEffect(() => {
     if (gameState === 'playing') {
       gameTimerRef.current = setInterval(() => {
@@ -167,7 +151,6 @@ const Game = () => {
     return () => clearInterval(gameTimerRef.current);
   }, [gameState]);
 
-  // Cleanup
   useEffect(() => {
     return () => {
       clearInterval(gameTimerRef.current);
@@ -177,50 +160,49 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4 flex flex-col items-center animate-fade-in-up">
+    <div className="min-h-screen pt-20 pb-16 px-4 flex flex-col items-center animate-fade-in-up">
       
       {/* Header */}
-      <div className="text-center mb-8 space-y-4">
-        <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 mb-4 animate-float">
-          <Bug size={40} className="text-red-500" />
-        </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
-          Bug <span className="text-red-500">Zapper</span>
+      <div className="text-center mb-4 space-y-2">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white flex items-center justify-center gap-3">
+          <Bug size={32} className="text-red-500" />
+          <span>Bug <span className="text-red-500">Zapper</span></span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-          Clear the bugs! Grab <span className="text-green-500 font-bold">Clocks</span> for time and <span className="text-yellow-500 font-bold">Stars</span> for points!
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Clear the bugs! Grab <span className="text-green-500 font-bold">Clocks</span> & <span className="text-yellow-500 font-bold">Stars</span>
         </p>
       </div>
 
-      {/* Stats Bar */}
-      <div className="flex items-center justify-between w-full max-w-md mb-6 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-        <div className="flex items-center gap-3 z-10">
-          <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
-            <Trophy size={20} />
-          </div>
-          <div>
-            <p className="text-xs text-slate-500 uppercase font-bold">Score</p>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{score}</p>
+      {/* NEW MINIMAL STATS BAR */}
+      <div className="flex items-end justify-between w-full max-w-md px-4 mb-8">
+        
+        {/* Score Display */}
+        <div className="flex flex-col">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Score</span>
+          <div className="flex items-center gap-2">
+            <Trophy size={28} className="text-yellow-500 drop-shadow-sm" />
+            <span className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+              {score}
+            </span>
           </div>
         </div>
 
+        {/* Timer Display */}
         {gameState === 'playing' && (
-           <div className="flex items-center gap-3 z-10">
-             <div className={`p-2 rounded-lg ${timeLeft <= 10 ? 'bg-red-100 text-red-600 animate-pulse' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
-               <Timer size={20} />
-             </div>
-             <div className="text-right">
-               <p className="text-xs text-slate-500 uppercase font-bold">Time</p>
-               <p className={`text-xl font-bold tabular-nums ${timeLeft <= 10 ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>
+           <div className="flex flex-col items-end">
+             <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Time</span>
+             <div className={`flex items-center gap-2 transition-colors duration-300 ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'text-slate-900 dark:text-white'}`}>
+               <Timer size={28} />
+               <span className="text-5xl font-black tabular-nums tracking-tight">
                  00:{timeLeft.toString().padStart(2, '0')}
-               </p>
+               </span>
              </div>
            </div>
         )}
       </div>
 
       {/* Game Grid */}
-      <div className="relative select-none">
+      <div className="relative select-none w-full max-w-md">
         
         {/* Overlay */}
         {gameState !== 'playing' && (
@@ -228,7 +210,7 @@ const Game = () => {
             {gameState === 'gameover' ? (
               <>
                 <Trophy size={48} className="text-yellow-500 mb-4 animate-bounce" />
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Deploy Complete!</h2>
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Deployment Successful!</h2>
                 <p className="text-slate-600 dark:text-slate-400 mb-6">Final Score: <span className="font-bold text-lg text-blue-600">{score}</span></p>
                 <button 
                   onClick={startGame}
@@ -254,7 +236,7 @@ const Game = () => {
         )}
 
         {/* The Grid */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-inner max-w-md mx-auto">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-inner">
           {Array.from({ length: GRID_SIZE }).map((_, idx) => {
             const item = activeItems.find(i => i.index === idx);
             const isZapped = zappedIndices.includes(idx);
@@ -265,8 +247,8 @@ const Game = () => {
                 onClick={() => handleWhack(idx)}
                 disabled={gameState !== 'playing'}
                 className={`
-                  relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl flex items-center justify-center transition-all duration-100 overflow-hidden
-                  ${gameState === 'playing' ? 'active:scale-95' : ''}
+                  relative aspect-square rounded-xl flex items-center justify-center transition-all duration-100 overflow-hidden
+                  ${gameState === 'playing' ? 'active:scale-95 cursor-crosshair' : 'cursor-default'}
                   bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700
                   hover:border-blue-300 dark:hover:border-blue-700
                 `}
@@ -277,10 +259,8 @@ const Game = () => {
                 {/* Active Entity Layer */}
                 <div className="relative z-10 transition-all duration-200">
                   {isZapped ? (
-                    // --- ZAP ANIMATION ---
                     <Zap size={40} className="text-yellow-500 scale-125 animate-ping" />
                   ) : item ? (
-                    // --- ACTIVE ITEMS ---
                     item.type === 'star' ? (
                       <div className="flex flex-col items-center animate-pulse">
                          <Star size={36} className="text-yellow-500 fill-yellow-500 drop-shadow-lg" />

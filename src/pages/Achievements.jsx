@@ -1,10 +1,10 @@
 // src/pages/Achievements.jsx
 import React from 'react';
-import { Trophy, Lock } from 'lucide-react';
+import { Trophy, Lock, RotateCcw } from 'lucide-react';
 import { useAchievements, ACHIEVEMENTS } from '../context/AchievementContext';
 
 const Achievements = () => {
-  const { unlocked } = useAchievements();
+  const { unlocked, resetAchievements } = useAchievements();
 
   // Calculate Progress
   const total = ACHIEVEMENTS.length;
@@ -12,7 +12,7 @@ const Achievements = () => {
   const percentage = Math.round((count / total) * 100);
 
   return (
-    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col">
       
       {/* Header Section */}
       <div className="text-center mb-12 animate-fade-in-up">
@@ -36,10 +36,11 @@ const Achievements = () => {
       </div>
 
       {/* Grid Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
         {ACHIEVEMENTS.map((achievement, index) => {
           const isUnlocked = unlocked.includes(achievement.id);
           const isSecret = achievement.id === 'found-game' && !isUnlocked;
+          const isCompletionist = achievement.id === 'completionist';
 
           return (
             <div 
@@ -47,8 +48,17 @@ const Achievements = () => {
               className={`
                 relative p-6 rounded-2xl border transition-all duration-300
                 flex flex-col items-center text-center gap-4 group
+                
+                /* CENTER THE COLLECTOR: 
+                   - On Tablet (sm): Span full width (col-span-2) 
+                   - On Desktop (md): Move to middle column (col-start-2)
+                */
+                ${isCompletionist ? 'sm:col-span-2 md:col-span-1 md:col-start-2' : ''}
+
                 ${isUnlocked 
-                  ? 'bg-white dark:bg-slate-900 border-yellow-400/50 shadow-lg shadow-yellow-400/10 scale-100 opacity-100' 
+                  ? isCompletionist 
+                    ? 'bg-gradient-to-b from-yellow-50 to-white dark:from-yellow-900/20 dark:to-slate-900 border-yellow-400 shadow-lg shadow-yellow-500/20'
+                    : 'bg-white dark:bg-slate-900 border-yellow-400/50 shadow-lg shadow-yellow-400/10 scale-100 opacity-100' 
                   : 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70 grayscale hover:grayscale-0 hover:opacity-100'
                 }
               `}
@@ -101,6 +111,22 @@ const Achievements = () => {
           );
         })}
       </div>
+
+      {/* Reset Button */}
+      <div className="mt-auto flex justify-center pb-8 opacity-40 hover:opacity-100 transition-opacity">
+        <button
+          onClick={() => {
+            if (window.confirm('Are you sure you want to reset all achievements? This cannot be undone.')) {
+              resetAchievements();
+            }
+          }}
+          className="flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+        >
+          <RotateCcw size={14} />
+          Reset Progress
+        </button>
+      </div>
+
     </div>
   );
 };

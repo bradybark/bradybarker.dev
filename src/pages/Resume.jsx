@@ -1,15 +1,13 @@
 // src/pages/Resume.jsx
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
-// import { useOutletContext } from 'react-router-dom'; // <--- DELETE THIS
 import { useAchievements } from '../context/AchievementContext';
-import { useTheme } from '../context/ThemeContext'; // <--- ADD THIS
+import { useTheme } from '../context/ThemeContext';
 
 import resumeData, { MAIN_SECTIONS } from '../data/resumeData';
 import Sidebar from '../components/layout/Sidebar';
 import MobileNav from '../components/layout/MobileNav';
 
-// Sections
 import HeroSection from '../components/sections/HeroSection';
 import ImpactSection from '../components/sections/ImpactSection';
 import ExperienceSection from '../components/sections/ExperienceSection';
@@ -18,26 +16,24 @@ import SkillsSection from '../components/sections/SkillsSection';
 import EducationAndCommunitySection from '../components/sections/EducationAndCommunitySection';
 import BioSection from '../components/sections/BioSection';
 
-const Resume = () => {
-  // 1. Get Theme from Context
+// 1. Receive props from App.jsx instead of creating local state
+const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => { 
+  
   const { isDarkMode } = useTheme();
-  const darkMode = isDarkMode; // Alias it so you don't have to rename props below
+  const darkMode = isDarkMode;
 
-  // 2. Create Local State for Sidebar (since it's not coming from Outlet anymore)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // REMOVE THIS LINE:
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
 
-  // 3. Achievements Hook
   const { unlockAchievement } = useAchievements(); 
   
   const [activeSection, setActiveSection] = useState('hero');
   const [showImpact, setShowImpact] = useState(false);
 
-  // Trigger "Visited Resume" on mount
   useEffect(() => {
     unlockAchievement('visit-resume');
   }, []);
 
-  // Trigger "Open Impact" when shown
   useEffect(() => {
     if (showImpact) {
       unlockAchievement('open-impact');
@@ -76,6 +72,7 @@ const Resume = () => {
 
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       setActiveSection(id); 
+      // Close sidebar on mobile when a link is clicked
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     }
   };
@@ -88,7 +85,6 @@ const Resume = () => {
         activeSection={activeSection}
         showImpact={showImpact}
         scrollToSection={scrollToSection}
-        // Pass the setter if Sidebar has a close button
         setIsSidebarOpen={setIsSidebarOpen} 
       />
 
@@ -126,7 +122,6 @@ const Resume = () => {
 
       <MobileNav 
         scrollToSection={scrollToSection} 
-        // Pass these if MobileNav handles the toggle button
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />

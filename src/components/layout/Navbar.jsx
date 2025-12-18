@@ -1,3 +1,4 @@
+// src/components/layout/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon, FileText, FolderGit2 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -43,8 +44,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     if (newCount === 5) {
       unlockAchievement('found-game');
-      // Navigate to game if it exists
-      // navigate('/game'); 
+      navigate('/game'); // <--- Redirect enabled
       setClickCount(0);
     }
   };

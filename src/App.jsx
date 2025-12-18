@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Resume from './pages/Resume';
 import Projects from './pages/Projects';
 import Achievements from './pages/Achievements';
+import Game from './pages/Games'; // <--- Import Game Page
 
 function App() {
   // Lifted State for Sidebar
@@ -44,6 +45,7 @@ function App() {
                 
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/achievements" element={<Achievements />} />
+                <Route path="/game" element={<Game />} /> {/* <--- Registered Route */}
               </Routes>
             </main>
             
