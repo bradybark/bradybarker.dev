@@ -1,13 +1,15 @@
 // src/pages/Resume.jsx
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
-import { useOutletContext } from 'react-router-dom';
+// import { useOutletContext } from 'react-router-dom'; // <--- DELETE THIS
+import { useAchievements } from '../context/AchievementContext';
+import { useTheme } from '../context/ThemeContext'; // <--- ADD THIS
 
 import resumeData, { MAIN_SECTIONS } from '../data/resumeData';
-
 import Sidebar from '../components/layout/Sidebar';
 import MobileNav from '../components/layout/MobileNav';
 
+// Sections
 import HeroSection from '../components/sections/HeroSection';
 import ImpactSection from '../components/sections/ImpactSection';
 import ExperienceSection from '../components/sections/ExperienceSection';
@@ -17,11 +19,30 @@ import EducationAndCommunitySection from '../components/sections/EducationAndCom
 import BioSection from '../components/sections/BioSection';
 
 const Resume = () => {
-  // Receive shared state from App layout via Outlet context
-  const { darkMode, isSidebarOpen, setIsSidebarOpen } = useOutletContext();
+  // 1. Get Theme from Context
+  const { isDarkMode } = useTheme();
+  const darkMode = isDarkMode; // Alias it so you don't have to rename props below
+
+  // 2. Create Local State for Sidebar (since it's not coming from Outlet anymore)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // 3. Achievements Hook
+  const { unlockAchievement } = useAchievements(); 
   
   const [activeSection, setActiveSection] = useState('hero');
   const [showImpact, setShowImpact] = useState(false);
+
+  // Trigger "Visited Resume" on mount
+  useEffect(() => {
+    unlockAchievement('visit-resume');
+  }, []);
+
+  // Trigger "Open Impact" when shown
+  useEffect(() => {
+    if (showImpact) {
+      unlockAchievement('open-impact');
+    }
+  }, [showImpact]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,9 +75,7 @@ const Resume = () => {
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      // We set active section immediately for better UX
       setActiveSection(id); 
-
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     }
   };
@@ -69,20 +88,13 @@ const Resume = () => {
         activeSection={activeSection}
         showImpact={showImpact}
         scrollToSection={scrollToSection}
+        // Pass the setter if Sidebar has a close button
+        setIsSidebarOpen={setIsSidebarOpen} 
       />
 
-      {/* CRITICAL FIX FOR ARTIFACTS:
-          1. transform: translate3d(0,0,0) -> Forces this container into its own GPU layer.
-          2. backfaceVisibility: hidden -> Prevents tearing during repaints.
-          3. p-1 -> Adds a tiny buffer to prevent margin collapsing which can also cause repaint errors.
-      */}
       <div 
         className="max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1"
-        style={{ 
-          transform: 'translate3d(0,0,0)', 
-          backfaceVisibility: 'hidden',
-          perspective: '1000px'
-        }}
+        style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden', perspective: '1000px' }}
       >
         <HeroSection resumeData={resumeData} />
         <ExperienceSection resumeData={resumeData} />
@@ -112,7 +124,12 @@ const Resume = () => {
         <BioSection />
       </div>
 
-      <MobileNav scrollToSection={scrollToSection} />
+      <MobileNav 
+        scrollToSection={scrollToSection} 
+        // Pass these if MobileNav handles the toggle button
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
     </>
   );
 };
