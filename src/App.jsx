@@ -10,7 +10,8 @@ import Home from './pages/Home';
 import Resume from './pages/Resume';
 import Projects from './pages/Projects';
 import Achievements from './pages/Achievements';
-import Game from './pages/Games'; // <--- Import Game Page
+import Game from './pages/Games';
+import './App.css';
 
 function App() {
   // Lifted State for Sidebar

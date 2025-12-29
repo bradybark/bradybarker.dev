@@ -19,8 +19,8 @@ body {
 
 .animate-float {
   animation: float 8s ease-in-out infinite;
-  /* REMOVED: will-change:BW transform; */
-  /* REMOVED: transform: translateZ(0); */
+  will-change: transform;
+  transform: translateZ(0); /* Hardware acceleration hint */
 }
 
 /* Breathing pulse for background glow */
@@ -31,8 +31,8 @@ body {
 
 .animate-pulse-slow {
   animation: pulse-slow 6s ease-in-out infinite;
-  /* REMOVED: will-change: opacity; */
-  /* REMOVED: transform: translateZ(0); */
+  will-change: opacity;
+  transform: translateZ(0); /* Hardware acceleration hint */
 }
 
 /* Shimmering gradient text effect */
