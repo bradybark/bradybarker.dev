@@ -1,8 +1,9 @@
 // src/pages/Achievements.jsx
 import React from 'react';
 import { Trophy, Lock, RotateCcw } from 'lucide-react';
-import toast from 'react-hot-toast'; 
-import { useAchievements, ACHIEVEMENTS } from '../context/AchievementContext';
+import toast from 'react-hot-toast';
+import { useAchievements } from '../hooks/useAchievements';
+import { ACHIEVEMENTS } from '../constants/achievements';
 
 const Achievements = () => {
   const { unlocked, resetAchievements } = useAchievements();

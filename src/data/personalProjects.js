@@ -24,27 +24,31 @@ export const personalProjects = [
     githubUrl: "https://github.com/bradybark/tim-and-lobo",
   },
   {
-    title: "Excel Dynamic Insights (EDI)",
-    description: "Streamlit-based Python app that helps you upload Excel/CSV files and instantly get data quality checks, quick stats, automated visuals, and AI-assisted takeaways.",
+    title: "Bark Budget",
+    description: "A full-stack personal finance tracker with serverless architecture, real-time expense management, and data visualization for tracking spending habits.",
     details: [
-      "Streamlit dashboard that auto-analyzes Excel/CSV with data quality checks and AI-driven insights.",
-      "Excel Dynamic Insights: a Python app blending statistical profiling with Gemini-powered narrative analysis.",
-      "Python-based Excel/CSV insights tool with automated health checks and smart visual discovery.",
-      "WIP: AI-assisted dataset audit and business summary tool for Excel and CSV files."
+      "Built with Next.js and deployed on Vercel with serverless API routes for expense CRUD operations.",
+      "Leverages Vercel KV (Redis) for fast, scalable data storage with sub-millisecond read times.",
+      "Interactive expense charts and spending analytics using Recharts for visual insights.",
+      "Real-time expense tracking with categorization, filtering, and monthly budget monitoring.",
+      "Responsive design optimized for mobile and desktop with Tailwind CSS styling.",
+      "RESTful API design with proper error handling and data validation."
     ],
-    tech: ["Data Engineering", "EDI Standards", "Python"],
-    githubUrl: "https://github.com/bradybark/EDI",
+    tech: ["Next.js", "Vercel", "Redis (KV)", "React", "Tailwind CSS", "Serverless"],
+    githubUrl: "https://github.com/bradybark/bark-budget",
   },
   {
     title: "bradybarker.dev",
-    description: "The source code for this portfolio website! Built with React and Tailwind CSS to showcase my professional experience and projects.",
+    description: "The source code for this portfolio website! A modern, interactive portfolio featuring gamification elements, thoughtful UX design, and optimized performance.",
     details: [
-      "Personal portfolio website built with React + Vite.",
-      "Source code for my personal portfolio and project showcase site.",
-      "Modern developer portfolio highlighting my data & analytics engineering work and projects.",
-      "Minimal, fast personal website for skills, experience, and featured builds."
+      "Achievement system with unlockable milestones and confetti celebrations to engage visitors.",
+      "Code-splitting and lazy loading for optimal performance with separate route bundles.",
+      "Custom error boundaries and loading states for graceful degradation and better UX.",
+      "Dark mode support with system preference detection and persistent theme state.",
+      "Interactive data visualizations using Recharts to showcase engineering impact metrics.",
+      "Hidden Easter egg game (Bug Zapper) discoverable through user exploration."
     ],
-    tech: ["React", "Tailwind CSS", "Vite", "Responsive Design"],
+    tech: ["React", "Tailwind CSS", "Vite", "React Router", "Recharts", "Canvas Confetti"],
     githubUrl: "https://github.com/bradybark/bradybarker.dev",
   }
 ];

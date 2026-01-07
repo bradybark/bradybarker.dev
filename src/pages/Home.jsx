@@ -1,8 +1,7 @@
 // src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, FolderGit2, FileText } from 'lucide-react'; // Changed icon
-import resumeData from '../data/resumeData';
+import { ChevronRight, FolderGit2, FileText } from 'lucide-react';
 
 const Home = () => {
   return (

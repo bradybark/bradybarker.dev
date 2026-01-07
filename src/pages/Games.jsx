@@ -1,16 +1,16 @@
 // src/pages/Games.jsx
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Bug, 
-  Zap, 
-  Code, 
-  Play, 
-  RotateCcw, 
-  Trophy, 
-  Timer, 
-  Star, 
-  Clock, 
-  AlertTriangle 
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import {
+  Bug,
+  Zap,
+  Code,
+  Play,
+  RotateCcw,
+  Trophy,
+  Timer,
+  Star,
+  Clock,
+  AlertTriangle
 } from 'lucide-react';
 
 const GRID_SIZE = 9; // 3x3 Grid
@@ -20,41 +20,37 @@ const Game = () => {
   const [gameState, setGameState] = useState('idle'); // idle, playing, gameover
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
-  
+
   // Track multiple active items on grid
-  const [activeItems, setActiveItems] = useState([]); 
-  
+  const [activeItems, setActiveItems] = useState([]);
+
   // Visual Feedback States
-  const [zappedIndices, setZappedIndices] = useState([]); 
-  
+  const [zappedIndices, setZappedIndices] = useState([]);
+
   // Refs
-  const gameStateRef = useRef('idle'); 
+  const gameStateRef = useRef('idle');
   const gameTimerRef = useRef(null);
   const spawnTimerRef = useRef(null);
+  const idCounterRef = useRef(0);
+  const spawnEntitiesRef = useRef();
 
   // --- Game Logic ---
 
-  const startGame = () => {
-    setScore(0);
-    setTimeLeft(GAME_DURATION);
-    setGameState('playing');
-    gameStateRef.current = 'playing';
-    setZappedIndices([]);
-    spawnEntities();
-  };
-
-  const spawnEntities = () => {
+  const spawnEntities = useCallback(() => {
     if (gameStateRef.current !== 'playing') return;
 
     setZappedIndices([]);
-    
+
     // 1. Determine how many BUGS to spawn
     let bugCount = 1;
-    if (timeLeft <= GAME_DURATION / 2) {
-      const rand = Math.random();
-      if (rand > 0.7) bugCount = 3;
-      else if (rand > 0.4) bugCount = 2;
-    }
+    setTimeLeft(currentTime => {
+      if (currentTime <= GAME_DURATION / 2) {
+        const rand = Math.random();
+        if (rand > 0.7) bugCount = 3;
+        else if (rand > 0.4) bugCount = 2;
+      }
+      return currentTime;
+    });
 
     const newItems = [];
     const usedIndices = new Set();
@@ -72,10 +68,10 @@ const Game = () => {
 
     // 2. Add Bugs
     for (let i = 0; i < bugCount; i++) {
-      newItems.push({ 
-        index: getUniqueIndex(), 
-        type: 'bug', 
-        id: Math.random() 
+      newItems.push({
+        index: getUniqueIndex(),
+        type: 'bug',
+        id: `bug-${++idCounterRef.current}`
       });
     }
 
@@ -85,54 +81,79 @@ const Game = () => {
       newItems.push({
         index: getUniqueIndex(),
         type,
-        id: Math.random()
+        id: `${type}-${++idCounterRef.current}`
       });
     }
 
     setActiveItems(newItems);
 
-    const speed = Math.max(800, 1500 - (score * 20));
-
-    clearTimeout(spawnTimerRef.current);
-    spawnTimerRef.current = setTimeout(spawnEntities, speed);
-  };
-
-  const handleWhack = (index) => {
-    if (gameStateRef.current !== 'playing') return;
-
-    const item = activeItems.find(i => i.index === index);
-    if (item) {
-      if (item.type === 'bug') {
-        setScore(s => s + 1);
-      } else if (item.type === 'star') {
-        setScore(s => s + 5);
-      } else if (item.type === 'time') {
-        setTimeLeft(t => t + 1);
-      }
-
-      setZappedIndices(prev => [...prev, index]);
-
-      const remaining = activeItems.filter(i => i.index !== index);
-      setActiveItems(remaining);
-
+    setScore(currentScore => {
+      const speed = Math.max(800, 1500 - (currentScore * 20));
       clearTimeout(spawnTimerRef.current);
-
-      if (remaining.length === 0) {
-        setTimeout(spawnEntities, 200); 
-      } else {
-        spawnTimerRef.current = setTimeout(spawnEntities, 1000); 
+      if (spawnEntitiesRef.current) {
+        spawnTimerRef.current = setTimeout(spawnEntitiesRef.current, speed);
       }
-    }
-  };
+      return currentScore;
+    });
+  }, []);
 
-  const endGame = () => {
+  // Keep ref in sync with latest function
+  useEffect(() => {
+    spawnEntitiesRef.current = spawnEntities;
+  }, [spawnEntities]);
+
+  const startGame = useCallback(() => {
+    setScore(0);
+    setTimeLeft(GAME_DURATION);
+    setGameState('playing');
+    gameStateRef.current = 'playing';
+    setZappedIndices([]);
+    idCounterRef.current = 0;
+    spawnEntities();
+  }, [spawnEntities]);
+
+  const endGame = useCallback(() => {
     setGameState('gameover');
     gameStateRef.current = 'gameover';
     setActiveItems([]);
     setZappedIndices([]);
     clearTimeout(spawnTimerRef.current);
     clearInterval(gameTimerRef.current);
-  };
+  }, []);
+
+  const handleWhack = useCallback((index) => {
+    if (gameStateRef.current !== 'playing') return;
+
+    setActiveItems(currentItems => {
+      const item = currentItems.find(i => i.index === index);
+      if (item) {
+        if (item.type === 'bug') {
+          setScore(s => s + 1);
+        } else if (item.type === 'star') {
+          setScore(s => s + 5);
+        } else if (item.type === 'time') {
+          setTimeLeft(t => t + 1);
+        }
+
+        setZappedIndices(prev => [...prev, index]);
+
+        const remaining = currentItems.filter(i => i.index !== index);
+
+        clearTimeout(spawnTimerRef.current);
+
+        if (spawnEntitiesRef.current) {
+          if (remaining.length === 0) {
+            setTimeout(spawnEntitiesRef.current, 200);
+          } else {
+            spawnTimerRef.current = setTimeout(spawnEntitiesRef.current, 1000);
+          }
+        }
+
+        return remaining;
+      }
+      return currentItems;
+    });
+  }, []);
 
   // --- Effects ---
 
@@ -149,7 +170,7 @@ const Game = () => {
       }, 1000);
     }
     return () => clearInterval(gameTimerRef.current);
-  }, [gameState]);
+  }, [gameState, endGame]);
 
   useEffect(() => {
     return () => {

@@ -1,27 +1,27 @@
 // src/pages/Projects.jsx
 import React from 'react';
-import { 
-  ArrowUpRight, 
-  Github, 
-  Code, 
-  Terminal, 
-  ChartNoAxesCombined, 
-  SquareTerminal, 
-  House, 
-  Package 
+import {
+  ArrowUpRight,
+  Github,
+  Code,
+  Terminal,
+  Wallet,
+  SquareTerminal,
+  House,
+  Package
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {
   switch (title) {
-    case "EDI":
-      return <ChartNoAxesCombined size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
-    case "Excel CLI":
+    case "Bark Budget":
+      return <Wallet size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+    case "Excel Tools (CLI)":
       return <SquareTerminal size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
     case "bradybarker.dev":
       return <House size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
-    case "Tim and Lobo":
+    case "Inventory Manager":
       return <Package size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
     default:
       return <Code size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;

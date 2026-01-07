@@ -1,7 +1,7 @@
 // src/components/sections/HeroSection.jsx
 import React, { useState } from 'react';
 import { MapPin, Mail, Download, Linkedin, Github, Check, Database, BarChart3, Server, Cloud } from 'lucide-react';
-import { useAchievements } from '../../context/AchievementContext';
+import { useAchievements } from '../../hooks/useAchievements';
 
 const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);

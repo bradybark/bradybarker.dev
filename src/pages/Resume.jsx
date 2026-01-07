@@ -1,8 +1,8 @@
 // src/pages/Resume.jsx
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
-import { useAchievements } from '../context/AchievementContext';
-import { useTheme } from '../context/ThemeContext';
+import { useAchievements } from '../hooks/useAchievements';
+import { useTheme } from '../hooks/useTheme';
 
 import resumeData, { MAIN_SECTIONS } from '../data/resumeData';
 import Sidebar from '../components/layout/Sidebar';
@@ -32,13 +32,13 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   useEffect(() => {
     unlockAchievement('visit-resume');
-  }, []);
+  }, [unlockAchievement]);
 
   useEffect(() => {
     if (showImpact) {
       unlockAchievement('open-impact');
     }
-  }, [showImpact]);
+  }, [showImpact, unlockAchievement]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

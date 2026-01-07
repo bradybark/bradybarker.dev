@@ -1,7 +1,8 @@
 // src/context/ThemeContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
-const ThemeContext = createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   // Check local storage or system preference on load
@@ -30,5 +31,3 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);

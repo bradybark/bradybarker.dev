@@ -1,18 +1,31 @@
 // src/App.jsx
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast'; // <--- Check this
+import { Toaster } from 'react-hot-toast';
 import { AchievementProvider } from './context/AchievementContext';
 import { ThemeProvider } from './context/ThemeContext';
-import './App.css'; 
+import './App.css';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import Home from './pages/Home';
-import Resume from './pages/Resume';
-import Projects from './pages/Projects';
-import Achievements from './pages/Achievements';
-import Game from './pages/Games';
+import ErrorBoundary from './components/common/ErrorBoundary';
+
+// Lazy load page components for code splitting
+const Home = lazy(() => import('./pages/Home'));
+const Resume = lazy(() => import('./pages/Resume'));
+const Projects = lazy(() => import('./pages/Projects'));
+const Achievements = lazy(() => import('./pages/Achievements'));
+const Game = lazy(() => import('./pages/Games'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-12 h-12 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+      <p className="text-slate-600 dark:text-slate-400">Loading...</p>
+    </div>
+  </div>
+);
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,29 +42,33 @@ function App() {
           />
 
           <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
-            <Navbar 
-              isSidebarOpen={isSidebarOpen} 
-              setIsSidebarOpen={setIsSidebarOpen} 
+            <Navbar
+              isSidebarOpen={isSidebarOpen}
+              setIsSidebarOpen={setIsSidebarOpen}
             />
-            
+
             <main className="flex-grow pt-16">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route 
-                  path="/resume" 
-                  element={
-                    <Resume 
-                      isSidebarOpen={isSidebarOpen} 
-                      setIsSidebarOpen={setIsSidebarOpen} 
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingFallback />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route
+                      path="/resume"
+                      element={
+                        <Resume
+                          isSidebarOpen={isSidebarOpen}
+                          setIsSidebarOpen={setIsSidebarOpen}
+                        />
+                      }
                     />
-                  } 
-                />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/achievements" element={<Achievements />} />
-                <Route path="/game" element={<Game />} />
-              </Routes>
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/achievements" element={<Achievements />} />
+                    <Route path="/game" element={<Game />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
             </main>
-            
+
             <Footer />
           </div>
         </AchievementProvider>

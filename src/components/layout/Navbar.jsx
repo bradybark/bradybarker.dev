@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon, FileText, FolderGit2 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAchievements } from '../../context/AchievementContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useAchievements } from '../../hooks/useAchievements';
+import { useTheme } from '../../hooks/useTheme';
 
 const CustomBBIcon = ({ size = 32 }) => (
   <span
