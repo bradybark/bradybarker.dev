@@ -14,7 +14,7 @@ const Footer = () => {
         {/* Static Tiny Link */}
         <Link
           to="/achievements"
-          className="text-[10px] uppercase tracking-[0.2em] text-neutral-700 hover:text-purple-400 transition-colors"
+          className="text-[10px] uppercase tracking-[0.2em] text-neutral-700 hover:text-neutral-400 transition-colors"
         >
           View Achievements
         </Link>

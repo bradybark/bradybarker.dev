@@ -183,9 +183,8 @@ const Game = () => {
 
       {/* Enhanced Galaxy/Star Background */}
       <div className="absolute inset-0 -z-10">
-        {/* Subtle gradient glow */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-[120px]" />
+        {/* Subtle neutral glow */}
+        <div className="absolute w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] rounded-full -top-32 -left-32 blur-3xl" />
 
         {/* Stars - More stars with various animations */}
         <div className="absolute top-[7%] left-[16%] w-1 h-1 bg-neutral-200/60 rounded-full animate-twinkle" />
@@ -205,10 +204,7 @@ const Game = () => {
         <div className="absolute top-[87%] left-[37%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full" />
         <div className="absolute top-[93%] left-[80%] w-1 h-1 bg-neutral-300/50 rounded-full animate-twinkle" />
 
-        {/* Purple accent stars */}
-        <div className="absolute top-[17%] left-[64%] w-1 h-1 bg-purple-400/30 rounded-full animate-pulse-slow" />
-        <div className="absolute top-[59%] left-[50%] w-0.5 h-0.5 bg-purple-300/25 rounded-full animate-twinkle" />
-        <div className="absolute top-[84%] left-[14%] w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-twinkle-slow" />
+        {/* Removed purple accent stars */}
 
         {/* Shooting stars - from random directions with randomized timing */}
         <div className="absolute top-[13%] right-[24%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star" style={{ animationDelay: '6.4s', animationDuration: '2.6s' }} />
@@ -219,7 +215,7 @@ const Game = () => {
 
       {/* Header */}
       <div className="text-center mb-4 space-y-2">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white flex items-center justify-center gap-3">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white flex items-center justify-center gap-3 font-display">
           <BugIcon size={32} className="text-red-500" />
           <span>Bug <span className="text-red-500">Zapper</span></span>
         </h1>
@@ -266,10 +262,10 @@ const Game = () => {
               <>
                 <TrophyIcon size={48} className="text-yellow-500 mb-4 animate-bounce" />
                 <h2 className="text-3xl font-bold text-white mb-2">Deployment Successful!</h2>
-                <p className="text-neutral-400 mb-6">Final Score: <span className="font-bold text-lg text-purple-400">{score}</span></p>
-                <button 
+                <p className="text-neutral-400 mb-6">Final Score: <span className="font-bold text-lg text-gradient-primary">{score}</span></p>
+                <button
                   onClick={startGame}
-                  className="flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white rounded-full font-bold transition-all hover:scale-105 shadow-lg shadow-purple-500/20"
+                  className="flex items-center gap-2 px-6 py-3 bg-neutral-200 hover:bg-white text-black rounded-sm font-bold font-mono transition-all shadow-lg shadow-neutral-200/20"
                 >
                   <RotateCcwIcon size={20} /> Play Again
                 </button>
@@ -279,9 +275,9 @@ const Game = () => {
                 <AlertTriangleIcon size={48} className="text-orange-500 mb-4" />
                 <h2 className="text-2xl font-bold text-white mb-2">Start Sprint?</h2>
                 <p className="text-neutral-400 mb-6">Squash bugs before the deadline.</p>
-                <button 
+                <button
                   onClick={startGame}
-                  className="flex items-center gap-2 px-8 py-4 bg-purple-500 hover:bg-purple-400 text-white rounded-full font-bold text-lg transition-all hover:scale-105 shadow-lg shadow-purple-500/20"
+                  className="flex items-center gap-2 px-8 py-4 bg-neutral-200 hover:bg-white text-black rounded-sm font-bold text-lg font-mono transition-all shadow-lg shadow-neutral-200/20"
                 >
                   <PlayIcon size={20} /> Start Game
                 </button>

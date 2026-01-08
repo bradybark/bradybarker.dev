@@ -15,7 +15,7 @@ const MiniGalaxy = () => {
     return Array.from({ length: count }).map((_, i) => {
       const angle = Math.random() * 2 * Math.PI;
       const radius = Math.random() * (maxRadius - minRadius) + minRadius;
-      
+
       const top = 50 + (Math.sin(angle) * radius * 50);
       const left = 50 + (Math.cos(angle) * radius * 50);
 
@@ -24,67 +24,44 @@ const MiniGalaxy = () => {
         top: `${top}%`,
         left: `${left}%`,
         size: Math.random() * (maxSize - minSize) + minSize,
-        opacity: Math.random() * 0.5 + 0.3,
+        // Reduced opacity by 40% for more subtle appearance
+        opacity: (Math.random() * 0.5 + 0.3) * 0.6,
       };
     });
   };
 
-  // Ring 1: Inner Core (Dense, Fast)
-  const innerRing = useMemo(() => generateRing(60, 1, 2.5, 0.1, 0.4), []);
-  // Ring 2: Mid Section (Medium Speed)
-  const midRing = useMemo(() => generateRing(45, 1.5, 3, 0.4, 0.75), []);
-  // Ring 3: Outer Edge (Slow)
-  const outerRing = useMemo(() => generateRing(40, 2, 4, 0.7, 1.0), []);
-  
-  // Ring 4: Background Field (Massive, covers entire page, rotates in sync)
-  // Starts at 0.5 (overlapping) and goes to 2.2 (far outside the container)
-  const backgroundRing = useMemo(() => generateRing(120, 1, 2, 0.5, 2.2), []);
+  // Ring 1: Inner Core (Reduced from 60 to 40 stars)
+  const innerRing = useMemo(() => generateRing(40, 1, 2.5, 0.1, 0.4), []);
+  // Ring 2: Mid Section (Reduced from 45 to 35 stars)
+  const midRing = useMemo(() => generateRing(35, 1.5, 3, 0.4, 0.75), []);
+  // Ring 3: Background Field (Reduced from 120 to 50 stars, removed outer ring for simpler look)
+  const backgroundRing = useMemo(() => generateRing(50, 1, 2, 0.5, 2.2), []);
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-      
-      {/* 1. EXPANDED MASK 
-          Fade out extremely far from center to avoid hard edges on the massive container 
-      */}
+
+      {/* EXPANDED MASK - Fade out from center for smooth appearance */}
       <div className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)]">
-        
-        {/* Background Ring - Rotates in sync (slowest layer for parallax depth) */}
-        <div className="absolute inset-0 animate-[spin_180s_linear_infinite]">
+
+        {/* Background Ring - Slowest rotation (240s instead of 180s) */}
+        <div className="absolute inset-0 animate-[spin_240s_linear_infinite]">
           {backgroundRing.map((star) => (
             <div
               key={`bg-${star.id}`}
-              className="absolute bg-neutral-600/30 rounded-full blur-[0.5px]"
+              className="absolute bg-neutral-600/20 rounded-full"
               style={{
                 top: star.top,
                 left: star.left,
                 width: `${star.size}px`,
                 height: `${star.size}px`,
-                // Lower opacity for background stars to not distract from text
-                opacity: star.opacity * 0.4, 
+                opacity: star.opacity * 0.4,
               }}
             />
           ))}
         </div>
 
-        {/* Outer Ring - 120s rotation */}
-        <div className="absolute inset-0 animate-[spin_120s_linear_infinite]">
-          {outerRing.map((star) => (
-            <div
-              key={`outer-${star.id}`}
-              className="absolute bg-neutral-400 rounded-full blur-[0.5px]"
-              style={{
-                top: star.top,
-                left: star.left,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                opacity: star.opacity,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Mid Ring - 90s rotation (Reverse) */}
-        <div className="absolute inset-[15%] animate-[spin_90s_linear_infinite] direction-reverse">
+        {/* Mid Ring - Slower rotation (120s instead of 90s, Reverse) */}
+        <div className="absolute inset-[15%] animate-[spin_120s_linear_infinite] direction-reverse">
           {midRing.map((star) => (
             <div
               key={`mid-${star.id}`}
@@ -100,12 +77,12 @@ const MiniGalaxy = () => {
           ))}
         </div>
 
-        {/* Inner Ring - 50s rotation */}
-        <div className="absolute inset-[25%] animate-[spin_50s_linear_infinite]">
+        {/* Inner Ring - Slower rotation (70s instead of 50s) */}
+        <div className="absolute inset-[25%] animate-[spin_70s_linear_infinite]">
           {innerRing.map((star) => (
             <div
               key={`inner-${star.id}`}
-              className="absolute bg-purple-300 rounded-full shadow-[0_0_4px_rgba(168,85,247,0.5)]"
+              className="absolute bg-neutral-300 rounded-full shadow-[0_0_3px_rgba(255,255,255,0.2)]"
               style={{
                 top: star.top,
                 left: star.left,
@@ -118,11 +95,8 @@ const MiniGalaxy = () => {
         </div>
       </div>
 
-      {/* 2. LIGHT SOURCE 
-          Standard Size for the visual anchor
-      */}
-      <div className="absolute w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15)_0%,transparent_70%)] blur-3xl mix-blend-screen animate-pulse-slow" />
-      <div className="absolute w-[200px] h-[200px] bg-[radial-gradient(circle_at_center,rgba(129,140,248,0.2)_0%,transparent_60%)] blur-2xl mix-blend-screen" />
+      {/* LIGHT SOURCE - Neutralized glows */}
+      <div className="absolute w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] blur-3xl mix-blend-screen animate-pulse-slow" />
     </div>
   );
 };
@@ -139,89 +113,118 @@ const HeroSection = ({ resumeData }) => {
   };
 
   return (
-    <section id="hero" className="flex flex-col lg:flex-row items-center justify-center gap-16 min-h-[60vh] scroll-mt-32">
-      
-      {/* Content Side - z-10 ensures text is clickable over the background stars */}
-      <div className="flex-1 space-y-6 animate-fade-in-up text-left max-w-xl z-10 relative">
-        
-        <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold tracking-wide uppercase">
-            Data & Analytics Engineer
-          </div>
-          <div className="flex items-center gap-2 text-sm font-medium text-neutral-500">
-            <MapPinIcon size={16} />
-            {resumeData.personalInfo.location}
-          </div>
+    <section id="hero" className="min-h-[70vh] scroll-mt-32 relative">
+
+      {/* Galaxy Background with Overlay */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0">
+          <MiniGalaxy />
         </div>
-
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-tight">
-          Data Driven. <br />
-          <span className="text-purple-400">
-            Cloud Native.
-          </span>
-        </h1>
-
-        <p className="text-lg text-neutral-400 leading-relaxed">
-          {resumeData.personalInfo.bio}
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 pt-2">
-          {/* Email Button */}
-          <a
-            onClick={handleCopyEmail}
-            className={`px-6 py-3 rounded-lg font-medium transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer min-w-[170px]
-              ${isCopied
-                ? 'bg-green-600 hover:bg-green-700 text-white shadow-green-600/20'
-                : 'bg-purple-500 hover:bg-purple-400 text-white shadow-purple-500/20 hover:shadow-purple-500/40'
-              }
-            `}
-          >
-            {isCopied ? <CheckIcon size={18} /> : <MailIcon size={18} />}
-            {isCopied ? "Email Copied!" : "Contact Me"}
-          </a>
-          
-          {/* Resume Button */}
-          <a
-            href="/Brady_Barker_Resume.pdf"
-            download="Brady_Barker_Resume.pdf"
-            onClick={() => unlockAchievement('download-resume')}
-            className="px-6 py-3 border border-neutral-800 hover:bg-neutral-800 rounded-lg font-medium transition-all flex items-center gap-2 text-neutral-300 cursor-pointer"
-          >
-            <DownloadIcon size={18} /> Resume
-          </a>
-
-          <div className="flex gap-3 pl-2 border-l border-neutral-800 ml-2">
-            {/* LinkedIn */}
-            <a
-              href={resumeData.personalInfo.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => unlockAchievement('click-linkedin')}
-              className="p-2 rounded-full hover:bg-neutral-800 text-neutral-400 hover:text-purple-400 transition-colors"
-            >
-              <LinkedinIcon size={25} />
-            </a>
-            {/* GitHub */}
-            <a
-              href={resumeData.personalInfo.github}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => unlockAchievement('click-github')}
-              className="p-2 rounded-full hover:bg-neutral-800 text-neutral-400 hover:text-purple-400 transition-colors"
-            >
-              <GithubIcon size={25} />
-            </a>
-          </div>
-        </div>
+        {/* Subtle dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
       </div>
 
-      {/* Structural Anchor with Massive Overflow
-          Container is 2000px wide/tall to ensure stars cover the whole screen.
-          Positioned centrally in the right-side anchor.
-      */}
-      <div className="hidden lg:flex w-72 h-72 relative shrink-0 items-center justify-center pointer-events-none">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[2000px] h-[2000px]">
-           <MiniGalaxy />
+      {/* Main Content */}
+      <div className="relative">
+        <div className="px-8 py-16 md:px-12 md:py-20 relative">
+
+          <div className="max-w-4xl space-y-10 relative z-10">
+
+            {/* Hook - Attention Grabber */}
+            <div className="space-y-6">
+              {/* Main Headline with staggered animation */}
+              <div className="relative overflow-hidden">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display">
+                  <span className="inline-block text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
+                    The New Standard
+                  </span>
+                </h1>
+              </div>
+
+              {/* Tagline with animation */}
+              <div className="relative animate-slide-up-fade" style={{ animationDelay: '0.5s' }}>
+                <p className="text-2xl md:text-3xl font-light text-neutral-400 tracking-wider font-mono">
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>Ingest.</span>
+                  {' '}
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.9s' }}>Transform.</span>
+                  {' '}
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '1.1s' }}>Visualize.</span>
+                </p>
+              </div>
+
+              {/* Name and Location */}
+              <div className="flex items-center gap-3 text-sm font-mono text-neutral-400 animate-slide-up-fade" style={{ animationDelay: '1.3s' }}>
+                <div className="h-px w-12 bg-gradient-to-r from-neutral-400/60 to-transparent" />
+                <span className="text-white font-semibold">{resumeData.personalInfo.name}</span>
+                <span className="text-neutral-600">▪</span>
+                <div className="flex items-center gap-1.5 text-neutral-500">
+                  <MapPinIcon size={14} />
+                  {resumeData.personalInfo.location}
+                </div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-400/20 to-transparent" />
+              </div>
+            </div>
+
+            {/* Bio */}
+            <div className="max-w-2xl animate-slide-up-fade" style={{ animationDelay: '1.5s' }}>
+              <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
+                {resumeData.personalInfo.bio}
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-2 animate-slide-up-fade" style={{ animationDelay: '1.7s' }}>
+              {/* Email Button */}
+              <button
+                onClick={handleCopyEmail}
+                className={`px-5 py-2.5 rounded-sm font-medium font-mono transition-all flex items-center justify-center gap-2 cursor-pointer border
+                  ${isCopied
+                    ? 'bg-neutral-950/80 border-neutral-700/80 text-white'
+                    : 'bg-black/60 border-neutral-800/80 text-neutral-300 hover:text-white hover:border-neutral-600 shadow-[0_0_15px_rgba(0,0,0,0.5)]'
+                  }
+                `}
+              >
+                {isCopied ? <CheckIcon size={18} /> : <MailIcon size={18} />}
+                {isCopied ? "Email Copied!" : "Contact Me"}
+              </button>
+
+              {/* Resume Button */}
+              <a
+                href="/Brady_Barker_Resume.pdf"
+                download="Brady_Barker_Resume.pdf"
+                onClick={() => unlockAchievement('download-resume')}
+                className="px-5 py-2.5 bg-black/60 border border-neutral-800/80 hover:border-neutral-600 rounded-sm font-medium font-mono transition-all flex items-center gap-2 text-neutral-300 hover:text-white cursor-pointer shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+              >
+                <DownloadIcon size={18} /> Resume
+              </a>
+
+              {/* Social Links */}
+              <div className="flex gap-2 pl-3 border-l border-neutral-800/80 ml-1">
+                {/* LinkedIn */}
+                <a
+                  href={resumeData.personalInfo.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => unlockAchievement('click-linkedin')}
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  title="LinkedIn"
+                >
+                  <LinkedinIcon size={20} />
+                </a>
+                {/* GitHub */}
+                <a
+                  href={resumeData.personalInfo.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => unlockAchievement('click-github')}
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  title="GitHub"
+                >
+                  <GithubIcon size={20} />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

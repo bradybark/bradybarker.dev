@@ -3,77 +3,79 @@ import React from 'react';
 import GraduationCapIcon from '../icons/GraduationCapIcon';
 import UsersIcon from '../icons/UsersIcon';
 import AwardIcon from '../icons/AwardIcon';
-import ChevronRightIcon from '../icons/ChevronRightIcon';
 
 const EducationAndCommunitySection = ({ resumeData }) => (
-  <section id="education" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-3 gap-12">
-    <div>
-      <div className="flex items-center justify-center gap-3 mb-8">
-        <GraduationCapIcon className="text-purple-400" size={24} />
-        <h2 className="text-2xl font-bold text-center">Education</h2>
+  <section id="education" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* Education */}
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+      <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern">
+        <h2 className="text-base font-semibold text-white tracking-tight font-mono">Education</h2>
       </div>
-      <div className="space-y-6">
+      <div className="px-6 py-5 space-y-5 bg-dot-pattern">
         {resumeData.education.map((edu, idx) => (
-          <div
-            key={idx}
-            className="group pl-4 border-l-2 border-neutral-800 hover:border-purple-500/30 transition-colors"
-          >
-            <h3 className="font-bold text-white">{edu.school}</h3>
-            <div className="text-purple-400 font-medium text-sm">
+          <div key={idx}>
+            <h3 className="font-semibold text-white text-sm">{edu.school}</h3>
+            <div className="text-neutral-400 text-xs mt-1">
               {edu.degree}
             </div>
-            <div className="flex justify-between items-center text-sm text-neutral-500 mt-1">
-              <span>{edu.location}</span> <span>{edu.year}</span>
+            <div className="flex justify-between items-center text-xs text-neutral-500 mt-1.5">
+              <span>{edu.location}</span>
+              <span className="font-mono">{edu.year}</span>
             </div>
+            {idx !== resumeData.education.length - 1 && (
+              <div className="mt-5 border-b border-neutral-800/30" />
+            )}
           </div>
         ))}
       </div>
     </div>
 
-    <div>
-      <div className="flex items-center justify-center gap-3 mb-8">
-        <UsersIcon className="text-neutral-400" size={24} />
-        <h2 className="text-2xl font-bold text-center">Leadership</h2>
+    {/* Leadership */}
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+      <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines">
+        <h2 className="text-base font-semibold text-white tracking-tight font-mono">Leadership</h2>
       </div>
-      <div className="space-y-6">
+      <div className="px-6 py-5 space-y-5 bg-circuit-pattern">
         {resumeData.leadership.map((lead, idx) => (
-          <div
-            key={idx}
-            className="group pl-4 border-l-2 border-neutral-800 hover:border-purple-500/30 transition-colors"
-          >
-            <h3 className="font-bold text-white">{lead.role}</h3>
-            <div className="text-purple-400 font-medium text-sm">
+          <div key={idx}>
+            <h3 className="font-semibold text-white text-sm">{lead.role}</h3>
+            <div className="text-neutral-400 text-xs mt-1">
               {lead.org}
             </div>
-            <p className="text-sm text-neutral-400 mt-2 leading-relaxed">
+            <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
               {lead.description}
             </p>
+            {idx !== resumeData.leadership.length - 1 && (
+              <div className="mt-5 border-b border-neutral-800/30" />
+            )}
           </div>
         ))}
-        <div className="group pl-4 border-l-2 border-neutral-800 hover:border-purple-500/30 transition-colors">
-          <h3 className="font-bold text-white">Community & Activities</h3>
-          <div className="text-sm text-neutral-400 mt-2 leading-relaxed">
-            {resumeData.activities.join(' • ')}
+        <div>
+          <div className="border-t border-neutral-800/30 pt-5">
+            <h3 className="font-semibold text-white text-sm mb-2">Community & Activities</h3>
+            <div className="text-xs text-neutral-500 leading-relaxed">
+              {resumeData.activities.join(' • ')}
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div>
-      <div className="flex items-center justify-center gap-3 mb-8">
-        <AwardIcon className="text-purple-600" size={24} />
-        <h2 className="text-2xl font-bold text-center">Awards</h2>
+    {/* Awards */}
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+      <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern">
+        <h2 className="text-base font-semibold text-white tracking-tight font-mono">Awards</h2>
       </div>
-      <ul className="space-y-4 text-left">
-        {resumeData.awards.map((award, idx) => (
-          <li
-            key={idx}
-            className="flex items-start gap-2 text-sm text-neutral-300"
-          >
-            <ChevronRightIcon size={18} className="text-purple-500 shrink-0 mt-0.5" /> {award}
-          </li>
-        ))}
-      </ul>
+      <div className="px-6 py-5 bg-dot-pattern">
+        <ul className="space-y-3">
+          {resumeData.awards.map((award, idx) => (
+            <li key={idx} className="flex items-start gap-2.5 text-xs text-neutral-300 leading-relaxed">
+              <span className="w-1 h-1 rounded-full bg-neutral-400/50 mt-1.5 shrink-0"></span>
+              <span>{award}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 );

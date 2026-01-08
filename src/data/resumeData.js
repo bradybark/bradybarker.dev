@@ -8,6 +8,7 @@ import {
   Terminal,
   Cloud,
   Database,
+  TrendingUp,
   // New icons for Impact Section
   Zap,
   Users,
@@ -172,7 +173,7 @@ export const SIDE_NAV_ITEMS = [
   { id: 'projects', label: 'Key Projects', icon: Gem },
   { id: 'skills', label: 'Skills', icon: Cpu },
   { id: 'education', label: 'Education', icon: GraduationCap },
-  { id: 'bio', label: 'About Me', icon: User },
+  { id: 'bio', label: 'Personal Interests', icon: User },
 ];
 
 export const MOBILE_NAV_ITEMS = [
@@ -180,7 +181,7 @@ export const MOBILE_NAV_ITEMS = [
   { id: 'projects', label: 'Projects', icon: Gem },
   { id: 'skills', label: 'Skills', icon: Cpu },
   { id: 'education', label: 'Edu.', icon: GraduationCap },
-  { id: 'bio', label: 'Bio', icon: User },
+  { id: 'bio', label: 'Interests', icon: User },
 ];
 
 export default resumeData;

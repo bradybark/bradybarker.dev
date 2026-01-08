@@ -20,16 +20,16 @@ const Achievements = () => {
     toast.custom((t) => (
       <div className={`${
         t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-white dark:bg-neutral-900 shadow-2xl rounded-2xl pointer-events-auto flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800 ring-1 ring-black/5`}>
-        
+      } max-w-md w-full bg-neutral-950 shadow-[0_0_25px_rgba(0,0,0,0.5)] rounded-sm pointer-events-auto flex flex-col overflow-hidden border border-neutral-800/80`}>
+
         {/* Header / Content */}
         <div className="p-6">
           <div className="flex items-start gap-4">
-            <div className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-500 p-3 rounded-xl shrink-0">
+            <div className="bg-black/60 text-red-500 p-3 rounded-sm border border-red-500/40 shrink-0">
               <RotateCcwIcon size={24} />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-white leading-tight">
+              <h3 className="text-lg font-bold text-white leading-tight font-mono">
                 Reset All Progress?
               </h3>
               <p className="mt-2 text-sm text-neutral-400">
@@ -39,28 +39,28 @@ const Achievements = () => {
           </div>
         </div>
 
-        {/* Action Buttons - UPDATED: justify-between separates them */}
-        <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+        {/* Action Buttons */}
+        <div className="bg-black/40 px-6 py-4 flex items-center justify-between border-t border-neutral-800/80">
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="px-4 py-2 text-sm font-semibold text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-semibold font-mono text-neutral-400 hover:text-white hover:bg-black/60 rounded-sm transition-colors border border-transparent hover:border-neutral-800/80"
           >
             Cancel
           </button>
           <button
             onClick={() => {
               toast.dismiss(t.id);
-              resetAchievements(); 
+              resetAchievements();
             }}
-            className="px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-lg shadow-red-600/20 transition-all transform active:scale-95"
+            className="px-4 py-2 text-sm font-bold font-mono text-white bg-red-600/80 hover:bg-red-600 rounded-sm border border-red-500/40 shadow-[0_0_15px_rgba(220,38,38,0.3)] transition-all transform active:scale-95"
           >
             Yes, Reset Everything
           </button>
         </div>
       </div>
-    ), { 
-      duration: Infinity, 
-      position: 'top-center' 
+    ), {
+      duration: Infinity,
+      position: 'top-center'
     });
   };
 
@@ -69,9 +69,8 @@ const Achievements = () => {
 
       {/* Enhanced Galaxy/Star Background */}
       <div className="absolute inset-0 -z-10">
-        {/* Subtle gradient glow */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-[120px]" />
+        {/* Subtle neutral glow */}
+        <div className="absolute w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] rounded-full -top-32 -left-32 blur-3xl" />
 
         {/* Stars - More stars with various animations */}
         <div className="absolute top-[6%] left-[15%] w-1 h-1 bg-neutral-200/60 rounded-full animate-twinkle" />
@@ -91,10 +90,7 @@ const Achievements = () => {
         <div className="absolute top-[86%] left-[35%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full" />
         <div className="absolute top-[94%] left-[78%] w-1 h-1 bg-neutral-300/50 rounded-full animate-twinkle" />
 
-        {/* Purple accent stars */}
-        <div className="absolute top-[16%] left-[62%] w-1 h-1 bg-purple-400/30 rounded-full animate-pulse-slow" />
-        <div className="absolute top-[56%] left-[38%] w-0.5 h-0.5 bg-purple-300/25 rounded-full animate-twinkle" />
-        <div className="absolute top-[88%] left-[18%] w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-twinkle-slow" />
+        {/* Removed purple accent stars */}
 
         {/* Shooting stars - from random directions with randomized timing */}
         <div className="absolute top-[14%] right-[22%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star" style={{ animationDelay: '5.3s', animationDuration: '2.7s' }} />
@@ -105,7 +101,7 @@ const Achievements = () => {
 
       {/* Header Section */}
       <div className="text-center mb-12 animate-fade-in-up">
-        <h1 className="text-4xl font-extrabold text-white mb-4">
+        <h1 className="text-4xl font-bold text-white mb-4 font-display">
           Achievements
         </h1>
         <p className="text-neutral-400 max-w-2xl mx-auto mb-8">
@@ -113,12 +109,12 @@ const Achievements = () => {
         </p>
 
         {/* Progress Bar */}
-        <div className="bg-neutral-800 rounded-full h-6 w-full max-w-md mx-auto relative overflow-hidden shadow-inner">
-          <div 
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-1000 ease-out"
+        <div className="bg-black/60 border border-neutral-800/80 rounded-sm h-6 w-full max-w-md mx-auto relative overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <div
+            className="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-1000 ease-out"
             style={{ width: `${percentage}%` }}
           />
-          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-md">
+          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white font-mono">
             {count} / {total} Unlocked ({percentage}%)
           </div>
         </div>
@@ -132,26 +128,26 @@ const Achievements = () => {
           const isCompletionist = achievement.id === 'completionist';
 
           return (
-            <div 
+            <div
               key={achievement.id}
               className={`
-                relative p-6 rounded-2xl border transition-all duration-300
+                relative p-6 rounded-sm border transition-all duration-300
                 flex flex-col items-center text-center gap-4 group
                 ${isCompletionist ? 'sm:col-span-2 md:col-span-1 md:col-start-2' : ''}
-                ${isUnlocked 
-                  ? isCompletionist 
-                    ? 'bg-gradient-to-b from-yellow-50 to-white dark:from-yellow-900/20 dark:to-neutral-900 border-yellow-400 shadow-lg shadow-yellow-500/20'
-                    : 'bg-white dark:bg-neutral-900 border-yellow-400/50 shadow-lg shadow-yellow-400/10 scale-100 opacity-100' 
-                  : 'bg-neutral-900/50 border-neutral-800 opacity-70 grayscale hover:grayscale-0 hover:opacity-100'
+                ${isUnlocked
+                  ? isCompletionist
+                    ? 'bg-black/60 border-green-400/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]'
+                    : 'bg-black/40 border-green-400/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] scale-100 opacity-100'
+                  : 'bg-black/20 border-neutral-800/80 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 hover:border-neutral-800'
                 }
               `}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className={`
-                w-16 h-16 rounded-full flex items-center justify-center mb-2 shadow-inner
-                ${isUnlocked 
-                  ? 'bg-gradient-to-br from-yellow-300 to-yellow-500 text-white shadow-yellow-500/50' 
-                  : 'bg-neutral-700 text-neutral-400'
+                w-16 h-16 rounded-sm flex items-center justify-center mb-2 border
+                ${isUnlocked
+                  ? 'bg-black/60 border-green-400/40 text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.3)]'
+                  : 'bg-black/40 border-neutral-800/80 text-neutral-600'
                 }
               `}>
                 {isUnlocked ? (
@@ -163,25 +159,25 @@ const Achievements = () => {
 
               <div>
                 <h3 className={`
-                  font-bold text-lg mb-1
-                  ${isUnlocked ? 'text-white' : 'text-neutral-400'}
+                  font-bold text-lg mb-1 font-mono
+                  ${isUnlocked ? 'text-white' : 'text-neutral-500'}
                 `}>
                   {isSecret ? '???' : achievement.title}
                 </h3>
-                
+
                 <p className={`
                   text-sm leading-relaxed
-                  ${isUnlocked ? 'text-neutral-300' : 'text-neutral-500'}
+                  ${isUnlocked ? 'text-neutral-300' : 'text-neutral-600'}
                 `}>
                   {isSecret ? 'Hidden Achievement' : achievement.description}
                 </p>
               </div>
 
               <div className={`
-                mt-auto text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-full border
-                ${isUnlocked 
-                  ? 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800' 
-                  : 'bg-neutral-800 text-neutral-400 border-neutral-700'
+                mt-auto text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-sm border font-mono
+                ${isUnlocked
+                  ? 'bg-black/60 text-green-400 border-green-400/40'
+                  : 'bg-black/40 text-neutral-500 border-neutral-800/80'
                 }
               `}>
                 {isUnlocked ? 'Unlocked' : 'Locked'}
@@ -195,7 +191,7 @@ const Achievements = () => {
       <div className="mt-auto flex justify-center pb-8 opacity-40 hover:opacity-100 transition-opacity">
         <button
           onClick={handleResetClick}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest font-mono text-red-500 hover:bg-black/40 hover:border-red-500/40 rounded-sm transition-colors border border-transparent"
         >
           <RotateCcwIcon size={14} />
           Reset Progress

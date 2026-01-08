@@ -9,11 +9,12 @@ import FolderIcon from '../icons/FolderIcon';
 
 const CustomBBIcon = ({ size = 32 }) => (
   <span
-    className="inline-flex items-center justify-center font-extrabold rounded-full text-white bg-purple-500 select-none transition-all active:scale-95 hover:bg-purple-400"
+    className="inline-flex items-center justify-center font-bold rounded-sm text-white bg-black border border-neutral-800/80 select-none transition-all active:scale-95 hover:border-neutral-600 font-mono shadow-[0_0_10px_rgba(0,0,0,0.5)]"
     style={{
       width: size,
       height: size,
-      fontSize: size * 0.48,
+      fontSize: size * 0.42,
+      letterSpacing: '-0.05em',
     }}
   >
     bb
@@ -79,7 +80,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 <CustomBBIcon size={32} />
               </div>
 
-              <Link to="/" className="text-lg md:text-xl font-bold text-white">
+              <Link to="/" className="text-lg md:text-xl font-bold text-white font-display">
                 Brady Barker
               </Link>
             </div>
@@ -90,10 +91,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <Link
               to="/resume"
               onClick={() => unlockAchievement('visit-resume')}
-              className={`hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
                 location.pathname === '/resume'
-                  ? 'text-purple-400 bg-neutral-900'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
+                  ? 'text-white active'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
               <FileTextIcon size={18} /> Resume
@@ -102,10 +103,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <Link
               to="/projects"
               onClick={() => unlockAchievement('click-projects')}
-              className={`hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
                 location.pathname === '/projects'
-                  ? 'text-purple-400 bg-neutral-900'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
+                  ? 'text-white active'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
               <FolderIcon size={18} /> Projects

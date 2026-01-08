@@ -61,19 +61,19 @@ export const AchievementProvider = ({ children }) => {
         }}
       >
         <div className={`
-          flex items-start gap-4 p-4 rounded-xl shadow-2xl border transition-colors duration-300
-          ${isGold 
-            ? 'bg-gradient-to-r from-yellow-200 via-yellow-50 to-yellow-200 border-yellow-400 text-yellow-900 shadow-yellow-500/50' 
-            : 'bg-white text-slate-900 border-slate-200 dark:bg-slate-900 dark:text-white dark:border-slate-700 shadow-lg'
+          flex items-start gap-4 p-4 rounded-sm shadow-2xl border transition-colors duration-300 corner-brackets
+          ${isGold
+            ? 'bg-gradient-to-r from-yellow-900/90 via-yellow-950/90 to-yellow-900/90 border-yellow-600/50 text-yellow-100 shadow-yellow-600/30 backdrop-blur-sm'
+            : 'bg-black/90 text-white border-green-500/40 shadow-lg shadow-green-500/10 backdrop-blur-sm'
           }
         `}>
           <div className={`
-            p-3 rounded-lg shrink-0
-            ${isGold 
-              ? 'bg-yellow-400 text-white animate-pulse' 
-              : isReset 
-                ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-500' 
-                : 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-500'
+            p-3 rounded-sm shrink-0
+            ${isGold
+              ? 'bg-yellow-600 text-yellow-50 animate-pulse'
+              : isReset
+                ? 'bg-red-900/50 text-red-400 border border-red-800/50'
+                : 'bg-green-950/50 text-green-400 border border-green-500/40'
             }
           `}>
             {isReset ? <RotateCcw size={24} /> : <Trophy size={24} strokeWidth={2.5} />}
@@ -81,17 +81,17 @@ export const AchievementProvider = ({ children }) => {
 
           <div className="flex-1 min-w-0">
             <h4 className={`
-              font-extrabold text-xs uppercase tracking-widest mb-1
-              ${isGold ? 'text-yellow-800' : 'text-slate-500 dark:text-slate-400'}
+              font-extrabold text-xs uppercase tracking-widest mb-1 font-mono
+              ${isGold ? 'text-yellow-400' : 'text-green-500/70'}
             `}>
               {isGold ? 'ULTIMATE UNLOCK' : (isReset ? 'System' : 'Achievement Unlocked')}
             </h4>
-            <p className="font-bold text-lg leading-tight truncate">
+            <p className={`font-bold text-lg leading-tight truncate ${isGold ? 'text-gradient-primary' : ''}`}>
               {achievement.title}
             </p>
             <p className={`
               text-sm mt-1 leading-snug
-              ${isGold ? 'text-yellow-800/80' : 'text-slate-500 dark:text-slate-400'}
+              ${isGold ? 'text-yellow-200/80' : 'text-neutral-400'}
             `}>
               {achievement.description}
             </p>
@@ -104,7 +104,7 @@ export const AchievementProvider = ({ children }) => {
             }}
             className={`
               p-1 transition-colors
-              ${isGold ? 'text-yellow-700 hover:text-yellow-900' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300'}
+              ${isGold ? 'text-yellow-400 hover:text-yellow-300' : 'text-neutral-500 hover:text-neutral-300'}
             `}
           >
             <X size={18} />

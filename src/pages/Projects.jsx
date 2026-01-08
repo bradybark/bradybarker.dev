@@ -14,18 +14,18 @@ import TerminalIcon from '../components/icons/TerminalIcon';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {
-  const iconClass = "text-neutral-500";
+  const iconClass = "text-neutral-400";
   switch (title) {
     case "Bark Budget":
-      return <Wallet size={24} className={iconClass} />;
+      return <Wallet size={20} className={iconClass} />;
     case "Excel Tools (CLI)":
-      return <SquareTerminal size={24} className={iconClass} />;
+      return <SquareTerminal size={20} className={iconClass} />;
     case "bradybarker.dev":
-      return <House size={24} className={iconClass} />;
+      return <House size={20} className={iconClass} />;
     case "Inventory Manager":
-      return <Package size={24} className={iconClass} />;
+      return <Package size={20} className={iconClass} />;
     default:
-      return <Code size={24} className={iconClass} />;
+      return <Code size={20} className={iconClass} />;
   }
 };
 
@@ -36,8 +36,7 @@ const Projects = () => {
       {/* Enhanced Galaxy/Star Background */}
       <div className="absolute inset-0 -z-10">
         {/* Subtle gradient glow */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-[120px]" />
+        <div className="absolute w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] rounded-full -top-32 -left-32 blur-3xl" />
 
         {/* Stars - More stars with various animations */}
         <div className="absolute top-[8%] left-[18%] w-1 h-1 bg-neutral-200/60 rounded-full animate-twinkle" />
@@ -58,9 +57,6 @@ const Projects = () => {
         <div className="absolute top-[92%] left-[85%] w-1 h-1 bg-neutral-300/50 rounded-full animate-twinkle" />
 
         {/* Purple accent stars */}
-        <div className="absolute top-[18%] left-[58%] w-1 h-1 bg-purple-400/30 rounded-full animate-pulse-slow" />
-        <div className="absolute top-[58%] left-[48%] w-0.5 h-0.5 bg-purple-300/25 rounded-full animate-twinkle" />
-        <div className="absolute top-[85%] left-[12%] w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-twinkle-slow" />
 
         {/* Shooting stars - from random directions with randomized timing */}
         <div className="absolute top-[12%] right-[18%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star" style={{ animationDelay: '4.1s', animationDuration: '2.8s' }} />
@@ -70,16 +66,23 @@ const Projects = () => {
       </div>
 
       {/* Header */}
-      <div className="text-center mb-20 space-y-6">
-        <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-neutral-900 border border-neutral-800 mb-6">
-          <TerminalIcon size={40} className="text-purple-400" />
+      <div className="mb-16">
+        <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <div className="px-8 py-12 md:px-12 md:py-16 bg-diagonal-lines">
+            <div className="max-w-4xl space-y-6">
+              <div className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-black/50 border border-neutral-800/80 text-neutral-400 text-xs font-mono tracking-wide uppercase geometric-corners">
+                Personal Projects
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight font-display text-gradient-primary">
+                Side Projects
+              </h1>
+              <div className="h-px bg-gradient-to-r from-neutral-400/40 via-neutral-400/20 to-transparent" />
+              <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl">
+                Experiments, tools, and side quests from my GitHub.
+              </p>
+            </div>
+          </div>
         </div>
-        <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">
-          Personal <span className="text-purple-400">Projects</span>
-        </h1>
-        <p className="text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
-          Experiments, tools, and side quests from my GitHub.
-        </p>
       </div>
 
       {/* Grid */}
@@ -87,15 +90,15 @@ const Projects = () => {
         {personalProjects.map((project, idx) => (
           <div
             key={idx}
-            className="group relative flex flex-col bg-neutral-900 border border-neutral-800 rounded-2xl p-8 hover:border-neutral-700 transition-all duration-200"
+            className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col"
           >
-            {/* Header: Icon + Title + GitHub Link */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-neutral-950 rounded-xl border border-neutral-800">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-black/50 rounded-sm border border-neutral-800/80">
                   {getProjectIcon(project.title)}
                 </div>
-                <h3 className="text-2xl font-bold text-white">
+                <h3 className="text-lg font-semibold text-white font-mono tracking-tight">
                   {project.title}
                 </h3>
               </div>
@@ -103,47 +106,59 @@ const Projects = () => {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors p-2 hover:bg-neutral-800 rounded-lg"
+                className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-900/50 rounded-sm"
                 title="View Source"
               >
-                <GithubIcon size={22} />
+                <GithubIcon size={20} />
               </a>
             </div>
 
-            <p className="text-neutral-400 leading-relaxed mb-6">
-              {project.description}
-            </p>
+            {/* Description */}
+            <div className="px-6 py-4 bg-black/20 border-b border-neutral-800/50 bg-dot-pattern">
+              <p className="text-sm text-neutral-400 leading-relaxed font-mono">
+                {project.description}
+              </p>
+            </div>
 
-            {/* Optional Bullet Points */}
+            {/* Details */}
             {project.details && (
-              <ul className="mb-6 space-y-2 flex-grow">
-                {project.details.map((detail, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-neutral-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 shrink-0" />
-                    {detail}
-                  </li>
-                ))}
-              </ul>
+              <div className="px-6 py-4 border-b border-neutral-800/50 accent-line-left">
+                <ul className="space-y-2">
+                  {project.details.map((detail, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-neutral-300">
+                      <span className="w-1 h-1 rounded-full bg-neutral-400/50 mt-2 shrink-0" />
+                      <span className="leading-relaxed">{detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
 
-            {/* Tech Stack Tags */}
-            <div className={`flex flex-wrap gap-2 mb-8 ${!project.details ? 'flex-grow' : ''}`}>
-              {project.tech.map((t, i) => (
-                <span key={i} className="tech-tag">
-                  {t}
-                </span>
-              ))}
+            {/* Tech Stack */}
+            <div className="px-6 py-4 flex-grow bg-circuit-pattern">
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t, i) => (
+                  <span
+                    key={i}
+                    className="tech-tag-dashed"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Link to Repo */}
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-purple-400 hover:text-purple-300 group/link transition-colors"
-            >
-              View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-            </a>
+            <div className="px-6 py-4 border-t border-neutral-800/80 bg-neutral-950/30 bg-diagonal-lines">
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
+              >
+                View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
           </div>
         ))}
       </div>

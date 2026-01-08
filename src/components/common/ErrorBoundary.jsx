@@ -45,7 +45,7 @@ class ErrorBoundary extends React.Component {
 
             <button
               onClick={() => window.location.href = '/'}
-              className="px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-bold transition-all hover:scale-105"
+              className="px-6 py-3 bg-neutral-200 hover:bg-white text-black rounded-sm font-bold font-mono transition-all"
             >
               Return to Home
             </button>

@@ -32,9 +32,9 @@ const GalaxyBackground = () => {
     });
   };
 
-  const layer1 = useMemo(() => generateStars(150, 1, 2, [0.1, 0.4]), []);
-  const layer2 = useMemo(() => generateStars(80, 2, 3, [0.3, 0.6]), []);
-  const layer3 = useMemo(() => generateStars(30, 2, 4, [0.6, 0.9]), []);
+  const layer1 = useMemo(() => generateStars(200, 1, 2, [0.1, 0.4]), []);
+  const layer2 = useMemo(() => generateStars(120, 2, 3, [0.3, 0.6]), []);
+  const layer3 = useMemo(() => generateStars(50, 2, 4, [0.6, 0.9]), []);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
@@ -112,9 +112,8 @@ const Home = () => {
         {/* The Galaxy Effect */}
         <GalaxyBackground />
 
-        {/* Central Glow (The Core) - Kept subtle */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px] mix-blend-screen" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[80px] mix-blend-screen" />
+        {/* Central Glow (The Core) - Neutralized with slow pulse */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(255,255,255,0.03)_0%,transparent_70%)] rounded-full blur-[120px] mix-blend-screen animate-pulse-slow" />
 
         {/* Shooting Stars - Retained for dynamic feel */}
         <div className="absolute top-[8%] right-[15%] w-0.5 h-0.5 bg-white rounded-full animate-shooting-star" style={{ animationDelay: '3.2s', animationDuration: '2.8s' }} />
@@ -125,13 +124,13 @@ const Home = () => {
       <div className="max-w-5xl mx-auto space-y-8 relative z-10">
         {/* Name */}
         <div className="space-y-6">
-          <h1 className="text-7xl md:text-9xl font-extrabold tracking-tighter text-white drop-shadow-2xl">
+          <h1 className="text-7xl md:text-9xl font-extrabold tracking-tight text-white drop-shadow-2xl font-display">
             Brady Barker
           </h1>
 
           {/* Tagline */}
           <p className="text-2xl md:text-4xl font-light text-neutral-400 tracking-wide">
-            Building <span className="text-purple-400 font-semibold">Data-Driven</span> Solutions.
+            Building <span className="text-gradient-primary font-semibold">Data-Driven</span> Solutions.
           </p>
         </div>
 
@@ -139,7 +138,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row gap-5 justify-center pt-12 items-center">
           <Link
             to="/resume"
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-bold text-lg transition-all duration-200 hover:scale-105 w-full sm:w-auto shadow-lg shadow-purple-500/20"
+            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-neutral-200 hover:bg-white text-black rounded-sm font-bold text-lg font-mono transition-all duration-200 w-full sm:w-auto shadow-lg shadow-neutral-200/20"
           >
             <FileTextIcon size={20} />
             View Resume
@@ -148,7 +147,7 @@ const Home = () => {
 
           <Link
             to="/projects"
-            className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-neutral-900 border border-neutral-800 hover:border-purple-500/30 hover:bg-neutral-800 text-white rounded-lg font-medium text-lg transition-all duration-200 w-full sm:w-auto"
+            className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-black/60 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-950/80 text-white rounded-sm font-medium text-lg font-mono transition-all duration-200 w-full sm:w-auto"
           >
             <FolderIcon size={20} />
             View Projects
