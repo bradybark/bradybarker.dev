@@ -8,95 +8,117 @@ import LinkedinIcon from '../icons/LinkedinIcon';
 import GithubIcon from '../icons/GithubIcon';
 import CheckIcon from '../icons/CheckIcon';
 
-// --- Mini Galaxy Component ---
-const MiniGalaxy = () => {
-  // Generate stable star data for rings
-  const generateRing = (count, minSize, maxSize, minRadius, maxRadius) => {
-    return Array.from({ length: count }).map((_, i) => {
-      const angle = Math.random() * 2 * Math.PI;
-      const radius = Math.random() * (maxRadius - minRadius) + minRadius;
+// --- Static Stars Component (Background Fill) ---
+const StaticStars = () => {
+  const stars = useMemo(() => {
+    // UPDATED: Increased count to 300 for full edge-to-edge coverage
+    return Array.from({ length: 300 }).map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.1, 
+      animationDelay: `${Math.random() * 5}s`,
+    }));
+  }, []);
 
-      const top = 50 + (Math.sin(angle) * radius * 50);
-      const left = 50 + (Math.cos(angle) * radius * 50);
+  return (
+    <div className="absolute inset-0">
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute bg-white rounded-full animate-twinkle"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            opacity: star.opacity,
+            animationDelay: star.animationDelay,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// --- Mini Galaxy Component (Offset Spiral) ---
+const MiniGalaxy = () => {
+  const generateSpiral = (count) => {
+    const armTraits = Array.from({ length: 3 }).map(() => ({
+      lengthScale: 0.8 + Math.random() * 0.4, // Min length increased to ensure reach
+      widthScale: 0.5 + Math.random() * 1.0, 
+      angleOffset: (Math.random() - 0.5) * 0.5 
+    }));
+
+    return Array.from({ length: count }).map((_, i) => {
+      const armIndex = Math.floor(Math.random() * 3);
+      const traits = armTraits[armIndex];
+      
+      const distRaw = Math.random();
+      
+      // Distance calculation
+      const distance = (0.05 + distRaw * 0.95) * traits.lengthScale;
+      
+      const armAngle = ((armIndex * 2 * Math.PI) / 3) + traits.angleOffset;
+      const spiralTwist = distance * 5; 
+      
+      const scatterRaw = Math.random(); 
+      const deviation = scatterRaw - 0.5; 
+      const armCenterDistance = Math.abs(deviation) * 2; 
+      const scatter = deviation * (0.3 + distance * 1.0) * traits.widthScale; 
+      
+      const angle = armAngle + spiralTwist + scatter;
+      
+      // UPDATED MATH:
+      // Radius multiplier increased to 60.
+      // With a 200vmax container, this allows stars to reach well past the left edge.
+      const radius = distance * 60; 
+
+      const top = 50 + (Math.sin(angle) * radius);
+      const left = 50 + (Math.cos(angle) * radius);
+
+      let baseOpacity = Math.random() * 0.5 + 0.3;
+      const armDimming = 1 - (armCenterDistance * 0.8);
+      
+      // Radial Fade: Fades stars out before they hit the container edge
+      const radialFade = Math.max(0, 1 - Math.pow(distRaw, 4)); 
 
       return {
         id: i,
         top: `${top}%`,
         left: `${left}%`,
-        size: Math.random() * (maxSize - minSize) + minSize,
-        // Reduced opacity by 40% for more subtle appearance
-        opacity: (Math.random() * 0.5 + 0.3) * 0.6,
+        size: Math.random() < 0.7 ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1.5,
+        opacity: baseOpacity * armDimming * radialFade * 0.6, 
       };
     });
   };
 
-  // Ring 1: Inner Core (Reduced from 60 to 40 stars)
-  const innerRing = useMemo(() => generateRing(40, 1, 2.5, 0.1, 0.4), []);
-  // Ring 2: Mid Section (Reduced from 45 to 35 stars)
-  const midRing = useMemo(() => generateRing(35, 1.5, 3, 0.4, 0.75), []);
-  // Ring 3: Background Field (Reduced from 120 to 50 stars, removed outer ring for simpler look)
-  const backgroundRing = useMemo(() => generateRing(50, 1, 2, 0.5, 2.2), []);
+  // 500 stars to maintain density over larger area
+  const stars = useMemo(() => generateSpiral(500), []);
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-
-      {/* EXPANDED MASK - Fade out from center for smooth appearance */}
-      <div className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)]">
-
-        {/* Background Ring - Slowest rotation (240s instead of 180s) */}
-        <div className="absolute inset-0 animate-[spin_240s_linear_infinite]">
-          {backgroundRing.map((star) => (
-            <div
-              key={`bg-${star.id}`}
-              className="absolute bg-neutral-600/20 rounded-full"
-              style={{
-                top: star.top,
-                left: star.left,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                opacity: star.opacity * 0.4,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Mid Ring - Slower rotation (120s instead of 90s, Reverse) */}
-        <div className="absolute inset-[15%] animate-[spin_120s_linear_infinite] direction-reverse">
-          {midRing.map((star) => (
-            <div
-              key={`mid-${star.id}`}
-              className="absolute bg-neutral-200 rounded-full"
-              style={{
-                top: star.top,
-                left: star.left,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                opacity: star.opacity,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Inner Ring - Slower rotation (70s instead of 50s) */}
-        <div className="absolute inset-[25%] animate-[spin_70s_linear_infinite]">
-          {innerRing.map((star) => (
-            <div
-              key={`inner-${star.id}`}
-              className="absolute bg-neutral-300 rounded-full shadow-[0_0_3px_rgba(255,255,255,0.2)]"
-              style={{
-                top: star.top,
-                left: star.left,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                opacity: star.opacity,
-              }}
-            />
-          ))}
-        </div>
+      {/* UPDATED CONTAINER: 
+        - Left: 75% (Offset to right)
+        - Size: 200vmax (Massive, ensuring overlap)
+      */}
+      <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vmax] h-[200vmax] animate-[spin_160s_linear_infinite]">
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="absolute bg-white rounded-full"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.opacity,
+              boxShadow: star.size > 2 ? `0 0 ${star.size}px rgba(255, 255, 255, 0.4)` : 'none'
+            }}
+          />
+        ))}
       </div>
-
-      {/* LIGHT SOURCE - Neutralized glows */}
-      <div className="absolute w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)] blur-3xl mix-blend-screen animate-pulse-slow" />
     </div>
   );
 };
@@ -115,13 +137,15 @@ const HeroSection = ({ resumeData }) => {
   return (
     <section id="hero" className="min-h-[70vh] scroll-mt-32 relative">
 
-      {/* Galaxy Background with Overlay */}
+      {/* Galaxy Background & Static Stars */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Static Stars (Background Fill) */}
+        <StaticStars />
+        
+        {/* Spinning Galaxy (Foreground Layer) */}
         <div className="absolute inset-0">
           <MiniGalaxy />
         </div>
-        {/* Subtle dark overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
       </div>
 
       {/* Main Content */}
@@ -132,18 +156,19 @@ const HeroSection = ({ resumeData }) => {
 
             {/* Hook - Attention Grabber */}
             <div className="space-y-6">
-              {/* Main Headline with staggered animation */}
-              <div className="relative overflow-hidden">
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display">
-                  <span className="inline-block text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
+              
+              {/* Main Headline */}
+              <div className="relative">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display text-shadow-strong">
+                  <span className="block pb-2 text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
                     The New Standard
                   </span>
                 </h1>
               </div>
 
-              {/* Tagline with animation */}
+              {/* Tagline */}
               <div className="relative animate-slide-up-fade" style={{ animationDelay: '0.5s' }}>
-                <p className="text-2xl md:text-3xl font-light text-neutral-400 tracking-wider font-mono">
+                <p className="text-2xl md:text-3xl font-light text-neutral-400 tracking-wider font-mono text-shadow-subtle">
                   <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>Ingest.</span>
                   {' '}
                   <span className="inline-block animate-fade-in" style={{ animationDelay: '0.9s' }}>Transform.</span>
@@ -153,7 +178,7 @@ const HeroSection = ({ resumeData }) => {
               </div>
 
               {/* Name and Location */}
-              <div className="flex items-center gap-3 text-sm font-mono text-neutral-400 animate-slide-up-fade" style={{ animationDelay: '1.3s' }}>
+              <div className="flex items-center gap-3 text-sm font-mono text-neutral-400 animate-slide-up-fade text-shadow-subtle" style={{ animationDelay: '1.3s' }}>
                 <div className="h-px w-12 bg-gradient-to-r from-neutral-400/60 to-transparent" />
                 <span className="text-white font-semibold">{resumeData.personalInfo.name}</span>
                 <span className="text-neutral-600">▪</span>
@@ -167,7 +192,7 @@ const HeroSection = ({ resumeData }) => {
 
             {/* Bio */}
             <div className="max-w-2xl animate-slide-up-fade" style={{ animationDelay: '1.5s' }}>
-              <p className="text-lg md:text-xl text-neutral-300 leading-relaxed">
+              <p className="text-lg md:text-xl text-neutral-300 leading-relaxed font-display text-shadow-subtle">
                 {resumeData.personalInfo.bio}
               </p>
             </div>
