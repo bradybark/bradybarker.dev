@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="w-full mt-32 pb-12 bg-transparent text-center">
-      <div className="max-w-4xl mx-auto px-4 flex flex-col gap-4 items-center">
-        
-        <p className="text-slate-400 dark:text-slate-600 text-xs font-medium opacity-50">
+    <footer className="w-full mt-32 pb-12 bg-transparent text-center border-t border-neutral-900">
+      <div className="max-w-4xl mx-auto px-4 flex flex-col gap-4 items-center pt-12">
+
+        <p className="text-neutral-600 text-xs font-medium">
           © {new Date().getFullYear()} Brady Barker. All rights reserved.
         </p>
 
         {/* Static Tiny Link */}
-        <Link 
-          to="/achievements" 
-          className="text-[10px] uppercase tracking-[0.2em] text-slate-300 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-500 transition-colors"
+        <Link
+          to="/achievements"
+          className="text-[10px] uppercase tracking-[0.2em] text-neutral-700 hover:text-purple-400 transition-colors"
         >
           View Achievements
         </Link>

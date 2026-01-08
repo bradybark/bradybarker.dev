@@ -1,17 +1,15 @@
 // src/pages/Games.jsx
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  Bug,
-  Zap,
-  Code,
-  Play,
-  RotateCcw,
-  Trophy,
-  Timer,
-  Star,
-  Clock,
-  AlertTriangle
-} from 'lucide-react';
+import BugIcon from '../components/icons/BugIcon';
+import ZapIcon from '../components/icons/ZapIcon';
+import CodeIcon from '../components/icons/CodeIcon';
+import PlayIcon from '../components/icons/PlayIcon';
+import RotateCcwIcon from '../components/icons/RotateCcwIcon';
+import TrophyIcon from '../components/icons/TrophyIcon';
+import TimerIcon from '../components/icons/TimerIcon';
+import StarIcon from '../components/icons/StarIcon';
+import ClockIcon from '../components/icons/ClockIcon';
+import AlertTriangleIcon from '../components/icons/AlertTriangleIcon';
 
 const GRID_SIZE = 9; // 3x3 Grid
 const GAME_DURATION = 30; // Seconds
@@ -181,15 +179,51 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="min-h-screen pt-20 pb-16 px-4 flex flex-col items-center animate-fade-in-up">
-      
+    <div className="relative min-h-screen pt-20 pb-16 px-4 flex flex-col items-center animate-fade-in-up overflow-hidden">
+
+      {/* Enhanced Galaxy/Star Background */}
+      <div className="absolute inset-0 -z-10">
+        {/* Subtle gradient glow */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-[120px]" />
+
+        {/* Stars - More stars with various animations */}
+        <div className="absolute top-[7%] left-[16%] w-1 h-1 bg-neutral-200/60 rounded-full animate-twinkle" />
+        <div className="absolute top-[13%] left-[46%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[10%] left-[74%] w-1 h-1 bg-neutral-200/50 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[19%] left-[86%] w-0.5 h-0.5 bg-neutral-300/35 rounded-full" />
+        <div className="absolute top-[27%] left-[11%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[33%] left-[54%] w-1 h-1 bg-neutral-300/50 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[39%] left-[91%] w-0.5 h-0.5 bg-neutral-200/40 rounded-full" />
+        <div className="absolute top-[44%] left-[26%] w-1 h-1 bg-neutral-300/55 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[51%] left-[70%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[57%] left-[7%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[63%] left-[44%] w-1 h-1 bg-neutral-200/50 rounded-full" />
+        <div className="absolute top-[69%] left-[84%] w-0.5 h-0.5 bg-neutral-300/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[74%] left-[24%] w-1 h-1 bg-neutral-200/55 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[81%] left-[64%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[87%] left-[37%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full" />
+        <div className="absolute top-[93%] left-[80%] w-1 h-1 bg-neutral-300/50 rounded-full animate-twinkle" />
+
+        {/* Purple accent stars */}
+        <div className="absolute top-[17%] left-[64%] w-1 h-1 bg-purple-400/30 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[59%] left-[50%] w-0.5 h-0.5 bg-purple-300/25 rounded-full animate-twinkle" />
+        <div className="absolute top-[84%] left-[14%] w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-twinkle-slow" />
+
+        {/* Shooting stars - from random directions with randomized timing */}
+        <div className="absolute top-[13%] right-[24%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star" style={{ animationDelay: '6.4s', animationDuration: '2.6s' }} />
+        <div className="absolute top-[32%] left-[16%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-tl" style={{ animationDelay: '13.1s', animationDuration: '3.0s' }} />
+        <div className="absolute bottom-[26%] left-[22%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-bl" style={{ animationDelay: '19.8s', animationDuration: '2.7s' }} />
+        <div className="absolute bottom-[10%] right-[34%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-br" style={{ animationDelay: '26.3s', animationDuration: '3.3s' }} />
+      </div>
+
       {/* Header */}
       <div className="text-center mb-4 space-y-2">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white flex items-center justify-center gap-3">
-          <Bug size={32} className="text-red-500" />
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white flex items-center justify-center gap-3">
+          <BugIcon size={32} className="text-red-500" />
           <span>Bug <span className="text-red-500">Zapper</span></span>
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-neutral-400">
           Clear the bugs! Grab <span className="text-green-500 font-bold">Clocks</span> & <span className="text-yellow-500 font-bold">Stars</span>
         </p>
       </div>
@@ -199,10 +233,10 @@ const Game = () => {
         
         {/* Score Display */}
         <div className="flex flex-col">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Score</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">Score</span>
           <div className="flex items-center gap-2">
-            <Trophy size={28} className="text-yellow-500 drop-shadow-sm" />
-            <span className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            <TrophyIcon size={28} className="text-yellow-500 drop-shadow-sm" />
+            <span className="text-5xl font-black text-white tracking-tight">
               {score}
             </span>
           </div>
@@ -211,9 +245,9 @@ const Game = () => {
         {/* Timer Display */}
         {gameState === 'playing' && (
            <div className="flex flex-col items-end">
-             <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Time</span>
-             <div className={`flex items-center gap-2 transition-colors duration-300 ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'text-slate-900 dark:text-white'}`}>
-               <Timer size={28} />
+             <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">Time</span>
+             <div className={`flex items-center gap-2 transition-colors duration-300 ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'text-white'}`}>
+               <TimerIcon size={28} />
                <span className="text-5xl font-black tabular-nums tracking-tight">
                  00:{timeLeft.toString().padStart(2, '0')}
                </span>
@@ -227,29 +261,29 @@ const Game = () => {
         
         {/* Overlay */}
         {gameState !== 'playing' && (
-          <div className="absolute inset-0 z-20 bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center text-center p-6 border border-slate-200 dark:border-slate-800">
+          <div className="absolute inset-0 z-20 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center text-center p-6 border border-neutral-800">
             {gameState === 'gameover' ? (
               <>
-                <Trophy size={48} className="text-yellow-500 mb-4 animate-bounce" />
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Deployment Successful!</h2>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">Final Score: <span className="font-bold text-lg text-blue-600">{score}</span></p>
+                <TrophyIcon size={48} className="text-yellow-500 mb-4 animate-bounce" />
+                <h2 className="text-3xl font-bold text-white mb-2">Deployment Successful!</h2>
+                <p className="text-neutral-400 mb-6">Final Score: <span className="font-bold text-lg text-purple-400">{score}</span></p>
                 <button 
                   onClick={startGame}
-                  className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+                  className="flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white rounded-full font-bold transition-all hover:scale-105 shadow-lg shadow-purple-500/20"
                 >
-                  <RotateCcw size={20} /> Play Again
+                  <RotateCcwIcon size={20} /> Play Again
                 </button>
               </>
             ) : (
               <>
-                <AlertTriangle size={48} className="text-orange-500 mb-4" />
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Start Sprint?</h2>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">Squash bugs before the deadline.</p>
+                <AlertTriangleIcon size={48} className="text-orange-500 mb-4" />
+                <h2 className="text-2xl font-bold text-white mb-2">Start Sprint?</h2>
+                <p className="text-neutral-400 mb-6">Squash bugs before the deadline.</p>
                 <button 
                   onClick={startGame}
-                  className="flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+                  className="flex items-center gap-2 px-8 py-4 bg-purple-500 hover:bg-purple-400 text-white rounded-full font-bold text-lg transition-all hover:scale-105 shadow-lg shadow-purple-500/20"
                 >
-                  <Play size={20} /> Start Game
+                  <PlayIcon size={20} /> Start Game
                 </button>
               </>
             )}
@@ -257,7 +291,7 @@ const Game = () => {
         )}
 
         {/* The Grid */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-inner">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 p-4 bg-neutral-900 rounded-2xl border border-neutral-800 shadow-inner">
           {Array.from({ length: GRID_SIZE }).map((_, idx) => {
             const item = activeItems.find(i => i.index === idx);
             const isZapped = zappedIndices.includes(idx);
@@ -270,30 +304,30 @@ const Game = () => {
                 className={`
                   relative aspect-square rounded-xl flex items-center justify-center transition-all duration-100 overflow-hidden
                   ${gameState === 'playing' ? 'active:scale-95 cursor-crosshair' : 'cursor-default'}
-                  bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700
+                  bg-neutral-800 border-2 border-neutral-700
                   hover:border-blue-300 dark:hover:border-blue-700
                 `}
               >
                 {/* Background Icon (Code) */}
-                <Code size={24} className="text-slate-200 dark:text-slate-700 absolute opacity-50" />
+                <CodeIcon size={24} className="text-neutral-700 absolute opacity-50" />
 
                 {/* Active Entity Layer */}
                 <div className="relative z-10 transition-all duration-200">
                   {isZapped ? (
-                    <Zap size={40} className="text-yellow-500 scale-125 animate-ping" />
+                    <ZapIcon size={40} className="text-yellow-500 scale-125 animate-ping" />
                   ) : item ? (
                     item.type === 'star' ? (
                       <div className="flex flex-col items-center animate-pulse">
-                         <Star size={36} className="text-yellow-500 fill-yellow-500 drop-shadow-lg" />
+                         <StarIcon size={36} className="text-yellow-500 fill-yellow-500 drop-shadow-lg" />
                          <span className="text-[10px] font-bold text-yellow-600 bg-yellow-50 border border-yellow-200 px-1 rounded mt-1">+5pts</span>
                       </div>
                     ) : item.type === 'time' ? (
                       <div className="flex flex-col items-center animate-bounce">
-                        <Clock size={36} className="text-green-500 drop-shadow-lg" />
+                        <ClockIcon size={36} className="text-green-500 drop-shadow-lg" />
                         <span className="text-[10px] font-bold text-green-600 bg-green-100 px-1 rounded mt-1">+1s</span>
                       </div>
                     ) : (
-                      <Bug size={36} className="text-red-500 drop-shadow-lg animate-bounce" />
+                      <BugIcon size={36} className="text-red-500 drop-shadow-lg animate-bounce" />
                     )
                   ) : null}
                 </div>

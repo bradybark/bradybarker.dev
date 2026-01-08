@@ -1,26 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  TrendingUp,
-  X,
-  Zap,
-  Users,
-  Award,
-  Timer,
-  Server,
-  Database,
-  Workflow,
-  BarChart3,
-  PieChart,
-  ChevronUp,
-  Shield,
-  CheckCircle,
-  Activity,
-  LayoutGrid,
-  Cloud,
-  FileText,
-  RefreshCw,
-  Archive
-} from 'lucide-react';
+import TrendingUpIcon from '../icons/TrendingUpIcon';
+import XIcon from '../icons/XIcon';
+import ZapIcon from '../icons/ZapIcon';
+import UsersIcon from '../icons/UsersIcon';
+import AwardIcon from '../icons/AwardIcon';
+import TimerIcon from '../icons/TimerIcon';
+import ServerIcon from '../icons/ServerIcon';
+import DatabaseIcon from '../icons/DatabaseIcon';
+import WorkflowIcon from '../icons/WorkflowIcon';
+import BarChart3Icon from '../icons/BarChart3Icon';
+import PieChartIcon from '../icons/PieChartIcon';
+import ChevronUpIcon from '../icons/ChevronUpIcon';
+import ShieldIcon from '../icons/ShieldIcon';
+import CheckCircleIcon from '../icons/CheckCircleIcon';
+import ActivityIcon from '../icons/ActivityIcon';
+import LayoutGridIcon from '../icons/LayoutGridIcon';
+import CloudIcon from '../icons/CloudIcon';
+import FileTextIcon from '../icons/FileTextIcon';
+import RefreshCwIcon from '../icons/RefreshCwIcon';
+import ArchiveIcon from '../icons/ArchiveIcon';
 import {
   BarChart,
   Bar,
@@ -46,20 +44,20 @@ import { impactData } from '../../data/resumeData';
 import SectionHeader from '../common/SectionHeader';
 
 const ICON_MAP = {
-  Zap,
-  Users,
-  Award,
-  Timer,
-  Shield,
-  CheckCircle,
-  Activity,
-  Server,
-  Database,
-  LayoutGrid,
-  Cloud,
-  FileText,
-  RefreshCw,
-  Archive
+  Zap: ZapIcon,
+  Users: UsersIcon,
+  Award: AwardIcon,
+  Timer: TimerIcon,
+  Shield: ShieldIcon,
+  CheckCircle: CheckCircleIcon,
+  Activity: ActivityIcon,
+  Server: ServerIcon,
+  Database: DatabaseIcon,
+  LayoutGrid: LayoutGridIcon,
+  Cloud: CloudIcon,
+  FileText: FileTextIcon,
+  RefreshCw: RefreshCwIcon,
+  Archive: ArchiveIcon
 };
 
 const ImpactSection = ({ onClose }) => {
@@ -110,9 +108,9 @@ const ImpactSection = ({ onClose }) => {
               cursor={{ fill: "transparent" }}
               content={({ active, payload }) =>
                 active && payload && payload.length ? (
-                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                  <div className="bg-neutral-800 text-white text-xs p-2 rounded shadow-xl border border-neutral-700">
                     <div className="font-bold mb-1">{payload[0].payload.name}</div>
-                    <div className="text-slate-300">{payload[0].payload.label}</div>
+                    <div className="text-neutral-300">{payload[0].payload.label}</div>
                   </div>
                 ) : null
               }
@@ -154,9 +152,9 @@ const ImpactSection = ({ onClose }) => {
               cursor={{ fill: "rgba(148, 163, 184, 0.05)" }}
               content={({ active, payload }) =>
                 active && payload && payload.length ? (
-                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                  <div className="bg-neutral-800 text-white text-xs p-2 rounded shadow-xl border border-neutral-700">
                     <div className="font-bold mb-1">{payload[0].payload.name}</div>
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-neutral-300">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: payload[0].color }}></span>
                       <span>Value: {payload[0].value}</span>
                     </div>
@@ -201,15 +199,15 @@ const ImpactSection = ({ onClose }) => {
             <Tooltip
               content={({ active, payload, label }) =>
                 active && payload && payload.length ? (
-                  <div className="bg-slate-800 text-white text-xs p-2 rounded shadow-xl border border-slate-700">
+                  <div className="bg-neutral-800 text-white text-xs p-2 rounded shadow-xl border border-neutral-700">
                     <div className="font-bold mb-2">{label}</div>
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <span className="text-slate-300">Users: <span className="text-white">{payload[0].value}</span></span>
+                      <span className="text-neutral-300">Users: <span className="text-white">{payload[0].value}</span></span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <span className="text-slate-300">Errors: <span className="text-white">{payload[1].value}</span></span>
+                      <span className="text-neutral-300">Errors: <span className="text-white">{payload[1].value}</span></span>
                     </div>
                   </div>
                 ) : null
@@ -262,22 +260,22 @@ const ImpactSection = ({ onClose }) => {
   const stackItems = [
     {
       label: 'Raw Data',
-      Icon: Database,
+      Icon: DatabaseIcon,
       classes: 'bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
     },
     {
       label: 'Databricks Workflows',
-      Icon: Workflow,
+      Icon: WorkflowIcon,
       classes: 'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
     },
     {
       label: 'Semantic Models',
-      Icon: BarChart3,
+      Icon: BarChart3Icon,
       classes: 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
     },
     {
       label: 'Prebuilt & Self-Service Reports',
-      Icon: PieChart,
+      Icon: PieChartIcon,
       classes: 'bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
     }
   ];
@@ -285,25 +283,25 @@ const ImpactSection = ({ onClose }) => {
   return (
     <section
       id="impact"
-      className="scroll-mt-24 animate-fade-in-up relative pt-10 pb-6 border-t border-b border-slate-100 dark:border-slate-800/50 my-10 bg-slate-50/50 dark:bg-slate-900/30 -mx-4 px-4 sm:mx-0 sm:px-0 sm:bg-transparent sm:dark:bg-transparent sm:border-0 rounded-3xl"
+      className="scroll-mt-24 animate-fade-in-up relative pt-10 pb-6 border-t border-b border-neutral-800/50 my-10 bg-neutral-900/30 -mx-4 px-4 sm:mx-0 sm:px-0 sm:bg-transparent sm:dark:bg-transparent sm:border-0 rounded-3xl"
     >
       <button
         onClick={onClose}
-        className="absolute top-2 right-2 sm:right-0 p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all z-20"
+        className="absolute top-2 right-2 sm:right-0 p-2 text-neutral-400 hover:text-red-500 hover:bg-neutral-800 rounded-full transition-all z-20"
         title="Close Impact Section"
       >
-        <X size={24} />
+        <XIcon size={24} />
       </button>
 
       <SectionHeader
-        icon={TrendingUp}
+        icon={TrendingUpIcon}
         title="Engineering Impact"
-        colorClass="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+        colorClass="bg-purple-500/10 text-purple-400"
       />
 
       {/* --- UNIFIED GRID TABS --- */}
       <div className="max-w-3xl mx-auto mb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-1.5 bg-neutral-800/50 rounded-xl border border-neutral-700/50">
           {impactData.map((project) => (
             <button
               key={project.id}
@@ -312,8 +310,8 @@ const ImpactSection = ({ onClose }) => {
                 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 w-full
                 flex items-center justify-center text-center
                 ${activeTabId === project.id
-                  ? 'bg-white dark:bg-slate-700 text-green-600 dark:text-green-400 shadow-sm ring-1 ring-slate-200 dark:ring-slate-600'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/30'
+                  ? 'bg-neutral-700 text-green-400 shadow-sm ring-1 ring-neutral-600'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/30'
                 }
               `}
             >
@@ -339,19 +337,19 @@ const ImpactSection = ({ onClose }) => {
             return (
               <div
                 key={`${activeTabId}-${idx}`}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group"
               >
                 <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity ${iconColor}`}>
                   <IconComponent size={64} />
                 </div>
                 <div className="relative z-10">
-                  <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-1">
+                  <div className="text-4xl font-extrabold text-white mb-1">
                     {metric.value}
                   </div>
                   <div className={`text-sm font-semibold uppercase tracking-wide ${textColor}`}>
                     {metric.label}
                   </div>
-                  <p className="text-xs text-slate-500 mt-2">
+                  <p className="text-xs text-neutral-500 mt-2">
                     {metric.desc}
                   </p>
                 </div>
@@ -361,10 +359,10 @@ const ImpactSection = ({ onClose }) => {
         </div>
 
         {/* --- Dynamic Chart Section --- */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <ChartHeaderIcon className="text-slate-400" size={20} />
-            <h3 className="font-bold text-slate-900 dark:text-white">{activeData.chart.title}</h3>
+            <ChartHeaderIcon className="text-neutral-400" size={20} />
+            <h3 className="font-bold text-white">{activeData.chart.title}</h3>
           </div>
 
           <div 
@@ -372,42 +370,42 @@ const ImpactSection = ({ onClose }) => {
             ref={chartContainerRef}
           >
             {chartWidth > 10 ? renderChart() : (
-              <div className="text-slate-400 text-xs">Loading chart...</div>
+              <div className="text-neutral-400 text-xs">Loading chart...</div>
             )}
           </div>
 
-          <div className="text-center text-xs text-slate-400 mt-2">
+          <div className="text-center text-xs text-neutral-400 mt-2">
             {activeData.chart.subtitle}
           </div>
         </div>
 
         {/* --- Static Data Stack Visualization --- */}
-        <div className="lg:col-span-1 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col">
-          <h3 className="font-bold text-slate-900 dark:text-white mb-6 flex items-center justify-center gap-2">
-            <Server size={20} className="text-slate-400" /> Improved Data Stack
+        <div className="lg:col-span-1 bg-gradient-to-br from-neutral-900 to-neutral-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col">
+          <h3 className="font-bold text-white mb-6 flex items-center justify-center gap-2">
+            <ServerIcon size={20} className="text-neutral-400" /> Improved Data Stack
           </h3>
           <div className="relative space-y-2">
              {stackItems.map((item, i) => (
                <React.Fragment key={i}>
-                 <div className="relative z-10 flex items-center p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                 <div className="relative z-10 flex items-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl shadow-sm">
                     <div className={`absolute left-3 p-2 rounded-lg shrink-0 ${item.classes}`}>
                       <item.Icon size={18} />
                     </div>
                     <div className="w-full text-center px-10">
-                      <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 leading-tight">
+                      <div className="font-semibold text-sm text-neutral-200 leading-tight">
                         {item.label}
                       </div>
                     </div>
                  </div>
                  {i < stackItems.length - 1 && (
                    <div className="flex justify-center h-4">
-                     <div className="w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+                     <div className="w-0.5 bg-neutral-700"></div>
                    </div>
                  )}
                </React.Fragment>
              ))}
           </div>
-          <p className="mt-6 text-xs text-slate-500 leading-relaxed text-center">
+          <p className="mt-6 text-xs text-neutral-500 leading-relaxed text-center">
             Clean, well-governed data pipelines connect raw sources to trusted reports and analytics.
           </p>
         </div>
@@ -416,9 +414,9 @@ const ImpactSection = ({ onClose }) => {
       <div className="flex justify-center mt-8">
         <button
           onClick={onClose}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-500 hover:text-red-500 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-500 hover:text-red-500 transition-colors"
         >
-           <ChevronUp size={16} /> Hide Impact Section
+           <ChevronUpIcon size={16} /> Hide Impact Section
         </button>
       </div>
     </section>

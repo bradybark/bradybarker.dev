@@ -2,81 +2,115 @@
 import React from 'react';
 import {
   ArrowUpRight,
-  Github,
   Code,
-  Terminal,
   Wallet,
   SquareTerminal,
   House,
   Package
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
+import GithubIcon from '../components/icons/GithubIcon';
+import TerminalIcon from '../components/icons/TerminalIcon';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {
+  const iconClass = "text-neutral-500";
   switch (title) {
     case "Bark Budget":
-      return <Wallet size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+      return <Wallet size={24} className={iconClass} />;
     case "Excel Tools (CLI)":
-      return <SquareTerminal size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+      return <SquareTerminal size={24} className={iconClass} />;
     case "bradybarker.dev":
-      return <House size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+      return <House size={24} className={iconClass} />;
     case "Inventory Manager":
-      return <Package size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+      return <Package size={24} className={iconClass} />;
     default:
-      return <Code size={24} className="text-slate-400 group-hover:text-indigo-500 transition-colors" />;
+      return <Code size={24} className={iconClass} />;
   }
 };
 
 const Projects = () => {
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in-up relative overflow-hidden">
-      
-      {/* Fun Background Glow Effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-[100px] -z-10 animate-pulse-slow pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+    <div className="relative min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in-up overflow-hidden">
+
+      {/* Enhanced Galaxy/Star Background */}
+      <div className="absolute inset-0 -z-10">
+        {/* Subtle gradient glow */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-[120px]" />
+
+        {/* Stars - More stars with various animations */}
+        <div className="absolute top-[8%] left-[18%] w-1 h-1 bg-neutral-200/60 rounded-full animate-twinkle" />
+        <div className="absolute top-[14%] left-[42%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[10%] left-[68%] w-1 h-1 bg-neutral-200/50 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[22%] left-[82%] w-0.5 h-0.5 bg-neutral-300/35 rounded-full" />
+        <div className="absolute top-[28%] left-[12%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[32%] left-[52%] w-1 h-1 bg-neutral-300/50 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[38%] left-[88%] w-0.5 h-0.5 bg-neutral-200/40 rounded-full" />
+        <div className="absolute top-[45%] left-[22%] w-1 h-1 bg-neutral-300/55 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[50%] left-[72%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[55%] left-[8%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[62%] left-[38%] w-1 h-1 bg-neutral-200/50 rounded-full" />
+        <div className="absolute top-[68%] left-[78%] w-0.5 h-0.5 bg-neutral-300/45 rounded-full animate-twinkle" />
+        <div className="absolute top-[75%] left-[18%] w-1 h-1 bg-neutral-200/55 rounded-full animate-twinkle-slow" />
+        <div className="absolute top-[80%] left-[58%] w-0.5 h-0.5 bg-neutral-300/40 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[88%] left-[32%] w-0.5 h-0.5 bg-neutral-200/45 rounded-full" />
+        <div className="absolute top-[92%] left-[85%] w-1 h-1 bg-neutral-300/50 rounded-full animate-twinkle" />
+
+        {/* Purple accent stars */}
+        <div className="absolute top-[18%] left-[58%] w-1 h-1 bg-purple-400/30 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[58%] left-[48%] w-0.5 h-0.5 bg-purple-300/25 rounded-full animate-twinkle" />
+        <div className="absolute top-[85%] left-[12%] w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-twinkle-slow" />
+
+        {/* Shooting stars - from random directions with randomized timing */}
+        <div className="absolute top-[12%] right-[18%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star" style={{ animationDelay: '4.1s', animationDuration: '2.8s' }} />
+        <div className="absolute top-[28%] left-[8%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-tl" style={{ animationDelay: '10.7s', animationDuration: '3.0s' }} />
+        <div className="absolute bottom-[28%] left-[18%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-bl" style={{ animationDelay: '17.2s', animationDuration: '2.6s' }} />
+        <div className="absolute bottom-[15%] right-[28%] w-0.5 h-0.5 bg-neutral-100 rounded-full animate-shooting-star-br" style={{ animationDelay: '22.9s', animationDuration: '3.2s' }} />
+      </div>
 
       {/* Header */}
-      <div className="text-center mb-16 space-y-4 relative z-10">
-        <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 mb-6 animate-float">
-          <Terminal size={40} className="text-indigo-600 dark:text-indigo-400" />
+      <div className="text-center mb-20 space-y-6">
+        <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-neutral-900 border border-neutral-800 mb-6">
+          <TerminalIcon size={40} className="text-purple-400" />
         </div>
-        <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Personal <span className="text-indigo-600 dark:text-indigo-400">Projects</span>
+        <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+          Personal <span className="text-purple-400">Projects</span>
         </h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
           Experiments, tools, and side quests from my GitHub.
         </p>
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-        {personalProjects.map((project, idx) => ( 
-          <div 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {personalProjects.map((project, idx) => (
+          <div
             key={idx}
-            className="group relative flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:border-indigo-500/30 transition-all duration-300 hover:-translate-y-1"
+            className="group relative flex flex-col bg-neutral-900 border border-neutral-800 rounded-2xl p-8 hover:border-neutral-700 transition-all duration-200"
           >
             {/* Header: Icon + Title + GitHub Link */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/20 transition-colors">
+                <div className="p-3 bg-neutral-950 rounded-xl border border-neutral-800">
                   {getProjectIcon(project.title)}
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <h3 className="text-2xl font-bold text-white">
                   {project.title}
                 </h3>
               </div>
-              <a 
+              <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"
+                className="text-neutral-500 hover:text-white transition-colors p-2 hover:bg-neutral-800 rounded-lg"
                 title="View Source"
               >
-                <Github size={22} />
+                <GithubIcon size={22} />
               </a>
             </div>
-            
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+
+            <p className="text-neutral-400 leading-relaxed mb-6">
               {project.description}
             </p>
 
@@ -84,8 +118,8 @@ const Projects = () => {
             {project.details && (
               <ul className="mb-6 space-y-2 flex-grow">
                 {project.details.map((detail, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                  <li key={i} className="flex items-start gap-2 text-sm text-neutral-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 shrink-0" />
                     {detail}
                   </li>
                 ))}
@@ -102,11 +136,11 @@ const Projects = () => {
             </div>
 
             {/* Link to Repo */}
-            <a 
+            <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 group/link"
+              className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-purple-400 hover:text-purple-300 group/link transition-colors"
             >
               View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
             </a>

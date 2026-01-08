@@ -1,14 +1,15 @@
 // src/components/sections/ExperienceSection.jsx
 import React from 'react';
-import { Trophy, ChevronRight } from 'lucide-react';
 import SectionHeader from '../common/SectionHeader';
+import TrophyIcon from '../icons/TrophyIcon';
+import ChevronRightIcon from '../icons/ChevronRightIcon';
 
 const ExperienceSection = ({ resumeData }) => (
   <section id="experience" className="scroll-mt-24">
     <SectionHeader
-      icon={Trophy}
+      icon={TrophyIcon}
       title="Professional Experience"
-      colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+      colorClass="bg-purple-500/10 text-purple-400"
     />
 
     <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 md:ml-6 space-y-12">
@@ -41,7 +42,7 @@ const ExperienceSection = ({ resumeData }) => (
                 key={aIdx}
                 className="experience-line flex gap-3 text-slate-700 dark:text-slate-300 group"
               >
-                <ChevronRight
+                <ChevronRightIcon
                   size={20}
                   className="text-blue-500 shrink-0 mt-0.5 group-hover:translate-x-1 transition-transform ease-in-out"
                 />

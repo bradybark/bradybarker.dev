@@ -1,20 +1,18 @@
 // src/components/layout/Sidebar.jsx
 import React from 'react';
-import {
-  Trophy,
-  Gem,
-  Cpu,
-  GraduationCap,
-  User,
-  TrendingUp,
-} from 'lucide-react';
+import TrophyIcon from '../icons/TrophyIcon';
+import GemIcon from '../icons/GemIcon';
+import CpuIcon from '../icons/CpuIcon';
+import GraduationCapIcon from '../icons/GraduationCapIcon';
+import UserIcon from '../icons/UserIcon';
+import TrendingUpIcon from '../icons/TrendingUpIcon';
 
 const SIDE_NAV_ITEMS = [
-  { id: 'experience', label: 'Experience', icon: Trophy },
-  { id: 'projects',   label: 'Key Projects', icon: Gem },
-  { id: 'skills',     label: 'Skills', icon: Cpu },
-  { id: 'education',  label: 'Education', icon: GraduationCap },
-  { id: 'bio',        label: 'About Me', icon: User },
+  { id: 'experience', label: 'Experience', icon: TrophyIcon },
+  { id: 'projects',   label: 'Key Projects', icon: GemIcon },
+  { id: 'skills',     label: 'Skills', icon: CpuIcon },
+  { id: 'education',  label: 'Education', icon: GraduationCapIcon },
+  { id: 'bio',        label: 'About Me', icon: UserIcon },
 ];
 
 const Sidebar = ({
@@ -32,7 +30,7 @@ const Sidebar = ({
         {
           id: 'impact',
           label: 'Engineering Impact',
-          icon: TrendingUp,
+          icon: TrendingUpIcon,
         },
       ];
     }

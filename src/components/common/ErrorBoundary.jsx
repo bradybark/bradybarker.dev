@@ -1,6 +1,6 @@
 // src/components/common/ErrorBoundary.jsx
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
+import AlertTriangleIcon from '../icons/AlertTriangleIcon';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -22,22 +22,22 @@ class ErrorBoundary extends React.Component {
         <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 text-center">
           <div className="max-w-md mx-auto space-y-6">
             <div className="flex justify-center">
-              <div className="p-4 bg-red-100 dark:bg-red-900/20 rounded-full">
-                <AlertTriangle size={48} className="text-red-600 dark:text-red-500" />
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                <AlertTriangleIcon size={48} className="text-red-500" />
               </div>
             </div>
 
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-white">
               Oops! Something went wrong
             </h1>
 
-            <p className="text-lg text-slate-600 dark:text-slate-400">
+            <p className="text-lg text-neutral-400">
               We encountered an unexpected error. Please try refreshing the page.
             </p>
 
             {import.meta.env.DEV && this.state.error && (
-              <div className="mt-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg text-left">
-                <p className="text-sm font-mono text-red-600 dark:text-red-400 break-words">
+              <div className="mt-4 p-4 bg-neutral-900 border border-neutral-800 rounded-lg text-left">
+                <p className="text-sm font-mono text-red-400 break-words">
                   {this.state.error.toString()}
                 </p>
               </div>
@@ -45,7 +45,7 @@ class ErrorBoundary extends React.Component {
 
             <button
               onClick={() => window.location.href = '/'}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+              className="px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-bold transition-all hover:scale-105"
             >
               Return to Home
             </button>

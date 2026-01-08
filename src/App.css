@@ -23,28 +23,101 @@ body {
   /* REMOVED: transform: translateZ(0); */
 }
 
-/* Breathing pulse for background glow */
+/* Breathing pulse for accent elements - greyish-white */
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.3; }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
 }
 
 .animate-pulse-slow {
   animation: pulse-slow 6s ease-in-out infinite;
-  /* REMOVED: will-change: opacity; */
-  /* REMOVED: transform: translateZ(0); */
 }
 
-/* Shimmering gradient text effect */
-@keyframes gradient-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Twinkle animation for stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
-.animate-gradient-text {
-  background-size: 200% auto;
-  animation: gradient-flow 8s linear infinite;
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-twinkle-slow {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* Shooting star animations - from different directions */
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-300px) translateY(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes shooting-star-tl {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300px) translateY(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes shooting-star-bl {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300px) translateY(-300px);
+    opacity: 0;
+  }
+}
+
+@keyframes shooting-star-br {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-300px) translateY(-300px);
+    opacity: 0;
+  }
+}
+
+.animate-shooting-star {
+  animation: shooting-star 3s ease-out infinite;
+}
+
+.animate-shooting-star-tl {
+  animation: shooting-star-tl 3s ease-out infinite;
+}
+
+.animate-shooting-star-bl {
+  animation: shooting-star-bl 3s ease-out infinite;
+}
+
+.animate-shooting-star-br {
+  animation: shooting-star-br 3s ease-out infinite;
 }
 
 /* Smooth slide-up entrance */
