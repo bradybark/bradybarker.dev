@@ -1,7 +1,12 @@
 // src/components/sections/HeroSection.jsx
 import React, { useState } from 'react';
-import { MapPin, Mail, Download, Linkedin, Github, Check, Database, BarChart3, Server, Cloud } from 'lucide-react';
 import { useAchievements } from '../../hooks/useAchievements';
+import MapPinIcon from '../icons/MapPinIcon';
+import MailIcon from '../icons/MailIcon';
+import DownloadIcon from '../icons/DownloadIcon';
+import LinkedinIcon from '../icons/LinkedinIcon';
+import GithubIcon from '../icons/GithubIcon';
+import CheckIcon from '../icons/CheckIcon';
 
 const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -15,95 +20,106 @@ const HeroSection = ({ resumeData }) => {
   };
 
   return (
-    <section id="hero" className="flex flex-col lg:flex-row items-center justify-center gap-16 min-h-[60vh] scroll-mt-32 overflow-hidden">
-      <div className="flex-1 space-y-6 animate-fade-in-up text-left max-w-xl">
-        
-        <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold tracking-wide uppercase">
-            Data & Analytics Engineer
-          </div>
-          <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-            <MapPin size={16} />
-            {resumeData.personalInfo.location}
-          </div>
-        </div>
+    // UPDATED: Reduced min-h from 70vh to 45vh to remove excessive bottom space
+    <section id="hero" className="min-h-[45vh] scroll-mt-32 relative flex flex-col justify-center">
 
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-          Data Driven. <br />
-          <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent animate-gradient-text pb-2">
-            Cloud Native.
-          </span>
-        </h1>
+      {/* Note: The Galaxy/Star background is in src/pages/Resume.jsx */}
 
-        <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          {resumeData.personalInfo.bio}
-        </p>
+      {/* Main Content */}
+      <div className="relative">
+        <div className="px-8 py-12 md:px-12 md:py-16 relative">
 
-        <div className="flex flex-wrap items-center gap-4 pt-2">
-          {/* Email Button */}
-          <a
-            onClick={handleCopyEmail}
-            className={`px-6 py-3 rounded-lg font-medium transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer min-w-[170px]
-              ${isCopied
-                ? 'bg-green-600 hover:bg-green-700 text-white shadow-green-600/20'
-                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20 hover:shadow-blue-600/40'
-              }
-            `}
-          >
-            {isCopied ? <Check size={18} /> : <Mail size={18} />}
-            {isCopied ? "Email Copied!" : "Contact Me"}
-          </a>
-          
-          {/* Resume Button - UPDATED HERE */}
-          <a
-            href="/Brady_Barker_Resume.pdf"
-            download="Brady_Barker_Resume.pdf"
-            onClick={() => unlockAchievement('download-resume')} // <--- ADDED ACHIEVEMENT TRIGGER
-            className="px-6 py-3 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg font-medium transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 cursor-pointer"
-          >
-            <Download size={18} /> Resume
-          </a>
+          {/* UPDATED: Reduced space-y-10 to space-y-6 to pull buttons up */}
+          <div className="max-w-4xl space-y-6 relative z-10">
 
-          <div className="flex gap-3 pl-2 border-l border-slate-300 dark:border-slate-700 ml-2">
-            {/* LinkedIn */}
-            <a
-              href={resumeData.personalInfo.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => unlockAchievement('click-linkedin')}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              <Linkedin size={25} />
-            </a>
-            {/* GitHub */}
-            <a
-              href={resumeData.personalInfo.github}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => unlockAchievement('click-github')}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              <Github size={25} />
-            </a>
-          </div>
-        </div>
-      </div>
+            {/* Hook - Attention Grabber */}
+            <div className="space-y-6">
+              
+              {/* Main Headline */}
+              <div className="relative">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display text-shadow-strong">
+                  <span className="block pb-2 text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
+                    The New Standard
+                  </span>
+                </h1>
+              </div>
 
-      {/* Animation Side */}
-      <div className="hidden lg:flex w-72 h-72 relative shrink-0 items-center justify-center">
-        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 opacity-30 blur-2xl animate-pulse-slow" style={{ transform: "translateZ(0)" }}></div>
-        <div className="relative z-10 grid grid-cols-2 gap-4 place-content-center">
-           <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-float" style={{ animationDelay: '0s' }}>
-            <Database className="text-blue-500" size={32} />
-          </div>
-          <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-float" style={{ animationDelay: '1.5s' }}>
-            <BarChart3 className="text-cyan-500" size={32} />
-          </div>
-          <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-float" style={{ animationDelay: '3s' }}>
-            <Server className="text-indigo-500" size={32} />
-          </div>
-          <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-300 dark:border-slate-700 flex items-center justify-center animate-float" style={{ animationDelay: '4.5s' }}>
-            <Cloud className="text-violet-500" size={32} />
+              {/* Tagline */}
+              <div className="relative animate-slide-up-fade" style={{ animationDelay: '0.5s' }}>
+                <p className="text-2xl md:text-3xl font-light text-neutral-400 tracking-wider font-mono text-shadow-subtle">
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>Ingest.</span>
+                  {' '}
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.9s' }}>Transform.</span>
+                  {' '}
+                  <span className="inline-block animate-fade-in" style={{ animationDelay: '1.1s' }}>Visualize.</span>
+                </p>
+              </div>
+
+              {/* Name and Location */}
+              <div className="flex items-center gap-3 text-sm font-mono text-neutral-400 animate-slide-up-fade text-shadow-subtle" style={{ animationDelay: '1.3s' }}>
+                <div className="h-px w-12 bg-gradient-to-r from-neutral-400/60 to-transparent" />
+                <span className="text-white font-semibold">{resumeData.personalInfo.name}</span>
+                <span className="text-neutral-600">▪</span>
+                <div className="flex items-center gap-1.5 text-neutral-500">
+                  <MapPinIcon size={14} />
+                  {resumeData.personalInfo.location}
+                </div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-400/20 to-transparent" />
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-2 animate-slide-up-fade" style={{ animationDelay: '1.7s' }}>
+              {/* Email Button */}
+              <button
+                onClick={handleCopyEmail}
+                className={`px-5 py-2.5 rounded-sm font-medium font-mono transition-all flex items-center justify-center gap-2 cursor-pointer border
+                  ${isCopied
+                    ? 'bg-neutral-950/80 border-neutral-700/80 text-white'
+                    : 'bg-black/60 border-neutral-800/80 text-neutral-300 hover:text-white hover:border-neutral-600 shadow-[0_0_15px_rgba(0,0,0,0.5)]'
+                  }
+                `}
+              >
+                {isCopied ? <CheckIcon size={18} /> : <MailIcon size={18} />}
+                {isCopied ? "Email Copied!" : "Contact Me"}
+              </button>
+
+              {/* Resume Button */}
+              <a
+                href="/Brady_Barker_Resume.pdf"
+                download="Brady_Barker_Resume.pdf"
+                onClick={() => unlockAchievement('download-resume')}
+                className="px-5 py-2.5 bg-black/60 border border-neutral-800/80 hover:border-neutral-600 rounded-sm font-medium font-mono transition-all flex items-center gap-2 text-neutral-300 hover:text-white cursor-pointer shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+              >
+                <DownloadIcon size={18} /> Resume
+              </a>
+
+              {/* Social Links */}
+              <div className="flex gap-2 pl-3 border-l border-neutral-800/80 ml-1">
+                {/* LinkedIn */}
+                <a
+                  href={resumeData.personalInfo.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => unlockAchievement('click-linkedin')}
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  title="LinkedIn"
+                >
+                  <LinkedinIcon size={20} />
+                </a>
+                {/* GitHub */}
+                <a
+                  href={resumeData.personalInfo.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => unlockAchievement('click-github')}
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  title="GitHub"
+                >
+                  <GithubIcon size={20} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

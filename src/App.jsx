@@ -21,8 +21,8 @@ const Game = lazy(() => import('./pages/Games'));
 const LoadingFallback = () => (
   <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
-      <p className="text-slate-600 dark:text-slate-400">Loading...</p>
+      <div className="w-12 h-12 border-4 border-neutral-800 border-t-neutral-400 rounded-full animate-spin"></div>
+      <p className="text-neutral-400">Loading...</p>
     </div>
   </div>
 );
@@ -41,7 +41,7 @@ function App() {
             containerStyle={{ zIndex: 99999 }} // Force it to the top
           />
 
-          <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+          <div className="flex flex-col min-h-screen bg-neutral-950 text-white transition-colors duration-300">
             <Navbar
               isSidebarOpen={isSidebarOpen}
               setIsSidebarOpen={setIsSidebarOpen}

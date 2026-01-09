@@ -3,15 +3,170 @@
 /* This line enables the dark mode toggle to work with the 'dark' class */
 @variant dark (&:where(.dark, .dark *));
 
+/* Font Hierarchy */
+/* Base body font - Inter for optimal readability */
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display font - Space Grotesk for standout elements */
+.font-display {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+/* Monospace font preserved for technical elements */
+.font-mono {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, 'Courier New', monospace;
+}
+
+/* Gradient Text Classes - Linear/xmcp Style */
+.text-gradient-primary {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-neutral-100 to-neutral-300;
+}
+
+.text-gradient-secondary {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-neutral-200 via-neutral-300 to-neutral-400;
+}
+
 /* Standardized Tech Tag Styling */
 .tech-tag {
-  @apply px-2 py-1 text-xs font-medium rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 transition-colors whitespace-nowrap;
-  
-  /* Hover effects */
-  @apply group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:text-blue-600 dark:group-hover:text-blue-300;
-  
+  @apply px-2 py-1 text-xs font-medium rounded bg-neutral-800 text-neutral-400 border border-neutral-700 transition-colors whitespace-nowrap;
+
+  /* Hover effects - Changed from purple to neutral */
+  @apply group-hover:bg-neutral-700 group-hover:text-neutral-200 group-hover:border-neutral-600;
+
   max-width: fit-content;
   flex-shrink: 0;
+}
+
+/* Dashed Border Tags - xmcp Style */
+.tech-tag-dashed {
+  @apply px-2.5 py-1 text-xs font-medium rounded-sm bg-neutral-900/50 text-neutral-400
+         transition-all whitespace-nowrap font-mono;
+  border: 1px dashed rgba(115, 115, 115, 0.4);
+}
+
+.tech-tag-dashed:hover {
+  @apply text-neutral-200 bg-neutral-800/50;
+  border-color: rgba(163, 163, 163, 0.6);
+}
+
+/* Grid/Dot Pattern Backgrounds */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(rgba(115, 115, 115, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(115, 115, 115, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, rgba(115, 115, 115, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-diagonal-lines {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(115, 115, 115, 0.03) 20px,
+    rgba(115, 115, 115, 0.03) 21px
+  );
+}
+
+.bg-circuit-pattern {
+  background-image:
+    linear-gradient(rgba(115, 115, 115, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(115, 115, 115, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 0% 0%, rgba(115, 115, 115, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 100% 100%, rgba(115, 115, 115, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+  background-position: 0 0, 0 0, 20px 20px, 20px 20px;
+}
+
+/* Geometric Corner Decorations - All 4 Corners */
+.geometric-corners {
+  position: relative;
+}
+
+.geometric-corners::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    /* Top-left corner */
+    linear-gradient(to right, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 0 0 / 20px 2px,
+    linear-gradient(to bottom, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 0 0 / 2px 20px,
+    /* Top-right corner */
+    linear-gradient(to left, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 100% 0 / 20px 2px,
+    linear-gradient(to bottom, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 100% 0 / 2px 20px,
+    /* Bottom-right corner */
+    linear-gradient(to left, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 100% 100% / 20px 2px,
+    linear-gradient(to top, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 100% 100% / 2px 20px,
+    /* Bottom-left corner */
+    linear-gradient(to right, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 0 100% / 20px 2px,
+    linear-gradient(to top, rgba(115, 115, 115, 0.5), rgba(115, 115, 115, 0.5)) 0 100% / 2px 20px;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* Geometric Accent Lines */
+.accent-line-top {
+  position: relative;
+}
+
+.accent-line-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.2), transparent);
+}
+
+.accent-line-left {
+  position: relative;
+}
+
+.accent-line-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+}
+
+/* Corner Brackets - Speakeasy Style - All 4 Corners */
+.corner-brackets {
+  position: relative;
+}
+
+.corner-brackets::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    /* Top-left corner */
+    linear-gradient(to right, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 0 0 / 10px 2px,
+    linear-gradient(to bottom, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 0 0 / 2px 10px,
+    /* Top-right corner */
+    linear-gradient(to left, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 100% 0 / 10px 2px,
+    linear-gradient(to bottom, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 100% 0 / 2px 10px,
+    /* Bottom-right corner */
+    linear-gradient(to left, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 100% 100% / 10px 2px,
+    linear-gradient(to top, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 100% 100% / 2px 10px,
+    /* Bottom-left corner */
+    linear-gradient(to right, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 0 100% / 10px 2px,
+    linear-gradient(to top, rgba(115, 115, 115, 0.6), rgba(115, 115, 115, 0.6)) 0 100% / 2px 10px;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
 @keyframes enter {

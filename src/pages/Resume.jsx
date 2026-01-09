@@ -1,5 +1,5 @@
 // src/pages/Resume.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
 import { useAchievements } from '../hooks/useAchievements';
 import { useTheme } from '../hooks/useTheme';
@@ -16,17 +16,109 @@ import SkillsSection from '../components/sections/SkillsSection';
 import EducationAndCommunitySection from '../components/sections/EducationAndCommunitySection';
 import BioSection from '../components/sections/BioSection';
 
-// 1. Receive props from App.jsx instead of creating local state
+// --- Static Stars Component (Moved from HeroSection) ---
+const StaticStars = () => {
+  const stars = useMemo(() => {
+    return Array.from({ length: 300 }).map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.1, 
+      animationDelay: `${Math.random() * 5}s`,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0">
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute bg-white rounded-full animate-twinkle"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            opacity: star.opacity,
+            animationDelay: star.animationDelay,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// --- Mini Galaxy Component (Moved from HeroSection) ---
+const MiniGalaxy = () => {
+  const generateSpiral = (count) => {
+    const armTraits = Array.from({ length: 3 }).map(() => ({
+      lengthScale: 0.8 + Math.random() * 0.4, 
+      widthScale: 0.5 + Math.random() * 1.0, 
+      angleOffset: (Math.random() - 0.5) * 0.5 
+    }));
+
+    return Array.from({ length: count }).map((_, i) => {
+      const armIndex = Math.floor(Math.random() * 3);
+      const traits = armTraits[armIndex];
+      const distRaw = Math.random();
+      const distance = (0.05 + distRaw * 0.95) * traits.lengthScale;
+      const armAngle = ((armIndex * 2 * Math.PI) / 3) + traits.angleOffset;
+      const spiralTwist = distance * 5; 
+      const scatterRaw = Math.random(); 
+      const deviation = scatterRaw - 0.5; 
+      const armCenterDistance = Math.abs(deviation) * 2; 
+      const scatter = deviation * (0.3 + distance * 1.0) * traits.widthScale; 
+      const angle = armAngle + spiralTwist + scatter;
+      
+      const radius = distance * 60; 
+
+      const top = 50 + (Math.sin(angle) * radius);
+      const left = 50 + (Math.cos(angle) * radius);
+
+      let baseOpacity = Math.random() * 0.5 + 0.3;
+      const armDimming = 1 - (armCenterDistance * 0.8);
+      const radialFade = Math.max(0, 1 - Math.pow(distRaw, 4)); 
+
+      return {
+        id: i,
+        top: `${top}%`,
+        left: `${left}%`,
+        size: Math.random() < 0.7 ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1.5,
+        opacity: baseOpacity * armDimming * radialFade * 0.6, 
+      };
+    });
+  };
+
+  const stars = useMemo(() => generateSpiral(500), []);
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center select-none">
+      <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vmax] h-[200vmax] animate-[spin_160s_linear_infinite]">
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="absolute bg-white rounded-full"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.opacity,
+              boxShadow: star.size > 2 ? `0 0 ${star.size}px rgba(255, 255, 255, 0.4)` : 'none'
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => { 
-  
   const { isDarkMode } = useTheme();
   const darkMode = isDarkMode;
+  const { unlockAchievement } = useAchievements();
 
-  // REMOVE THIS LINE:
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
-
-  const { unlockAchievement } = useAchievements(); 
-  
   const [activeSection, setActiveSection] = useState('hero');
   const [showImpact, setShowImpact] = useState(false);
 
@@ -72,24 +164,33 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       setActiveSection(id); 
-      // Close sidebar on mobile when a link is clicked
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     }
   };
 
   return (
     <>
+      {/* GLOBAL BACKGROUND LAYER
+        This is placed outside the transformed 'max-w-7xl' container below.
+        This allows 'fixed inset-0' to actually cover the full viewport.
+      */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <StaticStars />
+        <MiniGalaxy />
+      </div>
+
       <Sidebar
         darkMode={darkMode}
         isSidebarOpen={isSidebarOpen}
         activeSection={activeSection}
         showImpact={showImpact}
         scrollToSection={scrollToSection}
-        setIsSidebarOpen={setIsSidebarOpen} 
+        setIsSidebarOpen={setIsSidebarOpen}
       />
 
-      <div 
-        className="max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1"
+      {/* Main Content Container - Kept relative/transformed for layout/3D effects */}
+      <div
+        className="relative max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1 z-10"
         style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden', perspective: '1000px' }}
       >
         <HeroSection resumeData={resumeData} />
@@ -100,13 +201,13 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <div className="flex justify-center -mt-12 mb-12">
             <button
               onClick={() => setShowImpact(true)}
-              className="group flex flex-col items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+              className="group flex flex-col items-center gap-3 text-neutral-400 hover:text-purple-400 transition-colors cursor-pointer"
             >
-              <div className="px-6 py-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm group-hover:shadow-lg group-hover:border-blue-500/50 transition-all flex items-center gap-2 font-semibold">
+              <div className="px-6 py-2.5 rounded-sm bg-black/60 border border-neutral-800/80 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:border-purple-400/30 transition-all flex items-center gap-2 font-medium font-mono text-sm">
                 <TrendingUp size={18} /> See Engineering Impact
               </div>
               <div className="flex flex-col items-center gap-1 animate-bounce">
-                <span className="w-0.5 h-3 bg-slate-300 dark:bg-slate-700"></span>
+                <span className="w-px h-4 bg-neutral-700"></span>
                 <ChevronDown size={16} />
               </div>
             </button>

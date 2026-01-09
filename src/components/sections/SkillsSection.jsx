@@ -1,15 +1,11 @@
 // src/components/sections/SkillsSection.jsx
 import React from 'react';
-import { Cpu } from 'lucide-react';
+import CpuIcon from '../icons/CpuIcon';
 import SectionHeader from '../common/SectionHeader';
 
 const SkillsSection = ({ resumeData }) => (
   <section id="skills" className="scroll-mt-24">
-    <SectionHeader
-      icon={Cpu}
-      title="Technical Skills"
-      colorClass="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
-    />
+    <SectionHeader title="Technical Skills" />
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {resumeData.skills.map((skillGroup, idx) => {
@@ -17,23 +13,27 @@ const SkillsSection = ({ resumeData }) => (
         return (
           <div
             key={idx}
-            className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors group"
+            className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)]"
           >
-            <div className="flex items-center gap-3 mb-3 text-slate-900 dark:text-white">
-              <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                <Icon size={18} className="text-slate-600 dark:text-slate-400" />
-              </div>
-              <h3 className="font-bold text-md">{skillGroup.name}</h3>
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines">
+              <h3 className="text-base font-semibold text-white tracking-tight font-mono">
+                {skillGroup.name}
+              </h3>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {skillGroup.items.map((item, iIdx) => (
-                <span
-                  key={iIdx}
-                  className="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm"
-                >
-                  {item}
-                </span>
-              ))}
+
+            {/* Skills List */}
+            <div className="px-6 py-5 bg-circuit-pattern">
+              <div className="flex flex-wrap gap-2">
+                {skillGroup.items.map((item, iIdx) => (
+                  <span
+                    key={iIdx}
+                    className="tech-tag-dashed"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         );
