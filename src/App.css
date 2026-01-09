@@ -105,6 +105,40 @@ body {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
+/* Section reveal animation - staggered entrance after hero */
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-section-reveal {
+  opacity: 0;
+  animation: sectionReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered child animations within sections */
+@keyframes childReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-child-reveal {
+  opacity: 0;
+  animation: childReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Technical/Edgy Animations */
 @keyframes scan {
   0% { transform: translateY(-100%); }

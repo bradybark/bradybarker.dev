@@ -5,12 +5,14 @@ import TrophyIcon from '../icons/TrophyIcon';
 import ChevronRightIcon from '../icons/ChevronRightIcon';
 
 const ExperienceSection = ({ resumeData }) => (
-  <section id="experience" className="scroll-mt-24">
-    <SectionHeader title="Professional Experience" />
+  <section id="experience" className="scroll-mt-24 overflow-hidden">
+    <div className="animate-child-reveal" style={{ animationDelay: '0.1s' }}>
+      <SectionHeader title="Professional Experience" />
+    </div>
 
     <div className="space-y-16">
       {resumeData.experience.map((job, idx) => (
-        <div key={idx} className="relative group corner-brackets">
+        <div key={idx} className="relative group corner-brackets animate-child-reveal" style={{ animationDelay: `${0.2 + idx * 0.15}s` }}>
           {/* Clean Card Container */}
           <div className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
 

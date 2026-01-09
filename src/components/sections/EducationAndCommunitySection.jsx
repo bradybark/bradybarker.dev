@@ -5,9 +5,9 @@ import UsersIcon from '../icons/UsersIcon';
 import AwardIcon from '../icons/AwardIcon';
 
 const EducationAndCommunitySection = ({ resumeData }) => (
-  <section id="education" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+  <section id="education" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden">
     {/* Education */}
-    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-child-reveal" style={{ animationDelay: '0.1s' }}>
       <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern">
         <h2 className="text-base font-semibold text-white tracking-tight font-mono">Education</h2>
       </div>
@@ -31,7 +31,7 @@ const EducationAndCommunitySection = ({ resumeData }) => (
     </div>
 
     {/* Leadership */}
-    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-child-reveal" style={{ animationDelay: '0.2s' }}>
       <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines">
         <h2 className="text-base font-semibold text-white tracking-tight font-mono">Leadership</h2>
       </div>
@@ -62,7 +62,7 @@ const EducationAndCommunitySection = ({ resumeData }) => (
     </div>
 
     {/* Awards */}
-    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+    <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-child-reveal" style={{ animationDelay: '0.3s' }}>
       <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern">
         <h2 className="text-base font-semibold text-white tracking-tight font-mono">Awards</h2>
       </div>

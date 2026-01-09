@@ -190,15 +190,22 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
       {/* Main Content Container - Kept relative/transformed for layout/3D effects */}
       <div
-        className="relative max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1 z-10"
+        className="relative max-w-7xl mx-auto space-y-24 overflow-clip p-1 z-10"
         style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden', perspective: '1000px' }}
       >
         <HeroSection resumeData={resumeData} />
-        <ExperienceSection resumeData={resumeData} />
-        <ProjectsSection resumeData={resumeData} />
+
+        {/* Staggered section animations - start after hero completes (~2.5s) */}
+        <div className="animate-section-reveal overflow-hidden" style={{ animationDelay: '2.5s' }}>
+          <ExperienceSection resumeData={resumeData} />
+        </div>
+
+        <div className="animate-section-reveal overflow-hidden" style={{ animationDelay: '2.8s' }}>
+          <ProjectsSection resumeData={resumeData} />
+        </div>
 
         {!showImpact && (
-          <div className="flex justify-center -mt-12 mb-12">
+          <div className="flex justify-center -mt-12 mb-12 animate-section-reveal overflow-hidden" style={{ animationDelay: '3.1s' }}>
             <button
               onClick={() => setShowImpact(true)}
               className="group flex flex-col items-center gap-3 text-neutral-400 hover:text-purple-400 transition-colors cursor-pointer"
@@ -216,9 +223,17 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
         {showImpact && <ImpactSection onClose={() => setShowImpact(false)} />}
 
-        <SkillsSection resumeData={resumeData} />
-        <EducationAndCommunitySection resumeData={resumeData} />
-        <BioSection />
+        <div className="animate-section-reveal overflow-hidden" style={{ animationDelay: '3.1s' }}>
+          <SkillsSection resumeData={resumeData} />
+        </div>
+
+        <div className="animate-section-reveal overflow-hidden" style={{ animationDelay: '3.4s' }}>
+          <EducationAndCommunitySection resumeData={resumeData} />
+        </div>
+
+        <div className="animate-section-reveal overflow-hidden" style={{ animationDelay: '3.7s' }}>
+          <BioSection />
+        </div>
       </div>
 
       <MobileNav 
