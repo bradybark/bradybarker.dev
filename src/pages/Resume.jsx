@@ -1,5 +1,5 @@
 // src/pages/Resume.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
 import { useAchievements } from '../hooks/useAchievements';
 import { useTheme } from '../hooks/useTheme';
@@ -16,15 +16,107 @@ import SkillsSection from '../components/sections/SkillsSection';
 import EducationAndCommunitySection from '../components/sections/EducationAndCommunitySection';
 import BioSection from '../components/sections/BioSection';
 
-// 1. Receive props from App.jsx instead of creating local state
+// --- Static Stars Component (Moved from HeroSection) ---
+const StaticStars = () => {
+  const stars = useMemo(() => {
+    return Array.from({ length: 300 }).map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.1, 
+      animationDelay: `${Math.random() * 5}s`,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0">
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute bg-white rounded-full animate-twinkle"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            opacity: star.opacity,
+            animationDelay: star.animationDelay,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// --- Mini Galaxy Component (Moved from HeroSection) ---
+const MiniGalaxy = () => {
+  const generateSpiral = (count) => {
+    const armTraits = Array.from({ length: 3 }).map(() => ({
+      lengthScale: 0.8 + Math.random() * 0.4, 
+      widthScale: 0.5 + Math.random() * 1.0, 
+      angleOffset: (Math.random() - 0.5) * 0.5 
+    }));
+
+    return Array.from({ length: count }).map((_, i) => {
+      const armIndex = Math.floor(Math.random() * 3);
+      const traits = armTraits[armIndex];
+      const distRaw = Math.random();
+      const distance = (0.05 + distRaw * 0.95) * traits.lengthScale;
+      const armAngle = ((armIndex * 2 * Math.PI) / 3) + traits.angleOffset;
+      const spiralTwist = distance * 5; 
+      const scatterRaw = Math.random(); 
+      const deviation = scatterRaw - 0.5; 
+      const armCenterDistance = Math.abs(deviation) * 2; 
+      const scatter = deviation * (0.3 + distance * 1.0) * traits.widthScale; 
+      const angle = armAngle + spiralTwist + scatter;
+      
+      const radius = distance * 60; 
+
+      const top = 50 + (Math.sin(angle) * radius);
+      const left = 50 + (Math.cos(angle) * radius);
+
+      let baseOpacity = Math.random() * 0.5 + 0.3;
+      const armDimming = 1 - (armCenterDistance * 0.8);
+      const radialFade = Math.max(0, 1 - Math.pow(distRaw, 4)); 
+
+      return {
+        id: i,
+        top: `${top}%`,
+        left: `${left}%`,
+        size: Math.random() < 0.7 ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1.5,
+        opacity: baseOpacity * armDimming * radialFade * 0.6, 
+      };
+    });
+  };
+
+  const stars = useMemo(() => generateSpiral(500), []);
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center select-none">
+      <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vmax] h-[200vmax] animate-[spin_160s_linear_infinite]">
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="absolute bg-white rounded-full"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: `${star.size}px`,
+              height: `${star.size}px`,
+              opacity: star.opacity,
+              boxShadow: star.size > 2 ? `0 0 ${star.size}px rgba(255, 255, 255, 0.4)` : 'none'
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => { 
-  
   const { isDarkMode } = useTheme();
   const darkMode = isDarkMode;
-
-  // REMOVE THIS LINE:
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
-
   const { unlockAchievement } = useAchievements();
 
   const [activeSection, setActiveSection] = useState('hero');
@@ -72,13 +164,21 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       setActiveSection(id); 
-      // Close sidebar on mobile when a link is clicked
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     }
   };
 
   return (
     <>
+      {/* GLOBAL BACKGROUND LAYER
+        This is placed outside the transformed 'max-w-7xl' container below.
+        This allows 'fixed inset-0' to actually cover the full viewport.
+      */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <StaticStars />
+        <MiniGalaxy />
+      </div>
+
       <Sidebar
         darkMode={darkMode}
         isSidebarOpen={isSidebarOpen}
@@ -88,40 +188,11 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
 
+      {/* Main Content Container - Kept relative/transformed for layout/3D effects */}
       <div
-        className="relative max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1"
+        className="relative max-w-7xl mx-auto space-y-24 overflow-x-hidden p-1 z-10"
         style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden', perspective: '1000px' }}
       >
-        {/* Enhanced Galaxy/Star Background */}
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          {/* Subtle neutral glow */}
-          <div className="absolute w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] rounded-full -top-32 -left-32 blur-3xl" />
-
-          {/* Subtle stars - limited to top 20% only (hero area) */}
-          <div className="absolute top-[3%] left-[22%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle" />
-          <div className="absolute top-[5%] left-[68%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full animate-pulse-slow" />
-          <div className="absolute top-[7%] left-[88%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle-slow" />
-          <div className="absolute top-[9%] left-[45%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full" />
-          <div className="absolute top-[11%] left-[15%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle" />
-          <div className="absolute top-[13%] left-[85%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full animate-pulse-slow" />
-          <div className="absolute top-[15%] left-[35%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle-slow" />
-          <div className="absolute top-[17%] left-[55%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full" />
-          <div className="absolute top-[19%] left-[75%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle" />
-          <div className="absolute top-[4%] left-[10%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full animate-pulse-slow" />
-          <div className="absolute top-[6%] left-[50%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle" />
-          <div className="absolute top-[8%] left-[70%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full animate-pulse-slow" />
-          <div className="absolute top-[10%] left-[28%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle-slow" />
-          <div className="absolute top-[12%] left-[90%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full" />
-          <div className="absolute top-[14%] left-[8%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle" />
-          <div className="absolute top-[16%] left-[62%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full animate-pulse-slow" />
-          <div className="absolute top-[18%] left-[42%] w-0.5 h-0.5 bg-neutral-200/30 rounded-full animate-twinkle-slow" />
-          <div className="absolute top-[20%] left-[95%] w-0.5 h-0.5 bg-neutral-300/25 rounded-full" />
-
-          {/* Minimal shooting stars - only in top area */}
-          <div className="absolute top-[8%] right-[20%] w-0.5 h-0.5 bg-neutral-100/60 rounded-full animate-shooting-star" style={{ animationDelay: '3s', animationDuration: '3s' }} />
-          <div className="absolute top-[12%] left-[10%] w-0.5 h-0.5 bg-neutral-100/60 rounded-full animate-shooting-star-tl" style={{ animationDelay: '15s', animationDuration: '3s' }} />
-        </div>
-
         <HeroSection resumeData={resumeData} />
         <ExperienceSection resumeData={resumeData} />
         <ProjectsSection resumeData={resumeData} />
