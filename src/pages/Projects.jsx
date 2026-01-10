@@ -43,7 +43,8 @@ const Projects = () => {
         <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
           <div className="px-8 py-12 md:px-12 md:py-16 bg-diagonal-lines">
             <div className="max-w-4xl space-y-6">
-              <div className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-black/50 border border-neutral-800/80 text-neutral-400 text-xs font-mono tracking-wide uppercase geometric-corners">
+              {/* Removed geometric-corners and rounded-sm to make it square/clean */}
+              <div className="relative inline-flex items-center gap-2 px-3 py-1.5 bg-black/50 border border-neutral-800/80 text-neutral-400 text-xs font-mono tracking-wide uppercase">
                 Personal Projects
               </div>
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight font-display text-gradient-primary">
@@ -63,7 +64,7 @@ const Projects = () => {
         {personalProjects.map((project, idx) => (
           <div
             key={idx}
-            className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col"
+            className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col h-full"
           >
             {/* Header */}
             <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern flex items-center justify-between">
@@ -96,16 +97,16 @@ const Projects = () => {
               </a>
             </div>
 
-            {/* Description */}
-            <div className="px-6 py-4 bg-black/20 border-b border-neutral-800/50 bg-dot-pattern">
+            {/* Description - Added min-h to align */}
+            <div className="px-6 py-4 bg-black/20 border-b border-neutral-800/50 bg-dot-pattern min-h-[110px]">
               <p className="text-sm text-neutral-400 leading-relaxed font-mono">
                 {project.description}
               </p>
             </div>
 
-            {/* Details */}
+            {/* Details - Added min-h to align */}
             {project.details && (
-              <div className="px-6 py-4 border-b border-neutral-800/50 accent-line-left">
+              <div className="px-6 py-4 border-b border-neutral-800/50 accent-line-left min-h-[300px]">
                 <ul className="space-y-2">
                   {project.details.map((detail, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-neutral-300">
@@ -117,7 +118,7 @@ const Projects = () => {
               </div>
             )}
 
-            {/* Tech Stack */}
+            {/* Tech Stack - Flex grow to fill remaining space if any */}
             <div className="px-6 py-4 flex-grow bg-circuit-pattern">
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((t, i) => (
@@ -131,8 +132,8 @@ const Projects = () => {
               </div>
             </div>
 
-            {/* Link to Repo */}
-            <div className="px-6 py-4 border-t border-neutral-800/80 bg-neutral-950/30 bg-diagonal-lines">
+            {/* Link to Repo & Demo */}
+            <div className="px-6 py-4 border-t border-neutral-800/80 bg-neutral-950/30 bg-diagonal-lines flex gap-4">
               <a
                 href={project.githubUrl}
                 target="_blank"
@@ -141,6 +142,16 @@ const Projects = () => {
               >
                 View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
               </a>
+              {project.demoUrl && (
+                 <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
+              >
+                Visit Website <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+              </a>
+              )}
             </div>
           </div>
         ))}

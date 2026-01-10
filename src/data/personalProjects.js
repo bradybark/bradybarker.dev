@@ -53,6 +53,7 @@ export const personalProjects = [
   },
     {
     title: "Nestly",
+    demoUrl: "https://nestly.bradybarker.dev/",
     description: "A lightweight, zero-dependency family organization suite built with Vanilla JS. Features URL-based state management for instant, serverless sharing of lists and plans.",
     details: [
       "Serverless architecture uses URL hash compression to store and share data without a database.",
