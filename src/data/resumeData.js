@@ -18,7 +18,9 @@ import {
   CheckCircle,
   Activity,
   Server,
-  Archive
+  Archive,
+  FileText, // Added for Resume Nav
+  Folder    // Added for Projects Nav
 } from 'lucide-react';
 
 // Import the raw JSON data
@@ -182,6 +184,11 @@ export const MOBILE_NAV_ITEMS = [
   { id: 'skills', label: 'Skills', icon: Cpu },
   { id: 'education', label: 'Edu.', icon: GraduationCap },
   { id: 'bio', label: 'Interests', icon: User },
+];
+
+export const TOP_NAV_ITEMS = [
+  { id: 'resume', label: 'Resume', to: '/resume', icon: FileText },
+  { id: 'projects', label: 'Projects', to: '/projects', icon: Folder }
 ];
 
 export default resumeData;

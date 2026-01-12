@@ -1,12 +1,7 @@
 // src/components/sections/HeroSection.jsx
 import React, { useState } from 'react';
 import { useAchievements } from '../../hooks/useAchievements';
-import MapPinIcon from '../icons/MapPinIcon';
-import MailIcon from '../icons/MailIcon';
-import DownloadIcon from '../icons/DownloadIcon';
-import LinkedinIcon from '../icons/LinkedinIcon';
-import GithubIcon from '../icons/GithubIcon';
-import CheckIcon from '../icons/CheckIcon';
+import { Icons } from '@bark/ui';
 
 const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -34,7 +29,7 @@ const HeroSection = ({ resumeData }) => {
 
             {/* Hook - Attention Grabber */}
             <div className="space-y-6">
-              
+
               {/* Main Headline */}
               <div className="relative">
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display text-shadow-strong">
@@ -61,7 +56,7 @@ const HeroSection = ({ resumeData }) => {
                 <span className="text-white font-semibold">{resumeData.personalInfo.name}</span>
                 <span className="text-neutral-600">▪</span>
                 <div className="flex items-center gap-1.5 text-neutral-500">
-                  <MapPinIcon size={14} />
+                  <Icons.MapPinIcon size={14} />
                   {resumeData.personalInfo.location}
                 </div>
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-400/20 to-transparent" />
@@ -80,7 +75,7 @@ const HeroSection = ({ resumeData }) => {
                   }
                 `}
               >
-                {isCopied ? <CheckIcon size={18} /> : <MailIcon size={18} />}
+                {isCopied ? <Icons.CheckIcon size={18} /> : <Icons.MailIcon size={18} />}
                 {isCopied ? "Email Copied!" : "Contact Me"}
               </button>
 
@@ -91,7 +86,7 @@ const HeroSection = ({ resumeData }) => {
                 onClick={() => unlockAchievement('download-resume')}
                 className="px-5 py-2.5 bg-black/60 border border-neutral-800/80 hover:border-neutral-600 rounded-sm font-medium font-mono transition-all flex items-center gap-2 text-neutral-300 hover:text-white cursor-pointer shadow-[0_0_15px_rgba(0,0,0,0.5)]"
               >
-                <DownloadIcon size={18} /> Resume
+                <Icons.DownloadIcon size={18} /> Resume
               </a>
 
               {/* Social Links */}
@@ -105,7 +100,7 @@ const HeroSection = ({ resumeData }) => {
                   className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
                   title="LinkedIn"
                 >
-                  <LinkedinIcon size={20} />
+                  <Icons.LinkedinIcon size={20} />
                 </a>
                 {/* GitHub */}
                 <a
@@ -116,7 +111,7 @@ const HeroSection = ({ resumeData }) => {
                   className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
                   title="GitHub"
                 >
-                  <GithubIcon size={20} />
+                  <Icons.GithubIcon size={20} />
                 </a>
               </div>
             </div>

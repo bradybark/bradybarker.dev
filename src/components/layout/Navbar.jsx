@@ -2,120 +2,134 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAchievements } from '../../hooks/useAchievements';
-import MenuIcon from '../icons/MenuIcon';
-import XIcon from '../icons/XIcon';
-import FileTextIcon from '../icons/FileTextIcon';
-import FolderIcon from '../icons/FolderIcon';
+import { Icons } from '@bark/ui';
 
 const CustomBBIcon = ({ size = 32 }) => (
-  <span
-    className="inline-flex items-center justify-center font-bold rounded-sm text-white bg-black border border-neutral-800/80 select-none transition-all active:scale-95 hover:border-neutral-600 font-mono shadow-[0_0_10px_rgba(0,0,0,0.5)]"
-    style={{
-      width: size,
-      height: size,
-      fontSize: size * 0.42,
-      letterSpacing: '-0.05em',
-    }}
-  >
-    bb
-  </span>
+    <span
+        className="inline-flex items-center justify-center font-bold rounded-sm text-white bg-black border border-neutral-800/80 select-none transition-all active:scale-95 hover:border-neutral-600 font-mono shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+        style={{
+            width: size,
+            height: size,
+            fontSize: size * 0.42,
+            letterSpacing: '-0.05em',
+        }}
+    >
+        bb
+    </span>
 );
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+const Navbar = ({ isSidebarOpen = false, setIsSidebarOpen = () => { } }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
 
-  // Use Global Contexts
-  const { unlockAchievement } = useAchievements();
+    // Use Global Contexts
+    const { unlockAchievement } = useAchievements();
 
-  // EASTER EGG STATE
-  const [clickCount, setClickCount] = useState(0);
+    // EASTER EGG STATE
+    const [clickCount, setClickCount] = useState(0);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setClickCount(0), 1000);
-    return () => clearTimeout(timer);
-  }, [clickCount]);
+    useEffect(() => {
+        const timer = setTimeout(() => setClickCount(0), 1000);
+        return () => clearTimeout(timer);
+    }, [clickCount]);
 
-  const handleLogoClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    const handleLogoClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
-    const newCount = clickCount + 1;
-    setClickCount(newCount);
+        const newCount = clickCount + 1;
+        setClickCount(newCount);
 
-    if (newCount === 5) {
-      unlockAchievement('found-game');
-      navigate('/game');
-      setClickCount(0);
-    }
-  };
+        if (newCount === 5) {
+            unlockAchievement('found-game');
+            navigate('/game');
+            setClickCount(0);
+        }
+    };
 
-  // Only show hamburger on Resume or Home
-  const showSidebarToggle = location.pathname === '/' || location.pathname === '/resume';
+    // Only show hamburger on Resume page
+    const showSidebarToggle = location.pathname === '/resume';
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800">
-      <div className="max-w-full px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex justify-between items-center h-full">
+    // Hide navbar completely on home page
+    if (location.pathname === '/') return null;
 
-          {/* Left: Hamburger + Brand */}
-          <div className="flex items-center gap-4">
-            {showSidebarToggle && (
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="p-2 -ml-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
-                aria-label="Toggle Menu"
-              >
-                {isSidebarOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
-              </button>
-            )}
+    // Add slide-down animation only on resume page (first visit from home)
+    const animationClass = location.pathname === '/resume' ? 'animate-slide-down' : '';
 
-            {/* BRAND LOGO AREA - EASTER EGG */}
-            <div className="flex items-center gap-3">
-              <div
-                onClick={handleLogoClick}
-                className="cursor-pointer"
-                title="...?"
-              >
-                <CustomBBIcon size={32} />
-              </div>
+    return (
+        <nav className={`fixed top-0 left-0 right-0 z-50 h-16 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800 ${animationClass}`}>
+            <div className="max-w-full px-4 sm:px-6 lg:px-8 h-full">
+                <div className="flex justify-between items-center h-full">
 
-              <Link to="/" className="text-lg md:text-xl font-bold text-white font-display">
-                Brady Barker
-              </Link>
+                    {/* Left: Hamburger + Brand */}
+                    <div className="flex items-center gap-4">
+                        {/* Always reserve space for hamburger to prevent layout shift */}
+                        <div className="w-8 h-8 flex items-center justify-center -ml-2">
+                            {showSidebarToggle && (
+                                <button
+                                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                    className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+                                    aria-label="Toggle Menu"
+                                >
+                                    {isSidebarOpen ? <Icons.XIcon size={24} /> : <Icons.MenuIcon size={24} />}
+                                </button>
+                            )}
+                        </div>
+
+                        {/* BRAND LOGO AREA - EASTER EGG */}
+                        <div className="flex items-center gap-3">
+                            <div
+                                onClick={handleLogoClick}
+                                className="cursor-pointer"
+                                title="...?"
+                            >
+                                <CustomBBIcon size={32} />
+                            </div>
+
+                            <Link to="/" className="text-lg md:text-xl font-bold text-white font-display">
+                                Brady Barker
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Right: Navigation */}
+                    <div className="flex items-center gap-2">
+                        {/* Show Game tab only when on /game page - placed first */}
+                        {location.pathname === '/game' && (
+                            <Link
+                                to="/game"
+                                className="nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors text-white active"
+                            >
+                                <Icons.BugIcon size={18} /> Game
+                            </Link>
+                        )}
+
+                        <Link
+                            to="/resume"
+                            onClick={() => unlockAchievement('visit-resume')}
+                            className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${location.pathname === '/resume'
+                                ? 'text-white active'
+                                : 'text-neutral-400 hover:text-white'
+                                }`}
+                        >
+                            <Icons.FileTextIcon size={18} /> Resume
+                        </Link>
+
+                        <Link
+                            to="/projects"
+                            onClick={() => unlockAchievement('click-projects')}
+                            className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${location.pathname === '/projects'
+                                ? 'text-white active'
+                                : 'text-neutral-400 hover:text-white'
+                                }`}
+                        >
+                            <Icons.FolderIcon size={18} /> Projects
+                        </Link>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          {/* Right: Navigation */}
-          <div className="flex items-center gap-2">
-            <Link
-              to="/resume"
-              onClick={() => unlockAchievement('visit-resume')}
-              className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
-                location.pathname === '/resume'
-                  ? 'text-white active'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              <FileTextIcon size={18} /> Resume
-            </Link>
-
-            <Link
-              to="/projects"
-              onClick={() => unlockAchievement('click-projects')}
-              className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
-                location.pathname === '/projects'
-                  ? 'text-white active'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              <FolderIcon size={18} /> Projects
-            </Link>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+        </nav>
+    );
 };
 
 export default Navbar;

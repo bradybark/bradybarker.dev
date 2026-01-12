@@ -1,8 +1,6 @@
-// src/components/sections/BioSection.jsx
 import React from 'react';
 import { Dumbbell, Gamepad2, MousePointer2, Dog } from 'lucide-react';
-import UserIcon from '../icons/UserIcon';
-import SectionHeader from '../common/SectionHeader';
+import { Icons, SectionHeader } from '@bark/ui';
 
 const BioSection = () => {
   const interests = [

@@ -1,7 +1,5 @@
-// src/components/sections/SkillsSection.jsx
 import React from 'react';
-import CpuIcon from '../icons/CpuIcon';
-import SectionHeader from '../common/SectionHeader';
+import { SectionHeader } from '@bark/ui';
 
 const SkillsSection = ({ resumeData }) => (
   <section id="skills" className="scroll-mt-24 overflow-hidden">

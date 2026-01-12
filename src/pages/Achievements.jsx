@@ -3,9 +3,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useAchievements } from '../hooks/useAchievements';
 import { ACHIEVEMENTS } from '../constants/achievements';
-import TrophyIcon from '../components/icons/TrophyIcon';
-import LockIcon from '../components/icons/LockIcon';
-import RotateCcwIcon from '../components/icons/RotateCcwIcon';
+import { Icons } from '@bark/ui';
 
 const Achievements = () => {
   const { unlocked, resetAchievements } = useAchievements();
@@ -18,15 +16,14 @@ const Achievements = () => {
   // --- Custom Confirmation Toast ---
   const handleResetClick = () => {
     toast.custom((t) => (
-      <div className={`${
-        t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-neutral-950 shadow-[0_0_25px_rgba(0,0,0,0.5)] rounded-sm pointer-events-auto flex flex-col overflow-hidden border border-neutral-800/80`}>
+      <div className={`${t.visible ? 'animate-enter' : 'animate-leave'
+        } max-w-md w-full bg-neutral-950 shadow-[0_0_25px_rgba(0,0,0,0.5)] rounded-sm pointer-events-auto flex flex-col overflow-hidden border border-neutral-800/80`}>
 
         {/* Header / Content */}
         <div className="p-6">
           <div className="flex items-start gap-4">
             <div className="bg-black/60 text-red-500 p-3 rounded-sm border border-red-500/40 shrink-0">
-              <RotateCcwIcon size={24} />
+              <Icons.RotateCcwIcon size={24} />
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-bold text-white leading-tight font-mono">
@@ -151,9 +148,9 @@ const Achievements = () => {
                 }
               `}>
                 {isUnlocked ? (
-                  <TrophyIcon size={32} strokeWidth={2} />
+                  <Icons.TrophyIcon size={32} strokeWidth={2} />
                 ) : (
-                  <LockIcon size={28} strokeWidth={2} />
+                  <Icons.LockIcon size={28} strokeWidth={2} />
                 )}
               </div>
 
@@ -193,7 +190,7 @@ const Achievements = () => {
           onClick={handleResetClick}
           className="flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest font-mono text-red-500 hover:bg-black/40 hover:border-red-500/40 rounded-sm transition-colors border border-transparent"
         >
-          <RotateCcwIcon size={14} />
+          <Icons.RotateCcwIcon size={14} />
           Reset Progress
         </button>
       </div>

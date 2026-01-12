@@ -1,7 +1,5 @@
-// src/components/sections/ProjectsSection.jsx
 import React from 'react';
-import GemIcon from '../icons/GemIcon';
-import SectionHeader from '../common/SectionHeader';
+import { Icons, SectionHeader } from '@bark/ui';
 
 const ProjectsSection = ({ resumeData }) => (
   <section id="projects" className="scroll-mt-24 overflow-hidden">

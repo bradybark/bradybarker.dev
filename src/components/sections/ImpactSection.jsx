@@ -1,24 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import TrendingUpIcon from '../icons/TrendingUpIcon';
-import XIcon from '../icons/XIcon';
-import ZapIcon from '../icons/ZapIcon';
-import UsersIcon from '../icons/UsersIcon';
-import AwardIcon from '../icons/AwardIcon';
-import TimerIcon from '../icons/TimerIcon';
-import ServerIcon from '../icons/ServerIcon';
-import DatabaseIcon from '../icons/DatabaseIcon';
-import WorkflowIcon from '../icons/WorkflowIcon';
-import BarChart3Icon from '../icons/BarChart3Icon';
-import PieChartIcon from '../icons/PieChartIcon';
-import ChevronUpIcon from '../icons/ChevronUpIcon';
-import ShieldIcon from '../icons/ShieldIcon';
-import CheckCircleIcon from '../icons/CheckCircleIcon';
-import ActivityIcon from '../icons/ActivityIcon';
-import LayoutGridIcon from '../icons/LayoutGridIcon';
-import CloudIcon from '../icons/CloudIcon';
-import FileTextIcon from '../icons/FileTextIcon';
-import RefreshCwIcon from '../icons/RefreshCwIcon';
-import ArchiveIcon from '../icons/ArchiveIcon';
+import { Icons, SectionHeader } from '@bark/ui';
 import {
   BarChart,
   Bar,
@@ -41,23 +22,23 @@ import {
   Line
 } from 'recharts';
 import { impactData } from '../../data/resumeData';
-import SectionHeader from '../common/SectionHeader';
+
 
 const ICON_MAP = {
-  Zap: ZapIcon,
-  Users: UsersIcon,
-  Award: AwardIcon,
-  Timer: TimerIcon,
-  Shield: ShieldIcon,
-  CheckCircle: CheckCircleIcon,
-  Activity: ActivityIcon,
-  Server: ServerIcon,
-  Database: DatabaseIcon,
-  LayoutGrid: LayoutGridIcon,
-  Cloud: CloudIcon,
-  FileText: FileTextIcon,
-  RefreshCw: RefreshCwIcon,
-  Archive: ArchiveIcon
+  Zap: Icons.ZapIcon,
+  Users: Icons.UsersIcon,
+  Award: Icons.AwardIcon,
+  Timer: Icons.TimerIcon,
+  Shield: Icons.ShieldIcon,
+  CheckCircle: Icons.CheckCircleIcon,
+  Activity: Icons.ActivityIcon,
+  Server: Icons.ServerIcon,
+  Database: Icons.DatabaseIcon,
+  LayoutGrid: Icons.LayoutGridIcon,
+  Cloud: Icons.CloudIcon,
+  FileText: Icons.FileTextIcon,
+  RefreshCw: Icons.RefreshCwIcon,
+  Archive: Icons.ArchiveIcon
 };
 
 const ImpactSection = ({ onClose }) => {
@@ -119,12 +100,12 @@ const ImpactSection = ({ onClose }) => {
               {activeData.chart.data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fill} />
               ))}
-              <LabelList 
-                dataKey="label" 
-                position="right" 
-                fill="#94a3b8" 
-                fontSize={12} 
-                fontWeight="bold" 
+              <LabelList
+                dataKey="label"
+                position="right"
+                fill="#94a3b8"
+                fontSize={12}
+                fontWeight="bold"
               />
             </Bar>
           </BarChart>
@@ -140,9 +121,9 @@ const ImpactSection = ({ onClose }) => {
             barCategoryGap="20%"
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#94a3b8" strokeOpacity={0.1} />
-            <XAxis 
-              dataKey="name" 
-              tick={{ fill: "#94a3b8", fontSize: 12, fontWeight: "600" }} 
+            <XAxis
+              dataKey="name"
+              tick={{ fill: "#94a3b8", fontSize: 12, fontWeight: "600" }}
               axisLine={false}
               tickLine={false}
               dy={10}
@@ -162,9 +143,9 @@ const ImpactSection = ({ onClose }) => {
                 ) : null
               }
             />
-            <Bar 
-              dataKey="value" 
-              radius={[8, 8, 0, 0]} 
+            <Bar
+              dataKey="value"
+              radius={[8, 8, 0, 0]}
               barSize={60}
               minPointSize={3}
               animationDuration={1000}
@@ -172,12 +153,12 @@ const ImpactSection = ({ onClose }) => {
               {activeData.chart.data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fill} />
               ))}
-              <LabelList 
-                dataKey="label" 
-                position="top" 
-                fill="#94a3b8" 
-                fontSize={14} 
-                fontWeight="bold" 
+              <LabelList
+                dataKey="label"
+                position="top"
+                fill="#94a3b8"
+                fontSize={14}
+                fontWeight="bold"
                 offset={10}
               />
             </Bar>
@@ -214,9 +195,9 @@ const ImpactSection = ({ onClose }) => {
               }
             />
             <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} iconSize={8} />
-            
+
             <Bar yAxisId="left" dataKey="users" name="Active Users" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
-            
+
             <Line yAxisId="right" type="monotone" dataKey="failures" name="System Errors" stroke="#ef4444" strokeWidth={3} dot={{ r: 4, fill: "#ef4444", strokeWidth: 2, stroke: "#fff" }} activeDot={{ r: 6, fill: "#ef4444" }} />
           </ComposedChart>
         );
@@ -225,7 +206,7 @@ const ImpactSection = ({ onClose }) => {
         return (
           <div className="grid grid-cols-2 gap-3 h-full w-full">
             {activeData.chart.data.map((badge, idx) => {
-              const Icon = ICON_MAP[badge.icon] || CheckCircleIcon;
+              const Icon = ICON_MAP[badge.icon] || Icons.CheckCircleIcon;
 
               return (
                 <div
@@ -248,27 +229,27 @@ const ImpactSection = ({ onClose }) => {
   };
 
   // Determine the correct icon component for the chart header
-  const ChartHeaderIcon = ICON_MAP[activeData.chart.icon] || TimerIcon;
+  const ChartHeaderIcon = ICON_MAP[activeData.chart.icon] || Icons.TimerIcon;
 
   const stackItems = [
     {
       label: 'Raw Data',
-      Icon: DatabaseIcon,
+      Icon: Icons.DatabaseIcon,
       classes: 'bg-neutral-800/50 text-neutral-400'
     },
     {
       label: 'Databricks Workflows',
-      Icon: WorkflowIcon,
+      Icon: Icons.WorkflowIcon,
       classes: 'bg-neutral-800/50 text-neutral-400'
     },
     {
       label: 'Semantic Models',
-      Icon: BarChart3Icon,
+      Icon: Icons.BarChart3Icon,
       classes: 'bg-neutral-800/50 text-neutral-400'
     },
     {
       label: 'Prebuilt & Self-Service Reports',
-      Icon: PieChartIcon,
+      Icon: Icons.PieChartIcon,
       classes: 'bg-neutral-800/50 text-neutral-400'
     }
   ];
@@ -283,7 +264,7 @@ const ImpactSection = ({ onClose }) => {
         className="absolute top-2 right-0 p-2 text-neutral-400 hover:text-white hover:bg-neutral-950/80 rounded-sm transition-all z-20 border border-transparent hover:border-neutral-600"
         title="Close Impact Section"
       >
-        <XIcon size={20} />
+        <Icons.XIcon size={20} />
       </button>
 
       <SectionHeader
@@ -315,7 +296,7 @@ const ImpactSection = ({ onClose }) => {
         {/* --- Key Metrics Cards --- */}
         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {activeData.metrics.map((metric, idx) => {
-            const IconComponent = ICON_MAP[metric.icon] || AwardIcon;
+            const IconComponent = ICON_MAP[metric.icon] || Icons.AwardIcon;
 
             return (
               <div
@@ -344,7 +325,7 @@ const ImpactSection = ({ onClose }) => {
             <h3 className="font-semibold text-white text-base tracking-tight font-mono">{activeData.chart.title}</h3>
           </div>
           <div className="px-6 py-5 bg-circuit-pattern"
->
+          >
 
             <div
               className="w-full h-[260px] min-h-[260px] flex items-center justify-center"
@@ -367,7 +348,7 @@ const ImpactSection = ({ onClose }) => {
             <h3 className="font-semibold text-white text-base tracking-tight font-mono">Improved Data Stack</h3>
           </div>
           <div className="px-6 py-5 flex-grow bg-dot-pattern"
->
+          >
             <div className="relative space-y-2.5">
               {stackItems.map((item, i) => (
                 <React.Fragment key={i}>
@@ -399,7 +380,7 @@ const ImpactSection = ({ onClose }) => {
           onClick={onClose}
           className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium font-mono text-neutral-400 hover:text-white bg-black/40 hover:bg-neutral-950/80 border border-neutral-800/80 hover:border-neutral-600 rounded-sm transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
         >
-           <ChevronUpIcon size={16} /> Hide Impact Section
+          <Icons.ChevronUpIcon size={16} /> Hide Impact Section
         </button>
       </div>
     </section>

@@ -1,8 +1,6 @@
 // src/components/sections/ExperienceSection.jsx
 import React from 'react';
-import SectionHeader from '../common/SectionHeader';
-import TrophyIcon from '../icons/TrophyIcon';
-import ChevronRightIcon from '../icons/ChevronRightIcon';
+import { Icons, SectionHeader } from '@bark/ui';
 
 const ExperienceSection = ({ resumeData }) => (
   <section id="experience" className="scroll-mt-24 overflow-hidden">
@@ -49,7 +47,7 @@ const ExperienceSection = ({ resumeData }) => (
                     className="flex gap-3 text-neutral-300 leading-relaxed group/item"
                   >
                     <div className="flex-shrink-0 mt-1.5">
-                      <ChevronRightIcon
+                      <Icons.ChevronRightIcon
                         className="w-4 h-4 text-neutral-400/40 group-hover/item:text-neutral-400/70 group-hover/item:translate-x-0.5 transition-all"
                       />
                     </div>

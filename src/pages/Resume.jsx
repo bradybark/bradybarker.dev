@@ -1,11 +1,11 @@
 // src/pages/Resume.jsx
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, ChevronDown } from 'lucide-react';
 import { useAchievements } from '../hooks/useAchievements';
-import { useTheme } from '../hooks/useTheme';
 
-import resumeData, { MAIN_SECTIONS } from '../data/resumeData';
-import Sidebar from '../components/layout/Sidebar';
+
+
+import resumeData, { MAIN_SECTIONS, MOBILE_NAV_ITEMS, TOP_NAV_ITEMS } from '../data/resumeData';
 import MobileNav from '../components/layout/MobileNav';
 
 import HeroSection from '../components/sections/HeroSection';
@@ -16,107 +16,10 @@ import SkillsSection from '../components/sections/SkillsSection';
 import EducationAndCommunitySection from '../components/sections/EducationAndCommunitySection';
 import BioSection from '../components/sections/BioSection';
 
-// --- Static Stars Component (Moved from HeroSection) ---
-const StaticStars = () => {
-  const stars = useMemo(() => {
-    return Array.from({ length: 300 }).map((_, i) => ({
-      id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.4 + 0.1, 
-      animationDelay: `${Math.random() * 5}s`,
-    }));
-  }, []);
+import Sidebar from '../components/layout/Sidebar';
+import { StaticStars, MiniGalaxy } from '@bark/ui';
 
-  return (
-    <div className="absolute inset-0">
-      {stars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute bg-white rounded-full animate-twinkle"
-          style={{
-            top: star.top,
-            left: star.left,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            opacity: star.opacity,
-            animationDelay: star.animationDelay,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-// --- Mini Galaxy Component (Moved from HeroSection) ---
-const MiniGalaxy = () => {
-  const generateSpiral = (count) => {
-    const armTraits = Array.from({ length: 3 }).map(() => ({
-      lengthScale: 0.8 + Math.random() * 0.4, 
-      widthScale: 0.5 + Math.random() * 1.0, 
-      angleOffset: (Math.random() - 0.5) * 0.5 
-    }));
-
-    return Array.from({ length: count }).map((_, i) => {
-      const armIndex = Math.floor(Math.random() * 3);
-      const traits = armTraits[armIndex];
-      const distRaw = Math.random();
-      const distance = (0.05 + distRaw * 0.95) * traits.lengthScale;
-      const armAngle = ((armIndex * 2 * Math.PI) / 3) + traits.angleOffset;
-      const spiralTwist = distance * 5; 
-      const scatterRaw = Math.random(); 
-      const deviation = scatterRaw - 0.5; 
-      const armCenterDistance = Math.abs(deviation) * 2; 
-      const scatter = deviation * (0.3 + distance * 1.0) * traits.widthScale; 
-      const angle = armAngle + spiralTwist + scatter;
-      
-      const radius = distance * 60; 
-
-      const top = 50 + (Math.sin(angle) * radius);
-      const left = 50 + (Math.cos(angle) * radius);
-
-      let baseOpacity = Math.random() * 0.5 + 0.3;
-      const armDimming = 1 - (armCenterDistance * 0.8);
-      const radialFade = Math.max(0, 1 - Math.pow(distRaw, 4)); 
-
-      return {
-        id: i,
-        top: `${top}%`,
-        left: `${left}%`,
-        size: Math.random() < 0.7 ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1.5,
-        opacity: baseOpacity * armDimming * radialFade * 0.6, 
-      };
-    });
-  };
-
-  const stars = useMemo(() => generateSpiral(500), []);
-
-  return (
-    <div className="relative w-full h-full flex items-center justify-center select-none">
-      <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vmax] h-[200vmax] animate-[spin_160s_linear_infinite]">
-        {stars.map((star) => (
-          <div
-            key={star.id}
-            className="absolute bg-white rounded-full"
-            style={{
-              top: star.top,
-              left: star.left,
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-              opacity: star.opacity,
-              boxShadow: star.size > 2 ? `0 0 ${star.size}px rgba(255, 255, 255, 0.4)` : 'none'
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => { 
-  const { isDarkMode } = useTheme();
-  const darkMode = isDarkMode;
+const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const { unlockAchievement } = useAchievements();
 
   const [activeSection, setActiveSection] = useState('hero');
@@ -163,29 +66,27 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      setActiveSection(id); 
+      setActiveSection(id);
+      // Since we don't have a sidebar, this is less relevant, but harmless
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     }
   };
 
+
+
   return (
     <>
-      {/* GLOBAL BACKGROUND LAYER
-        This is placed outside the transformed 'max-w-7xl' container below.
-        This allows 'fixed inset-0' to actually cover the full viewport.
-      */}
+      {/* GLOBAL BACKGROUND LAYER */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <StaticStars />
         <MiniGalaxy />
       </div>
 
       <Sidebar
-        darkMode={darkMode}
         isSidebarOpen={isSidebarOpen}
         activeSection={activeSection}
         showImpact={showImpact}
         scrollToSection={scrollToSection}
-        setIsSidebarOpen={setIsSidebarOpen}
       />
 
       {/* Main Content Container - Kept relative/transformed for layout/3D effects */}
@@ -205,7 +106,7 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
         </div>
 
         {!showImpact && (
-          <div className="flex justify-center -mt-12 mb-12 animate-section-reveal overflow-hidden" style={{ animationDelay: '3.1s' }}>
+          <div className="flex justify-center -mt-12 mb-12">
             <button
               onClick={() => setShowImpact(true)}
               className="group flex flex-col items-center gap-3 text-neutral-400 hover:text-purple-400 transition-colors cursor-pointer"
@@ -235,12 +136,6 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <BioSection />
         </div>
       </div>
-
-      <MobileNav 
-        scrollToSection={scrollToSection} 
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
     </>
   );
 };

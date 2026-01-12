@@ -10,8 +10,7 @@ import {
   Layers // Imported Layers icon for Nestly
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
-import GithubIcon from '../components/icons/GithubIcon';
-import TerminalIcon from '../components/icons/TerminalIcon';
+import { Icons } from '@bark/ui';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {
@@ -35,12 +34,11 @@ const getProjectIcon = (title) => {
 const Projects = () => {
   return (
     <div className="relative min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in-up overflow-hidden">
-
       {/* STAR BACKGROUND REMOVED */}
 
       {/* Header */}
       <div className="mb-16">
-        <div className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+        <div className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
           <div className="px-8 py-12 md:px-12 md:py-16 bg-diagonal-lines">
             <div className="max-w-4xl space-y-6">
               {/* Removed geometric-corners and rounded-sm to make it square/clean */}
@@ -64,7 +62,7 @@ const Projects = () => {
         {personalProjects.map((project, idx) => (
           <div
             key={idx}
-            className="corner-brackets border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col h-full"
+            className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col h-full"
           >
             {/* Header */}
             <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern flex items-center justify-between">
@@ -73,17 +71,17 @@ const Projects = () => {
                   {getProjectIcon(project.title)}
                 </div>
                 <div className="flex flex-col gap-1">
-                   <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-semibold text-white font-mono tracking-tight">
-                        {project.title}
-                      </h3>
-                      {/* Private Tag */}
-                      {project.isPrivate && (
-                        <div className="px-1.5 py-0.5 rounded-sm bg-black/50 border border-neutral-800/80 text-neutral-400 text-[10px] font-mono tracking-wide uppercase">
-                          Private
-                        </div>
-                      )}
-                   </div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-white font-mono tracking-tight">
+                      {project.title}
+                    </h3>
+                    {/* Private Tag */}
+                    {project.isPrivate && (
+                      <div className="px-1.5 py-0.5 rounded-sm bg-black/50 border border-neutral-800/80 text-neutral-400 text-[10px] font-mono tracking-wide uppercase">
+                        Private
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <a
@@ -93,7 +91,7 @@ const Projects = () => {
                 className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-900/50 rounded-sm"
                 title="View Source"
               >
-                <GithubIcon size={20} />
+                <Icons.GithubIcon size={20} />
               </a>
             </div>
 
@@ -106,7 +104,7 @@ const Projects = () => {
 
             {/* Details - Added min-h to align */}
             {project.details && (
-              <div className="px-6 py-4 border-b border-neutral-800/50 accent-line-left min-h-[300px]">
+              <div className="px-6 py-4 border-b border-neutral-800/50 min-h-[300px]">
                 <ul className="space-y-2">
                   {project.details.map((detail, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-neutral-300">
@@ -143,14 +141,14 @@ const Projects = () => {
                 View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
               </a>
               {project.demoUrl && (
-                 <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
-              >
-                Visit Website <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-              </a>
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
+                >
+                  Visit Website <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                </a>
               )}
             </div>
           </div>
