@@ -8,10 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(), // <--- This handles all the Tailwind logic now
   ],
-  resolve: {
-    alias: {
-      react: 'c:/Personal Portfolio/bark-tools/bradybarker-dev/node_modules/react',
-      'react-dom': 'c:/Personal Portfolio/bark-tools/bradybarker-dev/node_modules/react-dom',
-    },
-  },
+
 })
