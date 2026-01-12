@@ -320,7 +320,9 @@ const ImpactSection = ({ onClose }) => {
         </div>
 
         {/* --- Dynamic Chart Section --- */}
-        <div className="corner-brackets lg:col-span-2 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+        <div className="corner-brackets-4 lg:col-span-2 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <span className="corner-tr"></span>
+          <span className="corner-bl"></span>
           <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern">
             <h3 className="font-semibold text-white text-base tracking-tight font-mono">{activeData.chart.title}</h3>
           </div>
@@ -343,7 +345,9 @@ const ImpactSection = ({ onClose }) => {
         </div>
 
         {/* --- Static Data Stack Visualization --- */}
-        <div className="corner-brackets lg:col-span-1 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col">
+        <div className="corner-brackets-4 lg:col-span-1 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col">
+          <span className="corner-tr"></span>
+          <span className="corner-bl"></span>
           <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines">
             <h3 className="font-semibold text-white text-base tracking-tight font-mono">Improved Data Stack</h3>
           </div>

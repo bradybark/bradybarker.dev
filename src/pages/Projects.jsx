@@ -38,7 +38,9 @@ const Projects = () => {
 
       {/* Header */}
       <div className="mb-16">
-        <div className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+        <div className="relative corner-brackets-4 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <span className="corner-tr"></span>
+          <span className="corner-bl"></span>
           <div className="px-8 py-12 md:px-12 md:py-16 bg-diagonal-lines">
             <div className="max-w-4xl space-y-6">
               {/* Removed geometric-corners and rounded-sm to make it square/clean */}
@@ -62,8 +64,10 @@ const Projects = () => {
         {personalProjects.map((project, idx) => (
           <div
             key={idx}
-            className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col h-full"
+            className="relative corner-brackets-4 border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)] flex flex-col h-full"
           >
+            <span className="corner-tr"></span>
+            <span className="corner-bl"></span>
             {/* Header */}
             <div className="px-6 py-4 border-b border-neutral-800/80 bg-neutral-950/50 bg-grid-pattern flex items-center justify-between">
               <div className="flex items-center gap-3">

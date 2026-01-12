@@ -3,30 +3,31 @@ import React from 'react';
 import { Icons, SectionHeader } from '@bark/ui';
 
 const ExperienceSection = ({ resumeData }) => (
-  <section id="experience" className="scroll-mt-24 overflow-hidden">
+  <section id="experience" className="scroll-mt-24">
     <div className="animate-child-reveal" style={{ animationDelay: '0.1s' }}>
       <SectionHeader title="Professional Experience" />
     </div>
 
     <div className="space-y-16">
       {resumeData.experience.map((job, idx) => (
-        <div key={idx} className="relative group corner-brackets animate-child-reveal" style={{ animationDelay: `${0.2 + idx * 0.15}s` }}>
+        <div key={idx} className="relative group corner-brackets-4 animate-child-reveal" style={{ animationDelay: `${0.2 + idx * 0.15}s` }}>
+          <span className="corner-tr"></span>
+          <span className="corner-bl"></span>
           {/* Clean Card Container */}
           <div className="border border-neutral-800/80 rounded-sm overflow-hidden bg-black/40 hover:border-neutral-600 transition-all duration-200 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
 
             {/* Header Section */}
-            <div className="px-8 py-6 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div className="flex-1">
-                  <h3 className="text-2xl font-semibold text-white mb-1.5 tracking-tight">
-                    {job.company}
-                  </h3>
-                  <div className="text-base text-neutral-400 font-medium">
-                    {job.role}
-                  </div>
-                </div>
-                <div className="inline-flex items-center px-3 py-1.5 rounded-md bg-neutral-800/50 border border-neutral-700/50 text-xs font-mono text-neutral-400 tracking-wide self-start">
-                  {job.period}
+            <div className="px-8 py-6 border-b border-neutral-800/80 bg-neutral-950/50 bg-diagonal-lines relative">
+              {/* Period Pill - Absolute positioned to far right */}
+              <div className="absolute top-4 right-4 inline-flex items-center px-3 py-1.5 rounded-md bg-neutral-800/50 border border-neutral-700/50 text-xs font-mono text-neutral-400 tracking-wide">
+                {job.period}
+              </div>
+              <div className="pr-32">
+                <h3 className="text-2xl font-semibold text-white mb-1.5 tracking-tight">
+                  {job.company}
+                </h3>
+                <div className="text-base text-neutral-400 font-medium">
+                  {job.role}
                 </div>
               </div>
             </div>

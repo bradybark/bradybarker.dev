@@ -2,7 +2,7 @@
 export const personalProjects = [
   {
     title: "Bark Budget",
-    isPrivate: true, 
+    isPrivate: true,
     description: "A full-stack personal finance tracker with serverless API architecture, real-time expense management, and data visualization for tracking spending habits.",
     details: [
       "Built with Next.js and deployed on Vercel with serverless API routes for expense CRUD operations.",
@@ -14,7 +14,7 @@ export const personalProjects = [
     tech: ["Next.js", "Vercel", "Redis (KV)", "React", "Tailwind CSS", "Serverless"],
     githubUrl: "https://github.com/bradybark/bark-budget",
   },
-{
+  {
     title: "Inventory Manager",
     description: "A local-first React inventory and PO dashboard with smart reorder planning, vendor tools, snapshot generation, and cloud-sync for small-team ops.",
     details: [
@@ -37,21 +37,9 @@ export const personalProjects = [
       "Python utility for converting and transforming .xlsx sheets into production-ready CSVs."
     ],
     tech: ["Python", "CLI", "Pandas", "Automation", "Excel API"],
-    githubUrl: "https://github.com/bradybark/excel_tools", 
+    githubUrl: "https://github.com/bradybark/excel_tools",
   },
   {
-   title: "bradybarker.dev",
-    description: "The source code for this portfolio website! A modern, interactive portfolio featuring gamification elements, thoughtful UX design, and optimized performance.",
-    details: [
-      "Achievement system with unlockable milestones and confetti celebrations to engage visitors.",
-      "Code-splitting and lazy loading for optimal performance with separate route bundles.",
-      "Custom error boundaries and loading states for graceful degradation and better UX.",
-      "Interactive data visualizations using Recharts to showcase engineering impact metrics."
-    ],
-    tech: ["React", "Tailwind CSS", "Vite", "React Router", "Recharts", "Canvas Confetti"],
-    githubUrl: "https://github.com/bradybark/bradybarker.dev",
-  },
-    {
     title: "Nestly",
     demoUrl: "https://nestly.bradybarker.dev/",
     description: "A lightweight, zero-dependency family organization suite built with Vanilla JS. Features URL-based state management for instant, serverless sharing of lists and plans.",
@@ -61,7 +49,19 @@ export const personalProjects = [
       "Includes 8+ tools: Grocery Lists, Chores, Recipes (with Cook Mode), Travel Itineraries, and encrypted Lockbox.",
       "Responsive, mobile-first design with local history tracking for recently accessed lists."
     ],
-    tech: ["Vanilla JS", "Vite", "CSS3", "Vercel", "LZString"], 
+    tech: ["Vanilla JS", "Vite", "CSS3", "Vercel", "LZString"],
     githubUrl: "https://github.com/bradybark/nestly",
+  },
+  {
+    title: "bradybarker.dev",
+    description: "The source code for this portfolio website! A modern, interactive portfolio featuring gamification elements, thoughtful UX design, and optimized performance.",
+    details: [
+      "Achievement system with unlockable milestones and confetti celebrations to engage visitors.",
+      "Code-splitting and lazy loading for optimal performance with separate route bundles.",
+      "Custom error boundaries and loading states for graceful degradation and better UX.",
+      "Interactive data visualizations using Recharts to showcase engineering impact metrics."
+    ],
+    tech: ["React", "Tailwind CSS", "Vite", "React Router", "Recharts", "Canvas Confetti"],
+    githubUrl: "https://github.com/bradybark/bradybarker.dev",
   }
 ];
