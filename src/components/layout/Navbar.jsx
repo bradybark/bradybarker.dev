@@ -1,9 +1,10 @@
 // src/components/layout/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Navbar as BarkNavbar, Icons } from '@bark/ui';
 import { useAchievements } from '../../hooks/useAchievements';
-import { Icons } from '@bark/ui';
 
+// Define CustomBBIcon locally since we are passing it in customBrand
 const CustomBBIcon = ({ size = 32 }) => (
     <span
         className="inline-flex items-center justify-center font-bold rounded-sm text-white bg-black border border-neutral-800/80 select-none transition-all active:scale-95 hover:border-neutral-600 font-mono shadow-[0_0_10px_rgba(0,0,0,0.5)]"
@@ -21,8 +22,6 @@ const CustomBBIcon = ({ size = 32 }) => (
 const Navbar = ({ isSidebarOpen = false, setIsSidebarOpen = () => { } }) => {
     const location = useLocation();
     const navigate = useNavigate();
-
-    // Use Global Contexts
     const { unlockAchievement } = useAchievements();
 
     // EASTER EGG STATE
@@ -47,89 +46,88 @@ const Navbar = ({ isSidebarOpen = false, setIsSidebarOpen = () => { } }) => {
         }
     };
 
-    // Only show hamburger on Resume page
-    const showSidebarToggle = location.pathname === '/resume';
-
     // Hide navbar completely on home page
     if (location.pathname === '/') return null;
 
-    // Add slide-down animation only on resume page (first visit from home)
+    // Define navigation items based on current page/logic
+    const navItems = [];
+
+    // Add 'Game' tab if on /game route
+    if (location.pathname === '/game') {
+        navItems.push({
+            id: 'game',
+            label: 'Game',
+            to: '/game',
+            icon: Icons.BugIcon,
+            active: true // Always active if visible here
+        });
+    }
+
+    // Standard items
+    navItems.push({
+        id: 'resume',
+        label: 'Resume',
+        to: '/resume',
+        icon: Icons.FileTextIcon,
+        active: location.pathname === '/resume',
+        onClick: () => {
+            unlockAchievement('visit-resume');
+            navigate('/resume');
+        }
+    });
+
+    navItems.push({
+        id: 'projects',
+        label: 'Projects',
+        to: '/projects',
+        icon: Icons.FolderIcon,
+        active: location.pathname === '/projects',
+        onClick: () => {
+            unlockAchievement('click-projects');
+            navigate('/projects');
+        }
+    });
+
+    // Animation class for Resume page
     const animationClass = location.pathname === '/resume' ? 'animate-slide-down' : '';
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 h-16 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800 ${animationClass}`}>
-            <div className="max-w-full px-4 sm:px-6 lg:px-8 h-full">
-                <div className="flex justify-between items-center h-full">
+        <BarkNavbar
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+            showToggle={location.pathname === '/resume'} // Only show toggle on Resume page
+            titlePrefix="Brady"
+            titleSuffix="Barker"
+            titleSuffixClass="text-white"
+            navItems={navItems}
+            navItemVariant="underline"
+            LinkComponent={Link}
 
-                    {/* Left: Hamburger + Brand */}
-                    <div className="flex items-center gap-4">
-                        {/* Always reserve space for hamburger to prevent layout shift */}
-                        <div className="w-8 h-8 flex items-center justify-center -ml-2">
-                            {showSidebarToggle && (
-                                <button
-                                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                    className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
-                                    aria-label="Toggle Menu"
-                                >
-                                    {isSidebarOpen ? <Icons.XIcon size={24} /> : <Icons.MenuIcon size={24} />}
-                                </button>
-                            )}
-                        </div>
-
-                        {/* BRAND LOGO AREA - EASTER EGG */}
-                        <div className="flex items-center gap-3">
-                            <div
-                                onClick={handleLogoClick}
-                                className="cursor-pointer"
-                                title="...?"
-                            >
-                                <CustomBBIcon size={32} />
-                            </div>
-
-                            <Link to="/" className="text-lg md:text-xl font-bold text-white font-display">
-                                Brady Barker
-                            </Link>
-                        </div>
+            // PASS FULL CUSTOM BRAND for Easter Egg Logic + Layout
+            customBrand={
+                <div className="flex items-center gap-3">
+                    {/* Logo as separate clickable DIV for Easter Egg */}
+                    <div
+                        onClick={handleLogoClick}
+                        className="cursor-pointer"
+                        title="...?"
+                    >
+                        <CustomBBIcon size={32} />
                     </div>
 
-                    {/* Right: Navigation */}
-                    <div className="flex items-center gap-2">
-                        {/* Show Game tab only when on /game page - placed first */}
-                        {location.pathname === '/game' && (
-                            <Link
-                                to="/game"
-                                className="nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors text-white active"
-                            >
-                                <Icons.BugIcon size={18} /> Game
-                            </Link>
-                        )}
-
-                        <Link
-                            to="/resume"
-                            onClick={() => unlockAchievement('visit-resume')}
-                            className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${location.pathname === '/resume'
-                                ? 'text-white active'
-                                : 'text-neutral-400 hover:text-white'
-                                }`}
-                        >
-                            <Icons.FileTextIcon size={18} /> Resume
-                        </Link>
-
-                        <Link
-                            to="/projects"
-                            onClick={() => unlockAchievement('click-projects')}
-                            className={`nav-link-underline hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${location.pathname === '/projects'
-                                ? 'text-white active'
-                                : 'text-neutral-400 hover:text-white'
-                                }`}
-                        >
-                            <Icons.FolderIcon size={18} /> Projects
-                        </Link>
-                    </div>
+                    {/* Text as separate Link */}
+                    <Link to="/" className="text-lg md:text-xl font-bold text-white font-display">
+                        Brady Barker
+                    </Link>
                 </div>
-            </div>
-        </nav>
+            }
+
+            className={`border-b border-neutral-800 ${animationClass}`}
+            containerClass="max-w-full px-4 sm:px-6 lg:px-8" // Full width container
+        />
     );
 };
+
+
 
 export default Navbar;
