@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GalaxyBackground, ShootingStars, Icons } from '@bark/ui';
+import { GalaxyBackground, RareShootingStars, Icons } from '@bark/ui';
 
 const Home = () => {
   return (
@@ -10,7 +10,7 @@ const Home = () => {
       {/* Background System */}
       <div className="absolute inset-0 -z-10 bg-neutral-950">
         <GalaxyBackground />
-        <ShootingStars />
+        <RareShootingStars />
       </div>
 
       <div className="max-w-5xl mx-auto space-y-8 relative z-10">

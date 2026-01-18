@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "preinstall": "bash scripts/preinstall.sh || true",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bark/ui": "github:bradybark/bark-ui",
+    "@bark/ui": "git+https://github.com/bradybark/bark-ui.git#3308b97",
     "@tailwindcss/vite": "^4.1.17",
     "canvas-confetti": "^1.9.4",
     "lucide-react": "^0.555.0",

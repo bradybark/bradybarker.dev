@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@bark/ui/style.css";
 
 /* This line enables the dark mode toggle to work with the 'dark' class */
 @variant dark (&:where(.dark, .dark *));
