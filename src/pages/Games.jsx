@@ -1,6 +1,6 @@
 // src/pages/Games.jsx
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Icons, StaticStars, MiniGalaxy } from '@bark/ui';
+import { Icons, StaticStars, MiniGalaxy } from '@bradybark/ui';
 
 const GRID_SIZE = 9; // 3x3 Grid
 const GAME_DURATION = 30; // Seconds

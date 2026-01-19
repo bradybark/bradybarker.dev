@@ -1,6 +1,6 @@
 // src/components/sections/ExperienceSection.jsx
 import React from 'react';
-import { Icons, SectionHeader } from '@bark/ui';
+import { Icons, SectionHeader } from '@bradybark/ui';
 
 const ExperienceSection = ({ resumeData }) => (
   <section id="experience" className="scroll-mt-24">

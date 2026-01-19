@@ -1,6 +1,6 @@
 // src/components/sections/EducationAndCommunitySection.jsx
 import React from 'react';
-import { Icons } from '@bark/ui';
+import { Icons } from '@bradybark/ui';
 
 const EducationAndCommunitySection = ({ resumeData }) => (
   <section id="education" className="scroll-mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden">

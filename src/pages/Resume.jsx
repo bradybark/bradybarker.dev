@@ -17,7 +17,7 @@ import EducationAndCommunitySection from '../components/sections/EducationAndCom
 import BioSection from '../components/sections/BioSection';
 
 import Sidebar from '../components/layout/Sidebar';
-import { StaticStars, MiniGalaxy } from '@bark/ui';
+import { StaticStars, MiniGalaxy } from '@bradybark/ui';
 
 const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const { unlockAchievement } = useAchievements();

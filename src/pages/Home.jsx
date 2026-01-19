@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GalaxyBackground, RareShootingStars, Icons } from '@bark/ui';
+import { GalaxyBackground, RareShootingStars, Icons } from '@bradybark/ui';
 
 const Home = () => {
   return (

@@ -1,7 +1,7 @@
 // src/components/layout/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Navbar as BarkNavbar, Icons } from '@bark/ui';
+import { Navbar as BarkNavbar, Icons } from '@bradybark/ui';
 import { useAchievements } from '../../hooks/useAchievements';
 
 // Define CustomBBIcon locally since we are passing it in customBrand

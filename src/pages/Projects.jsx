@@ -10,7 +10,7 @@ import {
   Layers // Imported Layers icon for Nestly
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
-import { Icons } from '@bark/ui';
+import { Icons } from '@bradybark/ui';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {

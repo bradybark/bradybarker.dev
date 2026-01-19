@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Icons, SectionHeader } from '@bark/ui';
+import { Icons, SectionHeader } from '@bradybark/ui';
 import {
   BarChart,
   Bar,

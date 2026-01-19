@@ -3,7 +3,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useAchievements } from '../hooks/useAchievements';
 import { ACHIEVEMENTS } from '../constants/achievements';
-import { Icons } from '@bark/ui';
+import { Icons } from '@bradybark/ui';
 
 const Achievements = () => {
   const { unlocked, resetAchievements } = useAchievements();

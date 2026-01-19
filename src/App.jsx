@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { AchievementProvider } from './context/AchievementContext';
 import './App.css';
 
-import { ErrorBoundary } from '@bark/ui';
+import { ErrorBoundary } from '@bradybark/ui';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 

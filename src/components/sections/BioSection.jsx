@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dumbbell, Gamepad2, MousePointer2, Dog } from 'lucide-react';
-import { Icons, SectionHeader } from '@bark/ui';
+import { Icons, SectionHeader } from '@bradybark/ui';
 
 const BioSection = () => {
   const interests = [

@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.jsx
 import React from 'react';
-import { Icons } from '@bark/ui';
+import { Icons } from '@bradybark/ui';
 
 const SIDE_NAV_ITEMS = [
     { id: 'experience', label: 'Experience', icon: Icons.TrophyIcon },

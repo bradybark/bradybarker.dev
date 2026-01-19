@@ -1,7 +1,7 @@
 // src/components/sections/HeroSection.jsx
 import React, { useState } from 'react';
 import { useAchievements } from '../../hooks/useAchievements';
-import { Icons } from '@bark/ui';
+import { Icons } from '@bradybark/ui';
 
 const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -97,7 +97,7 @@ const HeroSection = ({ resumeData }) => {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => unlockAchievement('click-linkedin')}
-                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all flex items-center justify-center"
                   title="LinkedIn"
                 >
                   <Icons.LinkedinIcon size={20} />
@@ -108,7 +108,7 @@ const HeroSection = ({ resumeData }) => {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => unlockAchievement('click-github')}
-                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all"
+                  className="p-2.5 rounded-sm bg-black/60 border border-neutral-800/80 hover:border-neutral-600 text-neutral-400 hover:text-white transition-all flex items-center justify-center"
                   title="GitHub"
                 >
                   <Icons.GithubIcon size={20} />

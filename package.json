@@ -6,12 +6,12 @@
   "scripts": {
     "preinstall": "bash scripts/preinstall.sh || true",
     "dev": "vite",
-    "build": "vite build",
+    "build": "ls -R node_modules/@bradybark && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bark/ui": "git+https://github.com/bradybark/bark-ui.git#3308b97",
+    "@bradybark/ui": "^0.1.4",
     "@tailwindcss/vite": "^4.1.17",
     "canvas-confetti": "^1.9.4",
     "lucide-react": "^0.555.0",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionHeader } from '@bark/ui';
+import { SectionHeader } from '@bradybark/ui';
 
 const SkillsSection = ({ resumeData }) => (
   <section id="skills" className="scroll-mt-24 overflow-hidden">
