@@ -18,6 +18,7 @@ import BioSection from '../components/sections/BioSection';
 
 import Sidebar from '../components/layout/Sidebar';
 import { StaticStars, MiniGalaxy } from '@bradybark/ui';
+import SEO from '../components/common/SEO';
 
 const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const { unlockAchievement } = useAchievements();
@@ -76,6 +77,11 @@ const Resume = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <>
+      <SEO
+        title="Resume"
+        description="View my professional experience, skills, and engineering impact."
+      />
+
       {/* GLOBAL BACKGROUND LAYER */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <StaticStars />

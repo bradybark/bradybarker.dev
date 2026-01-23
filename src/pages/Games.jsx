@@ -1,6 +1,7 @@
 // src/pages/Games.jsx
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Icons, StaticStars, MiniGalaxy } from '@bradybark/ui';
+import SEO from '../components/common/SEO';
 
 const GRID_SIZE = 9; // 3x3 Grid
 const GAME_DURATION = 30; // Seconds
@@ -171,6 +172,10 @@ const Game = () => {
 
   return (
     <div className="relative min-h-screen pt-20 pb-16 px-4 flex flex-col items-center animate-fade-in-up overflow-hidden">
+      <SEO
+        title="Bug Zapper"
+        description="A secret mini-game hidden in my portfolio. Can you beat the high score?"
+      />
 
       {/* Galaxy Background */}
       <div className="fixed inset-0 pointer-events-none z-0">

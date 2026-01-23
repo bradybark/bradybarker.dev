@@ -1,7 +1,7 @@
-// src/App.jsx
 import React, { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { HelmetProvider } from 'react-helmet-async';
 import { AchievementProvider } from './context/AchievementContext';
 import './App.css';
 
@@ -31,47 +31,49 @@ function App() {
 
   return (
     <Router>
-      <AchievementProvider>
-        {/* Ensure Toaster is rendered here */}
-        <Toaster
-          position="bottom-right"
-          reverseOrder={false}
-          containerStyle={{ zIndex: 99999 }} // Force it to the top
-        />
-
-        <div className="flex flex-col min-h-screen bg-neutral-950 text-white transition-colors duration-300">
-
-          {/* Global Navbar */}
-          <Navbar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
+      <HelmetProvider>
+        <AchievementProvider>
+          {/* Ensure Toaster is rendered here */}
+          <Toaster
+            position="bottom-right"
+            reverseOrder={false}
+            containerStyle={{ zIndex: 99999 }} // Force it to the top
           />
 
-          <main className="flex-grow pt-16">
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route
-                    path="/resume"
-                    element={
-                      <Resume
-                        isSidebarOpen={isSidebarOpen}
-                        setIsSidebarOpen={setIsSidebarOpen}
-                      />
-                    }
-                  />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/achievements" element={<Achievements />} />
-                  <Route path="/game" element={<Game />} />
-                </Routes>
-              </Suspense>
-            </ErrorBoundary>
-          </main>
+          <div className="flex flex-col min-h-screen bg-neutral-950 text-white transition-colors duration-300">
 
-          <Footer />
-        </div>
-      </AchievementProvider>
+            {/* Global Navbar */}
+            <Navbar
+              isSidebarOpen={isSidebarOpen}
+              setIsSidebarOpen={setIsSidebarOpen}
+            />
+
+            <main className="flex-grow pt-16">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingFallback />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route
+                      path="/resume"
+                      element={
+                        <Resume
+                          isSidebarOpen={isSidebarOpen}
+                          setIsSidebarOpen={setIsSidebarOpen}
+                        />
+                      }
+                    />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/achievements" element={<Achievements />} />
+                    <Route path="/game" element={<Game />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
+            </main>
+
+            <Footer />
+          </div>
+        </AchievementProvider>
+      </HelmetProvider>
     </Router>
   );
 }

@@ -18,7 +18,9 @@
     "motion": "^12.24.10",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
+    "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.6.0",
+    "react-is": "^19.2.3",
     "react-router-dom": "^7.10.1",
     "recharts": "^3.5.1"
   },

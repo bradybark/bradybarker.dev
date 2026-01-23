@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useAchievements } from '../hooks/useAchievements';
 import { ACHIEVEMENTS } from '../constants/achievements';
 import { Icons } from '@bradybark/ui';
+import SEO from '../components/common/SEO';
 
 const Achievements = () => {
   const { unlocked, resetAchievements } = useAchievements();
@@ -63,6 +64,10 @@ const Achievements = () => {
 
   return (
     <div className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto flex flex-col overflow-hidden">
+      <SEO
+        title="Achievements"
+        description="Track your exploration of my portfolio. Can you unlock them all?"
+      />
 
       {/* Enhanced Galaxy/Star Background */}
       <div className="absolute inset-0 -z-10">

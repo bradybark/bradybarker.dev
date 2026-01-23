@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
 import { Icons } from '@bradybark/ui';
+import SEO from '../components/common/SEO';
 
 // Map project titles to specific icons
 const getProjectIcon = (title) => {
@@ -34,6 +35,11 @@ const getProjectIcon = (title) => {
 const Projects = () => {
   return (
     <div className="relative min-h-screen pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in-up overflow-hidden">
+      <SEO
+        title="Side Projects"
+        description="A collection of my side projects, tools, and experiments."
+      />
+
       {/* STAR BACKGROUND REMOVED */}
 
       {/* Header */}
