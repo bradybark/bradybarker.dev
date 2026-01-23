@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>https://bradybarker.dev/</loc>
+    <priority>1.0</priority>
+  </url>
+  <!-- Resume -->
+  <url>
+    <loc>https://bradybarker.dev/resume</loc>
+    <priority>0.8</priority>
+  </url>
+  <!-- Projects -->
+  <url>
+    <loc>https://bradybarker.dev/projects</loc>
+    <priority>0.8</priority>
+  </url>
+  <!-- Achievements -->
+  <url>
+    <loc>https://bradybarker.dev/achievements</loc>
+    <priority>0.7</priority>
+  </url>
+  <!-- Game -->
+  <url>
+    <loc>https://bradybarker.dev/game</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>
