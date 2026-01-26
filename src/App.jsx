@@ -2,6 +2,7 @@ import React, { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
 import { AchievementProvider } from './context/AchievementContext';
 import './App.css';
 
@@ -72,6 +73,7 @@ function App() {
 
             <Footer />
           </div>
+          <Analytics />
         </AchievementProvider>
       </HelmetProvider>
     </Router>
