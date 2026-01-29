@@ -7,7 +7,7 @@ import SEO from '../components/common/SEO';
 const Home = () => {
   return (
     <div className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center p-6 text-center animate-fade-in-up overflow-hidden">
-      <SEO title="Full Stack Developer" />
+      <SEO />
 
       {/* Background System */}
       <div className="absolute inset-0 -z-10 bg-neutral-950">
