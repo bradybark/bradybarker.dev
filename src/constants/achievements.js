@@ -7,7 +7,7 @@ export const ACHIEVEMENTS = [
   { id: 'click-projects', title: 'Portfolio Browser', description: 'Viewed the Projects page.' },
   { id: 'found-game', title: 'Easter Egg Hunter', description: 'Found the hidden game!' },
   { id: 'open-impact', title: 'Data Driven', description: 'Viewed the Engineering Impact section.' },
-  { id: 'toggle-theme', title: 'Flashbang!', description: 'Toggled Light/Dark mode.' },
+
   { id: 'download-resume', title: 'Head Hunter', description: 'Downloaded a copy of the resume.' },
   { id: 'completionist', title: 'The Collector', description: 'Unlocked every single achievement!' },
 ];

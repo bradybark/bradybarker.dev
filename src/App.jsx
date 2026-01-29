@@ -9,6 +9,7 @@ import './App.css';
 import { ErrorBoundary } from '@bradybark/ui';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import FancyLoader from './components/common/FancyLoader';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -16,16 +17,6 @@ const Resume = lazy(() => import('./pages/Resume'));
 const Projects = lazy(() => import('./pages/Projects'));
 const Achievements = lazy(() => import('./pages/Achievements'));
 const Game = lazy(() => import('./pages/Games'));
-
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-neutral-800 border-t-neutral-400 rounded-full animate-spin"></div>
-      <p className="text-neutral-400">Loading...</p>
-    </div>
-  </div>
-);
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -51,7 +42,7 @@ function App() {
 
             <main className="flex-grow pt-16">
               <ErrorBoundary>
-                <Suspense fallback={<LoadingFallback />}>
+                <Suspense fallback={<FancyLoader />}>
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route
