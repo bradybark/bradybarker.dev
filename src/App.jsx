@@ -10,8 +10,10 @@ import { ErrorBoundary, FancyLoader } from '@bradybark/ui';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 
-// Lazy load page components for code splitting
-const Home = lazy(() => import('./pages/Home'));
+// Eagerly load Home to prevent loading flash on initial visit
+import Home from './pages/Home';
+
+// Lazy load other pages for code splitting
 const Resume = lazy(() => import('./pages/Resume'));
 const Projects = lazy(() => import('./pages/Projects'));
 const Achievements = lazy(() => import('./pages/Achievements'));
