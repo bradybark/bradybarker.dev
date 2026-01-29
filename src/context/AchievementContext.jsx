@@ -49,19 +49,18 @@ export const AchievementProvider = ({ children }) => {
   const showToast = useCallback((achievement, type = 'unlock') => {
     const isGold = achievement.id === 'completionist';
     const isReset = type === 'reset';
-    
+
     toast.custom((t) => (
-      <div 
-        className={`${
-          t.visible ? 'animate-enter' : 'animate-leave'
-        } max-w-sm w-full cursor-pointer hover:scale-105 transition-transform duration-200 pointer-events-auto`}
+      <div
+        className={`${t.visible ? 'animate-enter' : 'animate-leave'
+          } max-w-sm w-full cursor-pointer hover:scale-105 transition-transform duration-200 pointer-events-auto`}
         onClick={() => {
           toast.dismiss(t.id);
           if (!isReset) navigate('/achievements');
         }}
       >
         <div className={`
-          flex items-start gap-4 p-4 rounded-sm shadow-2xl border transition-colors duration-300 corner-brackets
+          flex items-start gap-4 p-4 rounded-sm shadow-2xl border transition-colors duration-300
           ${isGold
             ? 'bg-gradient-to-r from-yellow-900/90 via-yellow-950/90 to-yellow-900/90 border-yellow-600/50 text-yellow-100 shadow-yellow-600/30 backdrop-blur-sm'
             : 'bg-black/90 text-white border-green-500/40 shadow-lg shadow-green-500/10 backdrop-blur-sm'
@@ -97,7 +96,7 @@ export const AchievementProvider = ({ children }) => {
             </p>
           </div>
 
-          <button 
+          <button
             onClick={(e) => {
               e.stopPropagation();
               toast.dismiss(t.id);
