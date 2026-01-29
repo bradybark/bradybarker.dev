@@ -44,36 +44,3 @@ body {
   opacity: 0;
   /* Start hidden, animation will reveal */
 }
-
-/* Custom Animations for FancyLoader */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-150%) skewX(12deg);
-  }
-
-  100% {
-    transform: translateX(150%) skewX(12deg);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite ease-in-out;
-}
-
-@keyframes loading-bar {
-  0% {
-    transform: scaleX(0);
-  }
-
-  50% {
-    transform: scaleX(0.7);
-  }
-
-  100% {
-    transform: scaleX(1);
-  }
-}
-
-.animate-loading-bar {
-  animation: loading-bar 1.5s infinite ease-in-out;
-}

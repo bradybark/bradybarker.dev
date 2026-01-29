@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bradybark/ui": "^0.1.6",
+    "@bradybark/ui": "^0.1.7",
     "@tailwindcss/vite": "^4.1.17",
     "@vercel/analytics": "^1.4.1",
     "canvas-confetti": "^1.9.4",

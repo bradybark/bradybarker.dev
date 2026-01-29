@@ -6,10 +6,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { AchievementProvider } from './context/AchievementContext';
 import './App.css';
 
-import { ErrorBoundary } from '@bradybark/ui';
+import { ErrorBoundary, FancyLoader } from '@bradybark/ui';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import FancyLoader from './components/common/FancyLoader';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'));
