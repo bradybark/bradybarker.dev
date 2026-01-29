@@ -9,5 +9,6 @@ export const ACHIEVEMENTS = [
   { id: 'open-impact', title: 'Data Driven', description: 'Viewed the Engineering Impact section.' },
 
   { id: 'download-resume', title: 'Head Hunter', description: 'Downloaded a copy of the resume.' },
+  { id: 'scroll-master', title: 'Scroll Master', description: 'Reached the bottom of a page.' },
   { id: 'completionist', title: 'The Collector', description: 'Unlocked every single achievement!' },
 ];
