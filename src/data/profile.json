@@ -72,21 +72,6 @@
       "description": "Modernized enterprise-wide reporting architecture and systems.",
       "details": ["Updated & modernized PIM Cube & Semantic Model for 2,600+ users.", "Managed OneDeck updates and user support.", "Enhanced Cognos/MSAS/Power BI reporting to align with Enterprise Finance standards."],
       "tech": ["MSAS", "Cognos", "Power BI", "Analytics"]
-    },
-    {
-      "title": "Z.F. Household Services",
-      "role": "Web Developer",
-      "description": "Designed and developed a professional website for an Upper Valley handyman business offering pressure washing, painting, repairs, and more.",
-      "details": ["Built a responsive, SEO-optimized business website from scratch.", "Implemented service showcase, contact forms, and mobile-first design.", "Deployed and maintained the live production site."],
-      "tech": ["JavaScript", "HTML", "CSS", "Web Design"],
-      "liveUrl": "https://www.zfhouseholdservices.com/"
-    },
-    {
-      "title": "Hair Stylist Portfolio",
-      "role": "Web Developer",
-      "description": "Designed and developed a portfolio website for a professional hair stylist to showcase services and attract new clients.",
-      "details": ["Created a visually engaging, mobile-responsive site tailored to the stylist's brand.", "Built service listings, gallery, and booking integration.", "Focused on clean aesthetics and fast load times."],
-      "tech": ["JavaScript", "HTML", "CSS", "Web Design"]
     }
   ],
   "education": [
