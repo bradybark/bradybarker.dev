@@ -16,10 +16,28 @@
   "experience": [
     {
       "company": "General Motors",
-      "role": "Software Engineer",
-      "period": "Jul 2021 - Present",
+      "role": "Senior Systems Engineer",
+      "period": "Dec 2025 - Present",
       "location": "Roswell, GA",
       "description": "Leading data architecture modernization and enterprise analytics initiatives.",
+      "achievements": [
+        "Architected enterprise migration from on-prem MSAS Cubes to Databricks-backed Power BI Semantic Models, reducing refresh times by >99% and scaling to 3000+ finance users.",
+        "Engineered Databricks ETL pipelines (SQL + Python) integrating multi-source financial/operational data into a unified analytics layer.",
+        "Re-architected data models with Finance, Engineering, and Governance teams, enforcing quality controls that led to major gains in speed, reliability, and cross-system consistency.",
+        "Built Power Automate/Power Apps flows enabling KPI write-back, commentary, Databricks job orchestration, and model refresh automation for 600+ users.",
+        "Designed dimensional models (fact tables, dimension tables, surrogate keys, and SCD logic) supporting enterprise semantic layers.",
+        "Developed and maintained interactive Power BI dashboards, collaborating with business stakeholders to define requirements and present complex data in clear, executive-ready format.",
+        "Communicated analytical findings and data model behavior to non-technical stakeholders to support risk assessment, planning, and business strategy decisions.",
+        "Partnered with Finance, Engineering, Governance, and Product stakeholders to define business metrics, validate analytical results, and align on model logic across multiple systems.",
+        "Developed a PowerApps tool enabling users to Add, Modify, and Delete data directly in Databricks, with seamless Power BI integration for real-time reporting and data governance."
+      ]
+    },
+    {
+      "company": "General Motors",
+      "role": "Software Engineer",
+      "period": "Jul 2021 - Dec 2025",
+      "location": "Roswell, GA",
+      "description": "Led data architecture modernization and enterprise analytics initiatives.",
       "achievements": [
         "Architected enterprise migration from on-prem MSAS Cubes to Databricks-backed Power BI Semantic Models, reducing refresh times by >99% and scaling to 3000+ finance users.",
         "Engineered Databricks ETL pipelines (SQL + Python) integrating multi-source financial/operational data into a unified analytics layer.",
@@ -54,6 +72,21 @@
       "description": "Modernized enterprise-wide reporting architecture and systems.",
       "details": ["Updated & modernized PIM Cube & Semantic Model for 2,600+ users.", "Managed OneDeck updates and user support.", "Enhanced Cognos/MSAS/Power BI reporting to align with Enterprise Finance standards."],
       "tech": ["MSAS", "Cognos", "Power BI", "Analytics"]
+    },
+    {
+      "title": "Z.F. Household Services",
+      "role": "Web Developer",
+      "description": "Designed and developed a professional website for an Upper Valley handyman business offering pressure washing, painting, repairs, and more.",
+      "details": ["Built a responsive, SEO-optimized business website from scratch.", "Implemented service showcase, contact forms, and mobile-first design.", "Deployed and maintained the live production site."],
+      "tech": ["JavaScript", "HTML", "CSS", "Web Design"],
+      "liveUrl": "https://www.zfhouseholdservices.com/"
+    },
+    {
+      "title": "Hair Stylist Portfolio",
+      "role": "Web Developer",
+      "description": "Designed and developed a portfolio website for a professional hair stylist to showcase services and attract new clients.",
+      "details": ["Created a visually engaging, mobile-responsive site tailored to the stylist's brand.", "Built service listings, gallery, and booking integration.", "Focused on clean aesthetics and fast load times."],
+      "tech": ["JavaScript", "HTML", "CSS", "Web Design"]
     }
   ],
   "education": [

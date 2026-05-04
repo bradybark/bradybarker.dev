@@ -63,5 +63,29 @@ export const personalProjects = [
     ],
     tech: ["React", "Tailwind CSS", "Vite", "React Router", "Recharts", "Canvas Confetti"],
     githubUrl: "https://github.com/bradybark/bradybarker.dev",
+  },
+  {
+    title: "Z.F. Household Services",
+    isPrivate: true,
+    demoUrl: "https://www.zfhouseholdservices.com/",
+    description: "A professional business website for an Upper Valley handyman service specializing in pressure washing, painting, repairs, and general household maintenance.",
+    details: [
+      "Designed and developed a responsive, SEO-optimized website to establish the business's online presence.",
+      "Implemented service showcases, customer testimonials, and a contact system to drive client engagement.",
+      "Mobile-first design with fast load times and clean aesthetics tailored to the client's brand.",
+      "Deployed and maintained the live production site with ongoing support."
+    ],
+    tech: ["JavaScript", "HTML", "CSS", "SEO", "Web Design"],
+  },
+  {
+    title: "Hair Stylist Portfolio",
+    isPrivate: true,
+    description: "A custom portfolio website designed for a professional hair stylist to showcase their work, services, and attract new clientele.",
+    details: [
+      "Created a visually engaging, mobile-responsive site tailored to the stylist's personal brand.",
+      "Built a services section, image gallery, and booking integration for streamlined client scheduling.",
+      "Focused on clean aesthetics, smooth animations, and fast load times for an elevated user experience."
+    ],
+    tech: ["JavaScript", "HTML", "CSS", "Web Design"],
   }
 ];

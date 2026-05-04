@@ -7,7 +7,9 @@ import {
   SquareTerminal,
   House,
   Package,
-  Layers // Imported Layers icon for Nestly
+  Layers, // Imported Layers icon for Nestly
+  Wrench,
+  Scissors
 } from 'lucide-react';
 import { personalProjects } from '../data/personalProjects';
 import { Icons } from '@bradybark/ui';
@@ -27,6 +29,10 @@ const getProjectIcon = (title) => {
       return <Package size={20} className={iconClass} />;
     case "Nestly":
       return <Layers size={20} className={iconClass} />;
+    case "Z.F. Household Services":
+      return <Wrench size={20} className={iconClass} />;
+    case "Hair Stylist Portfolio":
+      return <Scissors size={20} className={iconClass} />;
     default:
       return <Code size={20} className={iconClass} />;
   }
@@ -94,15 +100,17 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-900/50 rounded-sm"
-                title="View Source"
-              >
-                <Icons.GithubIcon size={20} />
-              </a>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-neutral-900/50 rounded-sm"
+                  title="View Source"
+                >
+                  <Icons.GithubIcon size={20} />
+                </a>
+              )}
             </div>
 
             {/* Description - Added min-h to align */}
@@ -142,14 +150,16 @@ const Projects = () => {
 
             {/* Link to Repo & Demo */}
             <div className="px-6 py-4 border-t border-neutral-800/80 bg-neutral-950/30 bg-diagonal-lines flex gap-4">
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
-              >
-                View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-              </a>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium font-mono text-neutral-400 hover:text-white group/link transition-colors"
+                >
+                  View Repository <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                </a>
+              )}
               {project.demoUrl && (
                 <a
                   href={project.demoUrl}
