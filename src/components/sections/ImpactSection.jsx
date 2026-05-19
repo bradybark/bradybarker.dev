@@ -41,6 +41,71 @@ const ICON_MAP = {
   Archive: Icons.ArchiveIcon
 };
 
+const AnimatedMetricValue = ({ value }) => {
+  const [displayValue, setDisplayValue] = useState("0");
+
+  useEffect(() => {
+    // Check if it's text-only or has numbers
+    const match = value.match(/^([^0-9]*)([0-9.,]+)([^0-9]*)$/);
+    if (!match) {
+      // Pure text scramble/type effect
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i <= value.length) {
+          setDisplayValue(value.substring(0, i));
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 50);
+      return () => clearInterval(interval);
+    }
+
+    const prefix = match[1];
+    const numStr = match[2].replace(/,/g, '');
+    const isFloat = numStr.includes('.');
+    const suffix = match[3];
+    const targetNum = parseFloat(numStr);
+
+    let startTimestamp = null;
+    const duration = 1500; // 1.5 seconds
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      // easeOutExpo
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      
+      const currentNum = targetNum * easeProgress;
+      
+      let formattedNum;
+      if (isFloat) {
+        const decimals = match[2].split('.')[1].length;
+        formattedNum = currentNum.toFixed(decimals);
+      } else {
+        formattedNum = Math.floor(currentNum).toString();
+        if (match[2].includes(',')) {
+          formattedNum = parseInt(formattedNum, 10).toLocaleString();
+        }
+      }
+
+      setDisplayValue(`${prefix}${formattedNum}${suffix}`);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    requestAnimationFrame(step);
+  }, [value]);
+
+  return <>{displayValue}</>;
+};
+
+
 const ImpactSection = ({ onClose }) => {
   const chartContainerRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
@@ -305,7 +370,7 @@ const ImpactSection = ({ onClose }) => {
               >
                 <div className="px-6 py-5 bg-dot-pattern">
                   <div className="text-3xl md:text-4xl font-bold text-white mb-2 font-mono">
-                    {metric.value}
+                    <AnimatedMetricValue value={metric.value} />
                   </div>
                   <div className="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3 font-mono">
                     {metric.label}

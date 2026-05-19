@@ -60,6 +60,18 @@ body {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
+/* Override default tailwind bounce to make it more subtle universally */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-15%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
 /* Section reveal animation - staggered entrance after hero */
 @keyframes sectionReveal {
   from {
