@@ -109,9 +109,9 @@ const RoleCard = ({ role, rIdx }) => {
           onClick={() => setIsExpanded(!isExpanded)}
           className="font-mono text-[10px] sm:text-xs font-bold tracking-widest text-neutral-500 hover:text-purple-400 active:text-purple-400 active:scale-95 transition-all flex items-center gap-1.5 group/btn cursor-pointer"
         >
-          <span className="text-white/80 drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] group-hover/btn:text-purple-500 group-active/btn:text-purple-500 group-hover/btn:-translate-y-0.5 group-active/btn:-translate-y-0.5 group-hover/btn:drop-shadow-none group-active/btn:drop-shadow-none transition-all duration-300">[</span>
+          <span className="text-white/80 drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] group-hover/btn:text-purple-500 group-active/btn:text-purple-500 group-hover/btn:-translate-x-1 group-active/btn:-translate-x-1 group-hover/btn:drop-shadow-none group-active/btn:drop-shadow-none transition-all duration-300">[</span>
           <span className="w-[65px] sm:w-[72px] text-center">{isExpanded ? 'COLLAPSE' : 'EXPAND'}</span>
-          <span className="text-white/80 drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] group-hover/btn:text-purple-500 group-active/btn:text-purple-500 group-hover/btn:-translate-y-0.5 group-active/btn:-translate-y-0.5 group-hover/btn:drop-shadow-none group-active/btn:drop-shadow-none transition-all duration-300">]</span>
+          <span className="text-white/80 drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] group-hover/btn:text-purple-500 group-active/btn:text-purple-500 group-hover/btn:translate-x-1 group-active/btn:translate-x-1 group-hover/btn:drop-shadow-none group-active/btn:drop-shadow-none transition-all duration-300">]</span>
         </button>
       </div>
     </div>
