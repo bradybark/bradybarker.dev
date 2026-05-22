@@ -2,6 +2,30 @@
 import React, { useState } from 'react';
 import { Icons, SectionHeader } from '@bradybark/ui';
 
+const TextWithGlowingNumbers = ({ text }) => {
+  if (!text) return null;
+  const regex = /((?:>|\$)?\d+(?:,\d+)*(?:\.\d+)?[KMBkmb%+]?)/g;
+  const parts = text.split(regex);
+  
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (i % 2 === 1) {
+          return (
+            <span 
+              key={i} 
+              className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] font-semibold"
+            >
+              {part}
+            </span>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+};
+
 const RoleCard = ({ role, rIdx }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -39,7 +63,7 @@ const RoleCard = ({ role, rIdx }) => {
       {!isExpanded && (
         <div className="px-8 pb-2" onClick={() => setIsExpanded(true)}>
           <p className="text-sm text-neutral-400 leading-relaxed font-mono line-clamp-2 opacity-80 cursor-pointer">
-            {firstLine}
+            <TextWithGlowingNumbers text={firstLine} />
           </p>
         </div>
       )}
@@ -52,7 +76,7 @@ const RoleCard = ({ role, rIdx }) => {
           {/* Description */}
           <div className="px-8 pb-4">
             <p className="text-sm text-neutral-400 leading-relaxed font-mono">
-              {role.description}
+              <TextWithGlowingNumbers text={role.description} />
             </p>
           </div>
 
@@ -70,7 +94,7 @@ const RoleCard = ({ role, rIdx }) => {
                     />
                   </div>
                   <span className="text-sm group-hover/item:text-neutral-100 transition-colors">
-                    {achievement}
+                    <TextWithGlowingNumbers text={achievement} />
                   </span>
                 </li>
               ))}
