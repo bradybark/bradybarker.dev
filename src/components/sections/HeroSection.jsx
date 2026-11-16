@@ -1,11 +1,72 @@
 // src/components/sections/HeroSection.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAchievements } from '../../hooks/useAchievements';
 import { Icons } from '@bradybark/ui';
 
+const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*<>/';
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+const scramble = (text, revealed) =>
+  text
+    .split('')
+    .map((c, i) =>
+      i < revealed || c === ' '
+        ? c
+        : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+    )
+    .join('');
+
+// Letters start as random characters and resolve left to right.
+const ScrambleText = ({ text, delay = 0, duration = 1000, onDone }) => {
+  const [display, setDisplay] = useState(() =>
+    prefersReducedMotion() ? text : scramble(text, 0)
+  );
+
+  useEffect(() => {
+    if (prefersReducedMotion()) {
+      onDone?.();
+      return;
+    }
+    let raf;
+    let start;
+    let lastTick = 0;
+
+    const step = (t) => {
+      if (start === undefined) start = t;
+      const progress = Math.min((t - start) / duration, 1);
+      // Re-roll characters ~every 40ms so it flickers but stays readable
+      if (t - lastTick > 40 || progress === 1) {
+        lastTick = t;
+        setDisplay(progress === 1 ? text : scramble(text, Math.floor(progress * text.length)));
+      }
+      if (progress < 1) raf = requestAnimationFrame(step);
+      else onDone?.();
+    };
+
+    const timeout = setTimeout(() => {
+      raf = requestAnimationFrame(step);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+    };
+    // onDone intentionally left out so a new callback identity doesn't restart the effect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, delay, duration]);
+
+  return <span aria-hidden="true">{display}</span>;
+};
+
 const HeroSection = ({ resumeData }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [decoded, setDecoded] = useState(false);
   const { unlockAchievement } = useAchievements();
+  const [firstName, ...rest] = resumeData.personalInfo.name.split(' ');
+  const lastName = rest.join(' ');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(resumeData.personalInfo.email);
@@ -27,44 +88,43 @@ const HeroSection = ({ resumeData }) => {
           {/* UPDATED: Reduced space-y-10 to space-y-6 to pull buttons up */}
           <div className="max-w-4xl space-y-6 relative z-10">
 
-            {/* Hook - Attention Grabber */}
             <div className="space-y-6">
 
-              {/* Main Headline */}
-              <div className="relative">
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] font-display text-shadow-strong">
-                  <span className="block pb-2 text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
-                    The New Standard
-                  </span>
-                </h1>
+              {/* Location tag */}
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-black/50 border border-neutral-800/80 text-neutral-400 text-xs font-mono tracking-wide uppercase animate-slide-up-fade"
+                style={{ animationDelay: '0.1s' }}
+              >
+                <Icons.MapPinIcon size={12} />
+                {resumeData.personalInfo.location}
               </div>
 
-              {/* Tagline */}
-              <div className="relative animate-slide-up-fade" style={{ animationDelay: '0.5s' }}>
-                <p className="text-2xl md:text-3xl font-light text-neutral-400 tracking-wider font-mono text-shadow-subtle">
-                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>Ingest.</span>
-                  {' '}
-                  <span className="inline-block animate-fade-in" style={{ animationDelay: '0.9s' }}>Transform.</span>
-                  {' '}
-                  <span className="inline-block animate-fade-in" style={{ animationDelay: '1.1s' }}>Visualize.</span>
-                </p>
-              </div>
+              {/* Name */}
+              <h1
+                aria-label={resumeData.personalInfo.name}
+                className="font-display font-bold tracking-tight leading-[1.1] text-5xl md:text-7xl lg:text-8xl text-shadow-strong animate-name-glow"
+              >
+                <span className="inline-block text-white animate-slide-up-fade" style={{ animationDelay: '0.25s' }}>
+                  <ScrambleText text={firstName} delay={250} duration={700} />
+                </span>
+                {' '}
+                <span className="inline-block pb-2 text-gradient-primary animate-slide-up-fade" style={{ animationDelay: '0.4s' }}>
+                  <ScrambleText text={lastName} delay={450} duration={900} onDone={() => setDecoded(true)} />
+                </span>
+                {!decoded && (
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-[0.08em] h-[0.85em] ml-[0.12em] align-[-0.08em] bg-neutral-300 animate-cursor-blink"
+                  />
+                )}
+              </h1>
 
-              {/* Name and Location */}
-              <div className="flex items-center gap-3 text-sm font-mono text-neutral-400 animate-slide-up-fade text-shadow-subtle" style={{ animationDelay: '1.3s' }}>
-                <div className="h-px w-12 bg-gradient-to-r from-neutral-400/60 to-transparent" />
-                <span className="text-white font-semibold">{resumeData.personalInfo.name}</span>
-                <span className="text-neutral-600">▪</span>
-                <div className="flex items-center gap-1.5 text-neutral-500">
-                  <Icons.MapPinIcon size={14} />
-                  {resumeData.personalInfo.location}
-                </div>
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-400/20 to-transparent" />
-              </div>
+              {/* Divider */}
+              <div className="hero-divider max-w-2xl" aria-hidden="true" />
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2 animate-slide-up-fade" style={{ animationDelay: '1.7s' }}>
+            <div className="flex flex-wrap items-center gap-3 pt-2 animate-slide-up-fade" style={{ animationDelay: '0.7s' }}>
               {/* Email Button */}
               <button
                 onClick={handleCopyEmail}
